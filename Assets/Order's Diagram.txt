@@ -1,0 +1,54 @@
+Assets (Unfinished)
+
+    Animations: Lugar para guardar todas las animaciones del videojuego.
+        [ObjectName]: Cada objeto tiene que tener una carpeta con todas sus animaciones (ej: Player).
+            [ObjectName][ActionName]: Cada animacion tiene que contener un nombre (ej: PlayerWalk).
+    Animators: Lugar donde guardar todos los animators del videojuego.
+        [ObjectName]: Cada objeto tiene que tener su respectivo animator (ej: Player).
+    Audio: Lugar para guardar todo el aspecto sonoro del videojuego.
+        
+        Sounds: Sonidos del videojuego.
+            [SoundName]: Sonido de One Shot (ej: PlayerFootStepA).
+        
+        Music: Musica del videojuego.
+            [MusicName]: Musica loopeable (ej: CitySongA).
+
+    Editor: Lugar para guardar los distintos editores customizables de scripts del videojuego.
+    Fonts: Lugar para guardar todas las fuentes del videojuego.
+    Input: Lugar donde guardar los diferentes controladores de input.
+    Materials: Lugar para guardar todos los materiales del videojuego creados en Unity.
+    Models: (3D) Lugar para guardar todos los diferentes modelos del videojuego.
+
+        [ObjectName]: Cada objeto tiene que tener una carpeta con sus modelos (ej: Player).
+
+            [ObjectName][Model]: Cada objeto tiene que tener su nombre (ej: PlayerBody).
+    Palettes: (2D) Lugar para guardar las diferentes paletas de tiles del videojuego.
+    Packages: Lugar donde guardar los paquetes externos.
+    Prefabs: Lugar para guardar los prefabs de los objetos del videojuego.
+    Rendering: (URP o HDRP) Lugar para guardar los assets de rendering del videojuego.
+    Scenes: Lugar para guardar las escenas del videojuego.
+    ScriptableObjects: Lugar para guardar los distintos Scriptable Objects.
+    Scripts: Lugar donde guardar todos los scripts del videojuego.
+
+        Behaviour: Padre abstracto de ciertos componente.
+            [ScriptName]Behaviour: Script a utilizar (ej: GameBehaviour).
+        Brain: Componente a usar por un objeto con cerebro literal (ej: Player).
+            [ScriptName]Brain: Script a utilizar (ej: PlayerBrain).
+        Controller: Componente a usar por un objeto unico (ej: Camera).
+            [ScriptName]Controller: Script a utilizar (ej: CameraController)
+        Components: Diferentes componentes creados para usar con otros componentes (ej: AudioOneShot).
+            [ScriptName]: Script a utilizar, este no requiere el añadido Component.
+        System: Lugar para guardar todos los scripts utilizados por el sistem (ej: GameData).
+            [ScriptName]System: Script a utilizar (ej: GameDataSystem).
+        UI: Componente a usar por la UI.
+            
+            [ComponentFatherName]: Carpetas a utilizar para diferenciar los scripts dependiendo del objeto que se este creando (ej: Inventory).
+
+                [ScriptName]UI: Script a utilizar (ej: InventoryUI).
+    Shaders: Lugar para guardar los shades.
+    Textures: Lugar para guardar todas las texturas del videojuego.
+
+        [TypeObject]: Carpeta para diferenciar el tipo de textura a utilizar (ej: ModelsTextures, UI, RenderTextures, etc.)
+    Tiles: (2D) Lugar para guardar los diferentes assets de tiles para el videojuego.
+    Visual Effects: Lugar para guardar particulas.
+        
