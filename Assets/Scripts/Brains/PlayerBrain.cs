@@ -34,6 +34,10 @@ public class PlayerBrain : CharacterBehaviour {
 
             SmoothMove(value.Get<Vector2>());
             }
+        private void OnLook(InputValue value) {
+
+            CameraBrain.instance.SetRotationVelocity(value.Get<Vector2>());
+            }   
 		
         //Funciones publicas.
 		
@@ -41,6 +45,10 @@ public class PlayerBrain : CharacterBehaviour {
         protected override void Dead() {
 
             
+            }
+        protected override int GetActualHealth() {
+            
+            return GetMaxHealth();
             }
 		
         //Funciones ha heredar.

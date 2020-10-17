@@ -28,19 +28,28 @@ public abstract class CharacterBehaviour : GameBehaviour {
             [SerializeField] private Axis m_verticalAxis = Axis.Z;          //Axis a utilizar al moverse hacia atras y al frente.
 
             [Header("Brain Health System")]
-            [SerializeField] private int m_healthPoints;
+            [SerializeField] private int m_health = 10;               //Puntos de vida maximos.
 
             [Header("Brain References")]
             [SerializeField] private Rigidbody m_rigidbody = null;          //Referencia al rigidbody del personaje.
 
             //Privadas.
-			private Coroutine m_movementCoroutine = null;                   //Corotina a utilizar para mover el personaje sin usar update.
-            private Vector3 m_movementVelocity = Vector2.zero;              //Variable para guardar el movimiento a utilizar por el rigidbody.
-			private Vector3 m_moveDampVelocity = Vector2.zero;              //Variable utilizada por la funcion SmoothDamp dentro de la corotina de movimiento fluido.
+
+                //Movimiento.
+                private Coroutine m_movementCoroutine = null;                   //Corotina a utilizar para mover el personaje sin usar update.
+                private Vector3 m_movementVelocity = Vector2.zero;              //Variable para guardar el movimiento a utilizar por el rigidbody.
+                private Vector3 m_moveDampVelocity = Vector2.zero;              //Variable utilizada por la funcion SmoothDamp dentro de la corotina de movimiento fluido.
+
+                //Vida.
+                private int m_actualHealth;
 
     //Funciones
 		
         //Funciones de MonoBehaviour.
+        protected virtual void Start() {
+
+            m_actualHealth = GetActualHealth();
+            }
 		
         //Funciones privadas.
         private bool CompareVelocity(float threshold) {
@@ -93,9 +102,18 @@ public abstract class CharacterBehaviour : GameBehaviour {
             SetVelocity(ref m_movementVelocity, velocity, m_horizontalAxis, m_verticalAxis);
             if (m_movementCoroutine == null) m_movementCoroutine = StartCoroutine(MoveSmoothly());
             }
-				
+
         //Funciones ha heredar.
-        protected abstract void Dead();
+
+            //Protegidas.
+            protected int GetMaxHealth() {
+
+                return m_health;
+                }
+
+            //Abstractas.
+            protected abstract int GetActualHealth();
+            protected abstract void Dead();
 		
         //Corotinas.
 		private IEnumerator MoveSmoothly() {
