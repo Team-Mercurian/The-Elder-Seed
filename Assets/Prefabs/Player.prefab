@@ -71,6 +71,7 @@ MonoBehaviour:
   m_health: 10
   m_rigidbody: {fileID: 3022526979373369158}
   m_runSpeed: 8
+  m_rotationSmoothness: 0.1
 --- !u!136 &7489293262863081271
 CapsuleCollider:
   m_ObjectHideFlags: 0
