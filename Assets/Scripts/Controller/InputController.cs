@@ -79,6 +79,8 @@ public class InputController : MonoBehaviour {
         //Funciones publicas.
         public void ShowCursor(InputAction.CallbackContext context) {
 
+            if (m_cursorController == null) return;
+
             bool m_temporalCursor = false;
 
             if (context.phase == InputActionPhase.Started) m_temporalCursor = true;
@@ -90,7 +92,21 @@ public class InputController : MonoBehaviour {
             }
         public void Zoom(InputAction.CallbackContext context) {
             
+            if (m_cameraBrain == null) return;
+
             m_cameraBrain.Zoom(-context.ReadValue<float>());
+            }
+        public void Run(InputAction.CallbackContext context) {
+
+            if (m_playerBrain == null) return;
+
+            bool m_run = false;
+
+            if (context.phase == InputActionPhase.Started) m_run = true;
+            else if (context.phase == InputActionPhase.Canceled) m_run = false;
+            else return; 
+
+            m_playerBrain.SetRun(m_run);
             }
 		
         //Funciones heredadas.
