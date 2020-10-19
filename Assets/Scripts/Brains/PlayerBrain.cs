@@ -21,8 +21,13 @@ public class PlayerBrain : CharacterBehaviour {
         //Establecer variables.
 		
             //Publicas.
+            [Header("Player Values")]
+            [SerializeField] private float m_runSpeed = 8; 
+
+            //Privadas.
             private CameraBrain m_cameraBrain = null;                               //Referencia a la camara.
-			
+			private bool m_run = false;
+
     //Funciones
 		
         //Funciones de MonoBehaviour
@@ -53,7 +58,7 @@ public class PlayerBrain : CharacterBehaviour {
         private void FixedUpdate() {
 
             //Mover al jugador de manera suave en el rigidbody.
-            m_rigidbody.velocity = m_velocity * m_movementSpeed; 
+            m_rigidbody.velocity = m_velocity * (m_run ? m_runSpeed : m_movementSpeed); 
             }
 		
         //Funciones privadas.
@@ -66,6 +71,10 @@ public class PlayerBrain : CharacterBehaviour {
         public void SetVelocity(Vector3 velocity) {
 
             m_movementVelocity = velocity;
+            }
+        public void SetRun(bool active) {
+
+            m_run = active;
             }
 		
         //Funciones heredadas.
