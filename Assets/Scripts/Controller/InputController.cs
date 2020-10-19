@@ -23,7 +23,6 @@ public class InputController : MonoBehaviour {
             //Publicas.
             [Header("Input References")]
             [SerializeField] private PlayerInput m_playerInput = null;              //Referencia al Input System del jugador.
-            [SerializeField] private CursorVisibilityController m_cursorController = null;
 			
             //Privadas.
             private InputAction m_moveAction = null;                                //Referencia a la accion de mover del jugador.
@@ -32,6 +31,7 @@ public class InputController : MonoBehaviour {
             //Privadas.
             private CameraBrain m_cameraBrain;
             private PlayerBrain m_playerBrain;
+            private CursorVisibilityController m_cursorController;
 
             private bool m_isShowingCursor = false;
 			
@@ -44,6 +44,7 @@ public class InputController : MonoBehaviour {
             //Establecer referencias a componentes.
             m_cameraBrain = CameraBrain.GetSingleton();
             m_playerBrain = PlayerBrain.GetSingleton();
+            m_cursorController = CursorVisibilityController.GetSingleton();
 
             //Establecer las referencias a las acciones.
             m_moveAction = m_playerInput.actions["Player/Move"];
