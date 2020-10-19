@@ -21,8 +21,15 @@ public class PlayerBrain : CharacterBehaviour {
         //Establecer variables.
 		
             //Publicas.
+            [Header("Player Values")]
+            [SerializeField] private float m_runSpeed = 8; 
+            [SerializeField] private float m_rotationSmoothness = 0.2f;
+
+            //Privadas.
             private CameraBrain m_cameraBrain = null;                               //Referencia a la camara.
-			
+			private bool m_run = false;
+            private float m_rotationVelocity;
+
     //Funciones
 		
         //Funciones de MonoBehaviour
@@ -44,7 +51,8 @@ public class PlayerBrain : CharacterBehaviour {
             //Girar el modelo del jugador dependiendo de la velocidad de este.
             if (m_rigidbody.velocity.x != 0 || m_rigidbody.velocity.y != 0) {
 
-                transform.eulerAngles = new Vector3(0, (Mathf.Atan2(m_rigidbody.velocity.z, -m_rigidbody.velocity.x) * Mathf.Rad2Deg) - 90, 0);
+                float m_rotationValue = (Mathf.Atan2(m_rigidbody.velocity.z, -m_rigidbody.velocity.x) * Mathf.Rad2Deg) - 90;
+                transform.eulerAngles = new Vector3(0, Mathf.SmoothDampAngle(transform.eulerAngles.y, m_rotationValue, ref m_rotationVelocity, m_rotationSmoothness), 0);
                 }
 
             //Crear fluidez entre la velocidad actual y la velocidad proxima.
@@ -53,7 +61,7 @@ public class PlayerBrain : CharacterBehaviour {
         private void FixedUpdate() {
 
             //Mover al jugador de manera suave en el rigidbody.
-            m_rigidbody.velocity = m_velocity * m_movementSpeed; 
+            m_rigidbody.velocity = m_velocity * (m_run ? m_runSpeed : m_movementSpeed); 
             }
 		
         //Funciones privadas.
@@ -66,6 +74,10 @@ public class PlayerBrain : CharacterBehaviour {
         public void SetVelocity(Vector3 velocity) {
 
             m_movementVelocity = velocity;
+            }
+        public void SetRun(bool active) {
+
+            m_run = active;
             }
 		
         //Funciones heredadas.
