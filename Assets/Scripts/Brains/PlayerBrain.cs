@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput))]
 public class PlayerBrain : CharacterBehaviour {
 	
     //Establecer variables.
@@ -16,30 +14,59 @@ public class PlayerBrain : CharacterBehaviour {
 		
             //Publicas.
 			
-            //Privadas
+            //Privadas.
+            private static PlayerBrain m_instance;
+            private static Vector3 m_velocity = Vector3.zero;                              //Velocidad del jugador.
 			
         //Establecer variables.
 		
             //Publicas.
-			
-            //Privadas.
-			
+            private CameraBrain m_cameraBrain = null;                               //Referencia a la camara.
 			
     //Funciones
 		
         //Funciones de MonoBehaviour
+        private void Awake() {
+
+            m_instance = this;
+            }
+        protected override void Start() {
+
+            //Establecer referencia a la base de la herarquia.
+            base.Start();
+
+            //Establecer referencia de la camara.
+            m_cameraBrain = CameraBrain.GetSingleton();
+            }
+		
+        private void Update() {
+            
+            //Girar el modelo del jugador dependiendo de la velocidad de este.
+            if (m_rigidbody.velocity.x != 0 || m_rigidbody.velocity.y != 0) {
+
+                transform.eulerAngles = new Vector3(0, (Mathf.Atan2(m_rigidbody.velocity.z, -m_rigidbody.velocity.x) * Mathf.Rad2Deg) - 90, 0);
+                }
+
+            //Crear fluidez entre la velocidad actual y la velocidad proxima.
+            m_velocity = Vector3.SmoothDamp(m_velocity, (m_cameraBrain.GetDirection() * m_movementVelocity), ref m_moveDampVelocity, m_movementSmoothness, Mathf.Infinity, Time.deltaTime);
+            }
+        private void FixedUpdate() {
+
+            //Mover al jugador de manera suave en el rigidbody.
+            m_rigidbody.velocity = m_velocity * m_movementSpeed; 
+            }
 		
         //Funciones privadas.
-        private void OnMove(InputValue value) {
 
-            SmoothMove(value.Get<Vector2>());
-            }
-        private void OnLook(InputValue value) {
-
-            CameraBrain.instance.SetRotationVelocity(value.Get<Vector2>());
-            }   
-		
         //Funciones publicas.
+        public static PlayerBrain GetSingleton() {
+
+            return m_instance;
+            }
+        public void SetVelocity(Vector3 velocity) {
+
+            m_movementVelocity = velocity;
+            }
 		
         //Funciones heredadas.
         protected override void Dead() {
@@ -53,6 +80,5 @@ public class PlayerBrain : CharacterBehaviour {
 		
         //Funciones ha heredar.
 		
-        //Corotinas.
-		
+        //Corotinas.  
         }

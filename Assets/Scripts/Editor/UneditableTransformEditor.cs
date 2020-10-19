@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+ #if UNITY_EDITOR
 using UnityEditor;
 
 [CustomEditor(typeof(UneditableTransform))]
+
 public class UneditableTransformEditor : Editor {
 
     public override void OnInspectorGUI() {
@@ -45,3 +48,5 @@ public class UneditableTransformEditor : Editor {
         return v;
     }
         }
+
+#endif  

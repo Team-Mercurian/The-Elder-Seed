@@ -16,32 +16,32 @@ public abstract class CharacterBehaviour : GameBehaviour {
             //Publicas.
 			
             //Privadas
+            protected static Vector3 m_movementVelocity = Vector3.zero;              //Variable para guardar el movimiento a utilizar por el rigidbody.
 			
         //Establecer variables.
 		
             //Publicas.
             [Header("Brain Movement")]
-			[SerializeField] private float m_movementSpeed = 4;             //Multiplicador de velocidad.
-            [SerializeField] private float m_movementSmoothness = 0.1f;     //Suavidad con la que se interpolara la velocidad actual con la nueva (0 es ninguna, > a 0 es suave).
+			[SerializeField] protected float m_movementSpeed = 4;             //Multiplicador de velocidad.
+            [SerializeField] protected float m_movementSmoothness = 0.1f;     //Suavidad con la que se interpolara la velocidad actual con la nueva (0 es ninguna, > a 0 es suave).
             [Space]
-            [SerializeField] private Axis m_horizontalAxis = Axis.X;        //Axis a utilizar al moverse hacia los lados.
-            [SerializeField] private Axis m_verticalAxis = Axis.Z;          //Axis a utilizar al moverse hacia atras y al frente.
+            [SerializeField] protected Axis m_horizontalAxis = Axis.X;        //Axis a utilizar al moverse hacia los lados.
+            [SerializeField] protected Axis m_verticalAxis = Axis.Z;          //Axis a utilizar al moverse hacia atras y al frente.
 
             [Header("Brain Health System")]
-            [SerializeField] private int m_health = 10;               //Puntos de vida maximos.
+            [SerializeField] protected int m_health = 10;               //Puntos de vida maximos.
 
             [Header("Brain References")]
-            [SerializeField] private Rigidbody m_rigidbody = null;          //Referencia al rigidbody del personaje.
+            [SerializeField] protected Rigidbody m_rigidbody = null;          //Referencia al rigidbody del personaje.
 
             //Privadas.
 
                 //Movimiento.
-                private Coroutine m_movementCoroutine = null;                   //Corotina a utilizar para mover el personaje sin usar update.
-                private Vector3 m_movementVelocity = Vector2.zero;              //Variable para guardar el movimiento a utilizar por el rigidbody.
-                private Vector3 m_moveDampVelocity = Vector2.zero;              //Variable utilizada por la funcion SmoothDamp dentro de la corotina de movimiento fluido.
+                protected Coroutine m_movementCoroutine = null;                   //Corotina a utilizar para mover el personaje sin usar update.
+                protected Vector3 m_moveDampVelocity = Vector2.zero;              //Variable utilizada por la funcion SmoothDamp dentro de la corotina de movimiento fluido.
 
                 //Vida.
-                private int m_actualHealth;
+                protected int m_actualHealth;
 
     //Funciones
 		
@@ -52,7 +52,7 @@ public abstract class CharacterBehaviour : GameBehaviour {
             }
 		
         //Funciones privadas.
-        private bool CompareVelocity(float threshold) {
+        protected bool CompareVelocity(float threshold) {
 
             bool m_a = Mathf.Abs(GetAxisVelocity(m_horizontalAxis)) > threshold;
             bool m_b = Mathf.Abs(GetAxisVelocity(m_verticalAxis)) > threshold;
@@ -60,7 +60,7 @@ public abstract class CharacterBehaviour : GameBehaviour {
             if (m_a || m_b) return true;
             else return false;
             }
-        private float GetAxisVelocity(Axis axis) {
+        protected float GetAxisVelocity(Axis axis) {
 
             float m_value = 0;
 
@@ -73,7 +73,7 @@ public abstract class CharacterBehaviour : GameBehaviour {
 
             return m_value;
             }
-        private void SetVelocity(ref Vector3 actualVelocity, Vector2 newVelocity, Axis horizontalAxis, Axis verticalAxis) {
+        protected void SetVelocity(ref Vector3 actualVelocity, Vector2 newVelocity, Axis horizontalAxis, Axis verticalAxis) {
             
             float m_x = 0;
             float m_y = 0;
@@ -116,7 +116,7 @@ public abstract class CharacterBehaviour : GameBehaviour {
             protected abstract void Dead();
 		
         //Corotinas.
-		private IEnumerator MoveSmoothly() {
+		protected virtual IEnumerator MoveSmoothly() {
 
             if (m_movementVelocity == Vector3.zero) yield break;
 
