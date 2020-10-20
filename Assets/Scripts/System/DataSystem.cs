@@ -83,6 +83,16 @@ public class DataSystem : MonoBehaviour {
         
         m_actualRoom = actualRoom;
         }
+
+    public RoomData GetRoomData(Vector2Int roomPosition) {
+
+        foreach(RoomData m_room in m_runRoomsData) {
+
+            if (m_room.GetRoomPosition() == roomPosition) return m_room;
+            }
+        
+        return null;
+        }
     }
 
 [System.Serializable]
@@ -120,5 +130,13 @@ public class RoomData {
         
         m_roomPosition = roomPosition;
         m_tilePositions = tilePositions;
+        }
+    public Vector2Int GetRoomPosition() {
+
+        return m_roomPosition;
+        }
+    public List<Vector2Int> GetTilePositions() {
+
+        return m_tilePositions;
         }
     }
