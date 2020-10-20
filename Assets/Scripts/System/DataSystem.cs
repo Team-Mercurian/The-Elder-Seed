@@ -10,6 +10,8 @@ public class DataSystem : MonoBehaviour {
     private static GameData m_gameData;
     private static DataSystem m_instance;
 
+    private static List<RoomData> m_runRoomsData;
+
     //Funciones de MonoBehaviour.
     private void Awake() {
 
@@ -56,12 +58,20 @@ public class DataSystem : MonoBehaviour {
 
         return m_gameData;
         }
+    public List<RoomData> GetRoomsData() {
+
+        return m_runRoomsData;
+        }
+    public void SetRoomsData(List<RoomData> runRoomsData) {
+
+        m_runRoomsData = runRoomsData;
+        }
     }
 
 [System.Serializable]
 public class MasterData {
 
-    private GameData[] m_gameDatas;
+    [SerializeField] private GameData[] m_gameDatas;
 
     public MasterData() {
 
@@ -78,9 +88,20 @@ public class MasterData {
 [System.Serializable]
 public class GameData {
 
-
     public GameData() { 
-    
+        
+        
+        }
+    }
 
+public class RoomData {
+    
+    [SerializeField] private Vector2Int m_roomPosition;
+    [SerializeField] private List<Vector2Int> m_tilePositions;
+    
+    public RoomData(Vector2Int roomPosition, List<Vector2Int> tilePositions) {
+        
+        m_roomPosition = roomPosition;
+        m_tilePositions = tilePositions;
         }
     }
