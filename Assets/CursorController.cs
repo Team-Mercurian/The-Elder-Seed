@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CursorVisibilityController : MonoBehaviour {
+public class CursorController : MonoBehaviour {
 	
     //Establecer variables.
 		
@@ -15,7 +15,7 @@ public class CursorVisibilityController : MonoBehaviour {
             //Publicas.
 			
             //Privadas.
-            private static CursorVisibilityController m_instance;
+            private static CursorController m_instance;
 			
         //Establecer variables.
 		
@@ -52,7 +52,7 @@ public class CursorVisibilityController : MonoBehaviour {
             }
 		
         //Funciones publicas.
-        public static CursorVisibilityController GetSingleton() {
+        public static CursorController GetSingleton() {
 
             return m_instance;
             }
