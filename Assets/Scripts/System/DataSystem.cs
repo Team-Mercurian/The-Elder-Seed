@@ -55,6 +55,12 @@ public class DataSystem : MonoBehaviour {
 
         return m_data;
         }
+    public static DataSystem GetSingleton() {
+
+        return m_instance;
+        }
+
+
     public GameData GetGameData() {
 
         return m_gameData;
