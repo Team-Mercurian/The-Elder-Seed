@@ -11,6 +11,7 @@ public class DataSystem : MonoBehaviour {
     private static DataSystem m_instance;
 
     private static List<RoomData> m_runRoomsData;
+    private static Vector2Int m_actualRoom;
 
     //Funciones de MonoBehaviour.
     private void Awake() {
@@ -58,6 +59,7 @@ public class DataSystem : MonoBehaviour {
 
         return m_gameData;
         }
+    
     public List<RoomData> GetRoomsData() {
 
         return m_runRoomsData;
@@ -65,6 +67,15 @@ public class DataSystem : MonoBehaviour {
     public void SetRoomsData(List<RoomData> runRoomsData) {
 
         m_runRoomsData = runRoomsData;
+        }
+
+    public Vector2Int GetActualRoom() {
+
+        return m_actualRoom;
+        }
+    public void SetActualRoom(Vector2Int actualRoom) {
+        
+        m_actualRoom = actualRoom;
         }
     }
 
