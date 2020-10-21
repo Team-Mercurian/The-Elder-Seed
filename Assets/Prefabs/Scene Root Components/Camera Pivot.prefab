@@ -44,20 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7deb0897e756d646a190c08c8afcd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_defaultAngle: {x: 270, y: 30}
+  m_defaultAngle: {x: 270, y: 45}
   m_cameraRotationSensitivity: {x: 0.075, y: 0.035}
-  m_positionSmoothness: 0.2
+  m_positionSmoothness: 0.1
   m_rotationSmoothness: 0.025
   m_positionMultiplier: {x: 1, y: 1}
   m_defaultDistance: 4.5
   m_zoomSensitivity: 0.25
   m_zoomSmoothness: 0.2
-  m_minDistance: 2
+  m_minDistance: 2.5
   m_maxDistance: 5
   m_elevationUpMultiplier: 0.75
   m_elevationDownMultiplier: 0.1
-  m_minVerticalAngle: -75
-  m_maxVerticalAngle: 80
+  m_minVerticalAngle: -70
+  m_maxVerticalAngle: 70
   m_camera: {fileID: 5483288991590194240}
   m_cameraHolder: {fileID: 5347571576136446217}
   m_target: {fileID: 0}
@@ -88,8 +88,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5691809430351298389}
-  m_LocalRotation: {x: 0.2029003, y: -0.000000005838418, z: 0.0000000012097809, w: 0.9791994}
-  m_LocalPosition: {x: 0.00000004647262, y: 1.6875, z: -3.8971143}
+  m_LocalRotation: {x: 0.3162278, y: -0.0000000056564686, z: 0.0000000018854893, w: 0.9486833}
+  m_LocalPosition: {x: 0.000000037944737, y: 2.3864853, z: -3.1819804}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4980287384401710479}
