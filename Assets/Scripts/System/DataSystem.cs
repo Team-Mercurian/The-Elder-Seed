@@ -125,6 +125,11 @@ public class RoomData {
     
     [SerializeField] private Vector2Int m_roomPosition;
     [SerializeField] private List<Vector2Int> m_tilePositions;
+
+    [SerializeField] private Vector2Int? m_leftPassage = null;
+    [SerializeField] private Vector2Int? m_rightPassage = null;
+    [SerializeField] private Vector2Int? m_upPassage = null;
+    [SerializeField] private Vector2Int? m_downPassage = null;
     
     public RoomData(Vector2Int roomPosition, List<Vector2Int> tilePositions) {
         
@@ -138,5 +143,26 @@ public class RoomData {
     public List<Vector2Int> GetTilePositions() {
 
         return m_tilePositions;
+        }
+
+    public void SetPassages(Vector2Int left, Vector2Int right, Vector2Int up, Vector2Int down) {
+
+        m_leftPassage = new Vector2Int?(left);
+        m_rightPassage = new Vector2Int?(right);;
+        m_upPassage = new Vector2Int?(up);;
+        m_downPassage = new Vector2Int?(down);;
+        }
+    
+    public Vector2Int? GetPassagePosition(GameBehaviour.Direction direction) {
+
+        switch(direction) {
+
+            case GameBehaviour.Direction.Left : return m_leftPassage;
+            case GameBehaviour.Direction.Right : return m_rightPassage;
+            case GameBehaviour.Direction.Up : return m_upPassage;
+            case GameBehaviour.Direction.Down : return m_downPassage;
+            }
+        
+        return Vector2Int.zero;
         }
     }
