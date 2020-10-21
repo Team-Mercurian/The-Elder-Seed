@@ -15,8 +15,7 @@ public class GenerateForestRooms : GameBehaviour {
             //Publicas.
 			
             //Privadas
-			private static Vector2Int m_roomPosition;
-			
+            
         //Establecer variables.
 		
             //Publicas.
@@ -256,10 +255,6 @@ public class GenerateForestRooms : GameBehaviour {
         public int GetGenerationCount() {
 
             return m_generationCount;
-            }
-        public void SetRoomPosition(Vector2Int roomPosition) {
-            
-            m_roomPosition = roomPosition;
             }
         public bool GetValueInList(Vector2Int value, List<Vector2Int> list) {
 
