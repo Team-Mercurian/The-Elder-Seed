@@ -10,6 +10,9 @@ public class DataSystem : MonoBehaviour {
     private static GameData m_gameData;
     private static DataSystem m_instance;
 
+    private static List<RoomData> m_runRoomsData;
+    private static Vector2Int m_actualRoom;
+
     //Funciones de MonoBehaviour.
     private void Awake() {
 
@@ -52,16 +55,50 @@ public class DataSystem : MonoBehaviour {
 
         return m_data;
         }
+    public static DataSystem GetSingleton() {
+
+        return m_instance;
+        }
+
+
     public GameData GetGameData() {
 
         return m_gameData;
+        }
+    
+    public List<RoomData> GetRoomsData() {
+
+        return m_runRoomsData;
+        }
+    public void SetRoomsData(List<RoomData> runRoomsData) {
+
+        m_runRoomsData = runRoomsData;
+        }
+
+    public Vector2Int GetActualRoom() {
+
+        return m_actualRoom;
+        }
+    public void SetActualRoom(Vector2Int actualRoom) {
+        
+        m_actualRoom = actualRoom;
+        }
+
+    public RoomData GetRoomData(Vector2Int roomPosition) {
+
+        foreach(RoomData m_room in m_runRoomsData) {
+
+            if (m_room.GetRoomPosition() == roomPosition) return m_room;
+            }
+        
+        return null;
         }
     }
 
 [System.Serializable]
 public class MasterData {
 
-    private GameData[] m_gameDatas;
+    [SerializeField] private GameData[] m_gameDatas;
 
     public MasterData() {
 
@@ -78,9 +115,54 @@ public class MasterData {
 [System.Serializable]
 public class GameData {
 
-
     public GameData() { 
-    
+        
+        
+        }
+    }
 
+public class RoomData {
+    
+    [SerializeField] private Vector2Int m_roomPosition;
+    [SerializeField] private List<Vector2Int> m_tilePositions;
+
+    [SerializeField] private Vector2Int? m_leftPassage = null;
+    [SerializeField] private Vector2Int? m_rightPassage = null;
+    [SerializeField] private Vector2Int? m_upPassage = null;
+    [SerializeField] private Vector2Int? m_downPassage = null;
+    
+    public RoomData(Vector2Int roomPosition, List<Vector2Int> tilePositions) {
+        
+        m_roomPosition = roomPosition;
+        m_tilePositions = tilePositions;
+        }
+    public Vector2Int GetRoomPosition() {
+
+        return m_roomPosition;
+        }
+    public List<Vector2Int> GetTilePositions() {
+
+        return m_tilePositions;
+        }
+
+    public void SetPassages(Vector2Int left, Vector2Int right, Vector2Int up, Vector2Int down) {
+
+        m_leftPassage = new Vector2Int?(left);
+        m_rightPassage = new Vector2Int?(right);;
+        m_upPassage = new Vector2Int?(up);;
+        m_downPassage = new Vector2Int?(down);;
+        }
+    
+    public Vector2Int? GetPassagePosition(GameBehaviour.Direction direction) {
+
+        switch(direction) {
+
+            case GameBehaviour.Direction.Left : return m_leftPassage;
+            case GameBehaviour.Direction.Right : return m_rightPassage;
+            case GameBehaviour.Direction.Up : return m_upPassage;
+            case GameBehaviour.Direction.Down : return m_downPassage;
+            }
+        
+        return Vector2Int.zero;
         }
     }
