@@ -31,11 +31,7 @@ Material:
     - _BaseColorMap:
         m_Texture: {fileID: 2800000, guid: 775b35b8d87e0884d89b63aaa32ab5b9, type: 3}
         m_Scale: {x: 1, y: 1}
-<<<<<<< Updated upstream
         m_Offset: {x: 0, y: 0}
-=======
-        m_Offset: {x: 1, y: 1}
->>>>>>> Stashed changes
     - _BentNormalMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -250,7 +246,7 @@ Material:
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &3145562390344985344
+--- !u!114 &5863447725023635675
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
