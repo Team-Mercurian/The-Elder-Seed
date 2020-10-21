@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_defaultAngle: {x: 270, y: 30}
   m_cameraRotationSensitivity: {x: 0.075, y: 0.035}
-  m_positionSmoothness: 0.2
+  m_positionSmoothness: 0.1
   m_rotationSmoothness: 0.025
   m_positionMultiplier: {x: 1, y: 1}
   m_defaultDistance: 4.5
@@ -56,7 +56,7 @@ MonoBehaviour:
   m_maxDistance: 5
   m_elevationUpMultiplier: 0.75
   m_elevationDownMultiplier: 0.1
-  m_minVerticalAngle: -75
+  m_minVerticalAngle: -70
   m_maxVerticalAngle: 80
   m_camera: {fileID: 5483288991590194240}
   m_cameraHolder: {fileID: 5347571576136446217}
