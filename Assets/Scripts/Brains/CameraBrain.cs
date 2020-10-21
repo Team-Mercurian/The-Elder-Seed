@@ -233,7 +233,7 @@ public class CameraBrain : MonoBehaviour {
         //Funciones privadas.
         private void MoveToATarget(Vector3 positionToFollow) {
 
-            transform.position = positionToFollow;//Vector3.SmoothDamp(transform.position, positionToFollow, ref m_positionVelocity, m_positionSmoothness);
+            transform.position = Vector3.SmoothDamp(transform.position, positionToFollow, ref m_positionVelocity, m_positionSmoothness);
             }
         private void SetCameraRotation(Vector3 positionToLook) {
 
