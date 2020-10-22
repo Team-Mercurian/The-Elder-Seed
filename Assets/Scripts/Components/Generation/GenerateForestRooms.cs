@@ -15,6 +15,7 @@ public class GenerateForestRooms : GameBehaviour {
             //Publicas.
 			
             //Privadas
+            private static Direction m_appearDirection = Direction.Up;
             
         //Establecer variables.
 		
@@ -30,18 +31,27 @@ public class GenerateForestRooms : GameBehaviour {
             [SerializeField] private GameObject m_floorProp = null;
             [SerializeField] private GameObject m_wallProp = null;
 
-            [Header("Passages")]
-            [SerializeField] private GameObject m_passageProp = null;
+            [Header("Passages")] 
+            [SerializeField] private GameObject m_passagePropOpen = null;
+            [SerializeField] private GameObject m_passagePropClose = null;
             [SerializeField] private int m_passageLength = 4;
 
             //Privadas.
             private DataSystem m_dataSystem;
 			
+            private ForestPassageController m_passageLeft;
+            private ForestPassageController m_passageRight;
+            private ForestPassageController m_passageUp;
+            private ForestPassageController m_passageDown;
+
+            private PlayerBrain m_player;
+
     //Funciones
 		
         //Funciones de MonoBehaviour.
         private void Start() {
 
+            m_player = GetComponent<PlayerBrain>();
             m_dataSystem = DataSystem.GetSingleton();
             GenerateAllRooms();
             }
@@ -96,7 +106,7 @@ public class GenerateForestRooms : GameBehaviour {
                     bool m_generateLeftPassage = GetValueInList(m_rd.GetRoomPosition() + Vector2Int.left, m_rooms);
                     bool m_generateRightPassage = GetValueInList(m_rd.GetRoomPosition() + Vector2Int.right, m_rooms);
                     bool m_generateUpPassage = GetValueInList(m_rd.GetRoomPosition() + Vector2Int.up, m_rooms);
-                    bool m_generateDownPassage = GetValueInList(m_rd.GetRoomPosition() + Vector2Int.down, m_rooms);
+                    bool m_generateDownPassage = m_rd.GetRoomPosition() == Vector2Int.zero ? true : GetValueInList(m_rd.GetRoomPosition() + Vector2Int.down, m_rooms);
 
                     foreach(Vector2Int m_tile in m_rd.GetTilePositions()) {
                         
@@ -180,10 +190,10 @@ public class GenerateForestRooms : GameBehaviour {
                 if (!GetValueInList(m_pos + Vector2Int.up, m_positions)) CreateWallProp(m_pos + Vector2Int.up, m_walls);
                 }
 
-            CreatePassageProp(roomData, Direction.Left);
-            CreatePassageProp(roomData, Direction.Right);
-            CreatePassageProp(roomData, Direction.Up);
-            CreatePassageProp(roomData, Direction.Down);
+            m_passageLeft = CreatePassageProp(roomData, Direction.Left, true);
+            m_passageRight = CreatePassageProp(roomData, Direction.Right, true);
+            m_passageUp = CreatePassageProp(roomData, Direction.Up, true);
+            m_passageDown = CreatePassageProp(roomData, Direction.Down, roomData.GetRoomPosition() == new Vector2Int(0, 0) ? false : true);
             }
         private GameObject InstantiateScaledProp(Vector3 position, GameObject prop) {
             
@@ -213,10 +223,12 @@ public class GenerateForestRooms : GameBehaviour {
             InstantiateScaledProp(new Vector3(position.x, 0, position.y), m_wallProp);
             walls.Add(position);
             }
-        private void CreatePassageProp(RoomData roomData, Direction direction) {
+        private ForestPassageController CreatePassageProp(RoomData roomData, Direction direction, bool open) {
 
             Vector2Int? m_position = roomData.GetPassagePosition(direction);
-            if (m_position == Vector2Int.zero) return;
+            if (m_position == Vector2Int.zero) return null;
+
+            GameObject m_prop = open ? m_passagePropOpen : m_passagePropClose;
 
             float m_angle = 0;
 
@@ -228,8 +240,10 @@ public class GenerateForestRooms : GameBehaviour {
                 case Direction.Down : m_angle = 270; break;
                 }
 
-            GameObject m_go = InstantiateScaledProp(new Vector3(m_position.Value.x, 0, m_position.Value.y), m_passageProp, new Vector3(0, m_angle, 0));
-            m_go.GetComponent<ForestPassageController>().SetData(roomData.GetRoomPosition() + GetDirection(direction), direction);
+            GameObject m_go = InstantiateScaledProp(new Vector3(m_position.Value.x, 0, m_position.Value.y), m_prop, new Vector3(0, m_angle, 0));
+            ForestPassageController m_passage = m_go.GetComponent<ForestPassageController>();
+            m_passage.SetData(roomData.GetRoomPosition() + GetDirection(direction), direction);
+            return m_passage;
             }
         
         private Vector2Int GeneratePassage(Vector2Int position, Vector2Int direction, List<Vector2Int> floorPositions) {
@@ -264,6 +278,14 @@ public class GenerateForestRooms : GameBehaviour {
                 }
             
             return false;
+            }
+        public static Direction GetAppearDirection() {
+
+            return m_appearDirection;
+            }
+        public static void SetAppearDirection(Direction direction) {
+
+            m_appearDirection = direction;
             }
 		
         //Funciones heredadas.

@@ -41,7 +41,6 @@ public class CameraBrain : MonoBehaviour {
             [SerializeField] private float m_maxVerticalAngle = 80;                                            //Limite del suelo del jugador.
 
             [Header("Camera References")]
-            [SerializeField] private Camera m_camera = null;                                                    //Referencia de la camara.
             [SerializeField] private Transform m_cameraHolder = null;                                           //Referencia del sostenedor de la camara (Hijo).
             [SerializeField] private Transform m_target = null;                                                 //Referencia al objetivo a seguir de la camara.
 			

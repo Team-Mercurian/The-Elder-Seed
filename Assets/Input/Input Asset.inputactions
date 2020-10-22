@@ -192,7 +192,7 @@
                     "id": "c05a2912-cb65-4d01-923f-2a9fe2cb2e2c",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "ScaleVector2(x=20,y=20)",
                     "groups": ";Gamepad",
                     "action": "Look",
                     "isComposite": false,
@@ -298,9 +298,53 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "Shoulders",
+                    "id": "18b8d524-b935-44ca-8129-ba8e705c96dc",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "d30c4432-4669-4a66-95a5-21393a3cd4a9",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "3ebcf555-7268-43e0-bfbf-49b3b932372d",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Zoom",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
                     "name": "",
                     "id": "d5e01884-03a8-4531-a586-878ddc3079d6",
                     "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf627b16-60c4-4dd8-8ab5-ad5b2fb7bf8a",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

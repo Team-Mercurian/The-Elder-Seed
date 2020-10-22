@@ -50,6 +50,8 @@ MonoBehaviour:
     type: 3}
   m_wallProp: {fileID: 7111552302224872003, guid: bfd31251709cb734c81bbeed357dcea4,
     type: 3}
-  m_passageProp: {fileID: 9045906016584687172, guid: c41f000bf08c0784db53a7b0c3b909a2,
+  m_passagePropOpen: {fileID: 9045906016584687172, guid: c41f000bf08c0784db53a7b0c3b909a2,
+    type: 3}
+  m_passagePropClose: {fileID: 9045906016584687172, guid: 5739fc303a16e1e459c1e1ffa7d12dff,
     type: 3}
   m_passageLength: 6
