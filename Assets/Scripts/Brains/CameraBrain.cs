@@ -64,9 +64,11 @@ public class CameraBrain : MonoBehaviour {
 			
             //Establecer singleton.
             m_instance = this;
-            m_actualAngle = m_defaultAngle;
+            }
 
-            m_reachAngle = m_actualAngle;
+        private void Start() {
+
+            SetTransformTargetPositions();
 
             m_reachDistance = m_defaultDistance;
             m_smoothedDistance = m_defaultDistance;
@@ -100,6 +102,8 @@ public class CameraBrain : MonoBehaviour {
             SetCameraRotation(m_targetPosition);
             }
 
+        
+        #if UNITY_EDITOR
         private void OnValidate() {
 
             m_defaultAngle = GetProcessedAngle(m_defaultAngle);
@@ -116,8 +120,6 @@ public class CameraBrain : MonoBehaviour {
             MoveToATarget(new Vector3(m_targetPosition.x, 0, m_targetPosition.z));
             SetCameraRotation(m_targetPosition);
             }
-        
-        #if UNITY_EDITOR
         private void OnDrawGizmosSelected() {
             
             //Dibujar linea de direccion.
@@ -297,6 +299,19 @@ public class CameraBrain : MonoBehaviour {
             return m_instance;
             }
 
+        public void SetTransformTargetPositions() {
+
+            if (m_target != null) {
+                
+                
+                
+                m_defaultAngle = new Vector2(m_target.eulerAngles.y - 90, m_defaultAngle.y);
+                transform.position = m_target.position;
+                }
+
+            m_actualAngle = m_defaultAngle;
+            m_reachAngle = m_actualAngle;
+            }   
         //Funciones heredadas.
 		
         //Funciones ha heredar.

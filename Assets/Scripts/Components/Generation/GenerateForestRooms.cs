@@ -51,9 +51,10 @@ public class GenerateForestRooms : GameBehaviour {
         //Funciones de MonoBehaviour.
         private void Start() {
 
-            m_player = GetComponent<PlayerBrain>();
+            m_player = PlayerBrain.GetSingleton();
             m_dataSystem = DataSystem.GetSingleton();
             GenerateAllRooms();
+            CameraBrain.GetSingleton().SetTransformTargetPositions();
             }
 		
         //Funciones privadas.
@@ -113,7 +114,7 @@ public class GenerateForestRooms : GameBehaviour {
                         if (m_generateLeftPassage && m_tile.x <= m_leftPassage.x) m_leftPassage = m_tile; 
                         if (m_generateRightPassage && m_tile.x >= m_rightPassage.x) m_rightPassage = m_tile; 
                         if (m_generateUpPassage && m_tile.y >= m_upPassage.y) m_upPassage = m_tile; 
-                        if (m_generateDownPassage && m_tile.y <= m_downPassage.x) m_downPassage = m_tile; 
+                        if (m_generateDownPassage && m_tile.y <= m_downPassage.y) m_downPassage = m_tile; 
                         }
 
                     Vector2Int m_lPP = Vector2Int.zero;
@@ -134,6 +135,35 @@ public class GenerateForestRooms : GameBehaviour {
                 }
                 
             GenerateProps(m_dataSystem.GetRoomData(m_dataSystem.GetActualRoom()));
+
+            Vector3 m_playerPos = new Vector3();
+            float m_playerRot = 0;
+
+            switch(m_appearDirection) {
+
+                case Direction.Left : 
+                    m_playerPos = m_passageRight.transform.position + new Vector3(-1 * m_tileSize, 0, 0); 
+                    m_playerRot = 270;
+                    break;
+
+                case Direction.Right : 
+                    m_playerPos = m_passageLeft.transform.position + new Vector3(1 * m_tileSize, 0, 0);
+                    m_playerRot = 90;
+                    break;
+
+                case Direction.Up : 
+                    m_playerPos = m_passageDown.transform.position + new Vector3(0, 0, 1 * m_tileSize);
+                    m_playerRot = 0;
+                    break;
+
+                case Direction.Down : 
+                    m_playerPos = m_passageUp.transform.position + new Vector3(0, 0, -1 * m_tileSize);
+                    m_playerRot = 180;
+                    break;
+                }
+
+            m_player.transform.position = m_playerPos;
+            m_player.transform.rotation = Quaternion.Euler(0, m_playerRot, 0);
             }
         private List<Vector2Int> GenerateRoom() {
             
