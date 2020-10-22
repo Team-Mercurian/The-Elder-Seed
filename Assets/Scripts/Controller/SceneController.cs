@@ -19,6 +19,7 @@ public class SceneController : MonoBehaviour {
         //Establecer variables estaticas.
 		
             //Publicas.
+            private static SceneController m_instance;
 			
             //Privadas
 			
@@ -33,6 +34,10 @@ public class SceneController : MonoBehaviour {
     //Funciones
 		
         //Funciones de MonoBehaviour
+        private void Awake() {
+
+            m_instance = this;
+            }
 		
         //Funciones privadas.
 		
@@ -41,6 +46,10 @@ public class SceneController : MonoBehaviour {
 
             if (m_coroutine != null) StopCoroutine(m_coroutine);
             m_coroutine = StartCoroutine(LoadSceneCoroutine((int) scene));
+            }
+        public static SceneController GetSingleton() {
+
+            return m_instance;
             }
 		
         //Funciones heredadas.
@@ -54,10 +63,8 @@ public class SceneController : MonoBehaviour {
             m_async.allowSceneActivation = false;
             Debug.Log("Loading");
 
-            while(!m_async.isDone) {
-
-                yield return null;
-                }
+            yield return (m_async.progress > 0.9f);
+            yield return null;
 
             m_async.allowSceneActivation = true;
             }
