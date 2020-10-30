@@ -30,7 +30,7 @@ public class InputController : MonoBehaviour {
 			
             //Privadas.
             private CameraBrain m_cameraBrain;
-            private PlayerBrain m_playerBrain;
+            private PlayerMovement m_playerBrain;
             private CursorController m_cursorController;
 
             private bool m_isShowingCursor = false;
@@ -43,7 +43,7 @@ public class InputController : MonoBehaviour {
 			
             //Establecer referencias a componentes.
             m_cameraBrain = CameraBrain.GetSingleton();
-            m_playerBrain = PlayerBrain.GetSingleton();
+            m_playerBrain = PlayerMovement.GetSingleton();
             m_cursorController = CursorController.GetSingleton();
 
             //Establecer las referencias a las acciones.
@@ -61,7 +61,7 @@ public class InputController : MonoBehaviour {
 
             //Establecer la velocidad del jugador.
             Vector2 m_moveValue = m_moveAction.ReadValue<Vector2>();
-            SetPlayerVelocity(new Vector3(m_moveValue.x, 0, m_moveValue.y));
+            SetPlayerVelocity(new Vector2(m_moveValue.x, m_moveValue.y));
             }
 		
         //Funciones privadas.
@@ -70,10 +70,10 @@ public class InputController : MonoBehaviour {
             if (m_cameraBrain == null) return;
             m_cameraBrain.SetRotationVelocity(velocity);
             }
-        private void SetPlayerVelocity(Vector3 velocity) {
+        private void SetPlayerVelocity(Vector2 velocity) {
 
             if (m_playerBrain == null) return;
-            m_playerBrain.SetVelocity(velocity);
+            m_playerBrain.SetHorizontalVelocity(velocity);
             }
 		
         //Funciones publicas.
@@ -107,6 +107,13 @@ public class InputController : MonoBehaviour {
             else return; 
 
             m_playerBrain.SetRun(m_run);
+            }
+        
+        public void Jump(InputAction.CallbackContext context) {
+            
+            if (context.phase != InputActionPhase.Started) return;
+            
+            m_playerBrain.Jump();
             }
 		
         //Funciones heredadas.
