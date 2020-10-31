@@ -15,7 +15,6 @@ public class PlayerMovement : JumpingCharacter {
             //Publicas.
 			
             //Privadas.
-            private static PlayerMovement m_instance;
 			
         //Establecer variables.
 		
@@ -41,10 +40,6 @@ public class PlayerMovement : JumpingCharacter {
     //Funciones
 		
         //Funciones de MonoBehaviour
-        private void Awake() {
-
-            m_instance = this;
-            }
         protected override void Start() {
 
             base.Start();
@@ -91,10 +86,6 @@ public class PlayerMovement : JumpingCharacter {
         //Funciones privadas.
 
         //Funciones publicas.
-        public static PlayerMovement GetSingleton() {
-
-            return m_instance;
-            }
         public void SetRun(bool active) {
 
             m_run = active;

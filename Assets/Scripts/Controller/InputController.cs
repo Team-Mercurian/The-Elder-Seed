@@ -30,10 +30,12 @@ public class InputController : MonoBehaviour {
 			
             //Privadas.
             private CameraBrain m_cameraBrain;
-            private PlayerMovement m_playerBrain;
             private CursorController m_cursorController;
 
             private bool m_isShowingCursor = false;
+
+            private PlayerMovement m_playerMovement;
+            private PlayerAttack m_playerAttack;
 			
 			
     //Funciones
@@ -43,7 +45,8 @@ public class InputController : MonoBehaviour {
 			
             //Establecer referencias a componentes.
             m_cameraBrain = CameraBrain.GetSingleton();
-            m_playerBrain = PlayerMovement.GetSingleton();
+            m_playerMovement = PlayerBrain.GetSingleton().GetMovement();
+            m_playerAttack = PlayerBrain.GetSingleton().GetAttack();
             m_cursorController = CursorController.GetSingleton();
 
             //Establecer las referencias a las acciones.
@@ -72,8 +75,8 @@ public class InputController : MonoBehaviour {
             }
         private void SetPlayerVelocity(Vector2 velocity) {
 
-            if (m_playerBrain == null) return;
-            m_playerBrain.SetHorizontalVelocity(velocity);
+            if (m_playerMovement == null) return;
+            m_playerMovement.SetHorizontalVelocity(velocity);
             }
 		
         //Funciones publicas.
@@ -98,7 +101,7 @@ public class InputController : MonoBehaviour {
             }
         public void Run(InputAction.CallbackContext context) {
 
-            if (m_playerBrain == null) return;
+            if (m_playerMovement == null) return;
 
             bool m_run = false;
 
@@ -106,14 +109,19 @@ public class InputController : MonoBehaviour {
             else if (context.phase == InputActionPhase.Canceled) m_run = false;
             else return; 
 
-            m_playerBrain.SetRun(m_run);
+            m_playerMovement.SetRun(m_run);
             }
-        
         public void Jump(InputAction.CallbackContext context) {
             
             if (context.phase != InputActionPhase.Started) return;
             
-            m_playerBrain.Jump();
+            m_playerMovement.Jump();
+            }
+        public void Attack(InputAction.CallbackContext context) {
+            
+            if (context.phase != InputActionPhase.Started) return;
+            
+            m_playerAttack.Attack();
             }
 		
         //Funciones heredadas.

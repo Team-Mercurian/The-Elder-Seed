@@ -44,14 +44,14 @@ public class GenerateForestRooms : GameBehaviour {
             private ForestPassageController m_passageUp;
             private ForestPassageController m_passageDown;
 
-            private PlayerMovement m_player;
+            private PlayerMovement m_playerMovement;
 
     //Funciones
 		
         //Funciones de MonoBehaviour.
         private void Start() {
 
-            m_player = PlayerMovement.GetSingleton();
+            m_playerMovement = PlayerBrain.GetSingleton().GetMovement();
             m_dataSystem = DataSystem.GetSingleton();
             GenerateAllRooms();
             CameraBrain.GetSingleton().SetTransformTargetPositions();
@@ -162,8 +162,8 @@ public class GenerateForestRooms : GameBehaviour {
                     break;
                 }
 
-            m_player.transform.position = m_playerPos;
-            m_player.transform.rotation = Quaternion.Euler(0, m_playerRot, 0);
+            m_playerMovement.transform.position = m_playerPos;
+            m_playerMovement.transform.rotation = Quaternion.Euler(0, m_playerRot, 0);
             }
         private List<Vector2Int> GenerateRoom() {
             
