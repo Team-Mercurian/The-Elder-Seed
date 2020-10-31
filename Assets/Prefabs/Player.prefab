@@ -414,9 +414,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3022526979373369159}
-  - component: {fileID: 3022526979373369158}
-  - component: {fileID: 3022526979373369157}
-  - component: {fileID: 8208868335374003730}
+  - component: {fileID: 4252489991149073973}
+  - component: {fileID: 606783867811322470}
   - component: {fileID: 6333725622104679913}
   m_Layer: 0
   m_Name: Player
@@ -441,23 +440,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &3022526979373369158
-Rigidbody:
+--- !u!143 &4252489991149073973
+CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3022526979373369156}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 1
---- !u!114 &3022526979373369157
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.001
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &606783867811322470
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -471,26 +472,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_movementSpeed: 4
   m_movementSmoothness: 0.1
-  m_horizontalAxis: 0
-  m_verticalAxis: 2
-  m_health: 10
-  m_rigidbody: {fileID: 3022526979373369158}
-  m_runSpeed: 8
-  m_rotationSmoothness: 0.05
---- !u!136 &8208868335374003730
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3022526979373369156}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_rotationSmoothness: 0.2
+  m_characterController: {fileID: 4252489991149073973}
+  m_upGravityMultiplier: 1
+  m_downGravityMultiplier: 1
+  m_groundCheckDistance: 0.3
+  m_groundCheckOffset: {x: 0, y: 0, z: 0}
+  m_jumpForce: 6
+  m_jumpFrontForce: 0.5
+  m_staminaMaxSecs: 4
+  m_staminaFillVelocity: 1.5
+  m_staminaFillTiredVelocity: 1
+  m_tiredSpeed: 3.5
+  m_runSpeed: 6
+  m_defaultSlopeLimit: 45
+  m_runSlopeLimit: 60
 --- !u!114 &6333725622104679913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,7 +523,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3180970899159478526}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.584, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3022526979373369159}
