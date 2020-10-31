@@ -44,14 +44,14 @@ public class GenerateForestRooms : GameBehaviour {
             private ForestPassageController m_passageUp;
             private ForestPassageController m_passageDown;
 
-            private PlayerBrain m_player;
+            private PlayerMovement m_player;
 
     //Funciones
 		
         //Funciones de MonoBehaviour.
         private void Start() {
 
-            m_player = PlayerBrain.GetSingleton();
+            m_player = PlayerMovement.GetSingleton();
             m_dataSystem = DataSystem.GetSingleton();
             GenerateAllRooms();
             CameraBrain.GetSingleton().SetTransformTargetPositions();

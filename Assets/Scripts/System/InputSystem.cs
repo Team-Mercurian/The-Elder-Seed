@@ -65,6 +65,14 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""93cd456a-1c41-42ec-aa40-9a653e2c6658"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -362,6 +370,28 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d381a572-1aad-4a74-a1e1-8e27d2e94178"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d1761983-3a67-44a9-b7f0-bd42109cd09d"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -884,6 +914,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         m_Player_ShowCursor = m_Player.FindAction("Show Cursor", throwIfNotFound: true);
         m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
@@ -951,6 +982,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_ShowCursor;
     private readonly InputAction m_Player_Zoom;
     private readonly InputAction m_Player_Run;
+    private readonly InputAction m_Player_Jump;
     public struct PlayerActions
     {
         private @InputSystem m_Wrapper;
@@ -961,6 +993,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         public InputAction @ShowCursor => m_Wrapper.m_Player_ShowCursor;
         public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
         public InputAction @Run => m_Wrapper.m_Player_Run;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -988,6 +1021,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @Run.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
                 @Run.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
                 @Run.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRun;
+                @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1010,6 +1046,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @Run.started += instance.OnRun;
                 @Run.performed += instance.OnRun;
                 @Run.canceled += instance.OnRun;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
             }
         }
     }
@@ -1127,6 +1166,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         void OnShowCursor(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -61,15 +61,15 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 3bb4cf5d-a56d-4872-a3f7-76f80d1aad99
-    m_ActionName: Player/Fire[/Mouse/leftButton]
+    m_ActionName: Player/Fire[/XInputControllerWindows/rightTrigger,/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 6a3eed9b-5eff-4be2-9fbf-ed35dc463e4f
-    m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
+    m_ActionName: Player/Look[/XInputControllerWindows/rightStick,/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 803d9eb4-ee54-4e79-be06-ef533310d9f7
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+    m_ActionName: Player/Move[/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5782245782921134665}
@@ -86,6 +86,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3f5cd090-8424-4af7-acb0-942c09e6d5fc
     m_ActionName: Player/Show Cursor[/Keyboard/alt]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5782245782921134665}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: Zoom
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4e2d288d-2673-4bab-b78c-a4738fad305e
+    m_ActionName: Player/Zoom[/Mouse/scroll/y,/XInputControllerWindows/leftTrigger,/XInputControllerWindows/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5782245782921134665}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: Run
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5ccd54b8-87c7-4bd8-bb79-df93e826f76a
+    m_ActionName: Player/Run[/Keyboard/leftShift,/XInputControllerWindows/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5782245782921134665}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 93cd456a-1c41-42ec-aa40-9a653e2c6658
+    m_ActionName: Player/Jump[/XInputControllerWindows/buttonSouth,/Keyboard/space]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 2e3aa763-9ce8-4153-bd89-a86ebc6d57cf
@@ -117,47 +165,15 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: c4c6d2e7-e2ba-48c6-bcee-ac610313d9b6
-    m_ActionName: UI/Cancel[/Keyboard/escape]
+    m_ActionName: UI/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: ed4373fe-9e9e-40bb-9260-5ca4815887a7
-    m_ActionName: UI/Submit[/Keyboard/enter]
+    m_ActionName: UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: b7173b0b-2474-45c9-9987-c6286f937150
-    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5782245782921134665}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: Zoom
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 4e2d288d-2673-4bab-b78c-a4738fad305e
-    m_ActionName: Player/Zoom[/Mouse/scroll/y]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5782245782921134665}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: Run
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 5ccd54b8-87c7-4bd8-bb79-df93e826f76a
-    m_ActionName: Player/Run[/Keyboard/leftShift]
+    m_ActionName: UI/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
