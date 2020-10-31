@@ -73,9 +73,16 @@ MonoBehaviour:
   m_downGravityMultiplier: 1
   m_groundCheckDistance: 0.3
   m_groundCheckOffset: {x: 0, y: 0, z: 0}
+  m_slideForce: {x: 6, y: 6}
   m_jumpForce: 6
   m_jumpFrontForce: 0.5
+  m_staminaMaxSecs: 4
+  m_staminaFillVelocity: 1.5
+  m_staminaFillTiredVelocity: 1
+  m_tiredSpeed: 3.5
   m_runSpeed: 6
+  m_defaultSlopeLimit: 45
+  m_runSlopeLimit: 60
 --- !u!114 &6333725622104679913
 MonoBehaviour:
   m_ObjectHideFlags: 0
