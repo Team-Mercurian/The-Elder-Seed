@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyMovement : JumpingCharacter {
+public class EnemyAttack : EntityAttack {
 	
     //Establecer variables.
 		
@@ -25,27 +25,20 @@ public abstract class EnemyMovement : JumpingCharacter {
 			
     //Funciones
 		
-        //Funciones de MonoBehaviour.
-
+        //Funciones de MonoBehaviour
+		
         //Funciones privadas.
 		
         //Funciones publicas.
-		protected void ConstantJump(float minSecs, float maxSecs) {
-
-            StartCoroutine(ConstantJumpCoroutine(minSecs, maxSecs));
-            }
-
+		
         //Funciones heredadas.
+        protected override string SetOtherTag() {
+
+            return "Player";
+            }
 		
         //Funciones ha heredar.
 		
         //Corotinas.
-        private IEnumerator ConstantJumpCoroutine(float minSecs, float maxSecs) {
-            
-            while(true) {
-
-                Jump();
-                yield return new WaitForSeconds(Random.Range(minSecs, maxSecs));
-                }
-            }
+		
         }

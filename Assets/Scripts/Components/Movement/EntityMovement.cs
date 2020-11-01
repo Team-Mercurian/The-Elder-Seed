@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public abstract class MovementBehaviour : GravityValues {
+public abstract class EntityMovement : GravityValues {
 	
     //Establecer variables.
 		
@@ -35,7 +35,7 @@ public abstract class MovementBehaviour : GravityValues {
             [SerializeField] protected float m_downGravityMultiplier = 1;
 
             [Header("Ground Detection")]
-            [SerializeField] protected float m_groundCheckDistance = 0.1f;
+            [SerializeField] protected float m_groundCheckDistance = 0.3f;
             [SerializeField] protected Vector3 m_groundCheckOffset = new Vector3();
 
 //            [Header("Slide")]
@@ -187,16 +187,35 @@ public abstract class MovementBehaviour : GravityValues {
             }       
         }
 
-public abstract class JumpingCharacter : MovementBehaviour {
+public abstract class JumpingCharacter : EntityMovement {
 
+    //Establecer variables.
+		
+        //Establecer estructuras.
+		
+        //Establecer enumeradores.
+		
+        //Establecer variables estaticas.
+		
+            //Privadas
+
+            //Publicas
+			
+        //Establecer variables.
+		
+            //Publicas.
             [Header("Jump Values")]
-            [SerializeField] protected float m_jumpForce = 10;
+            [SerializeField] protected float m_jumpForce = 6;
             [SerializeField] protected float m_jumpFrontForce = 1;
 
+            //Privadas.
             protected bool m_canJump = true;
             protected bool m_isJumping;
             protected Vector2 m_jumpDirection;
 
+    //Funciones
+		
+        //Funciones heredadas.
         protected override void SetGravityVelocity() {
 
             if (m_isGrounded && !m_isJumping) 
@@ -217,6 +236,7 @@ public abstract class JumpingCharacter : MovementBehaviour {
             return new Vector3(m_x, m_y, m_z);
             }
 
+        //Funciones publicas.
         public void Jump() {
 
             if (!m_isGrounded || !m_canJump) return;
@@ -228,6 +248,7 @@ public abstract class JumpingCharacter : MovementBehaviour {
             m_canJump = canJump;
             }
     
+        //Corotinas.
         private IEnumerator JumpAnimation() {
 
             m_isJumping = true;

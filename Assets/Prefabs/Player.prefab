@@ -473,9 +473,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7bda77d0e01b54c86a5b86f6da05cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_attack: {fileID: 2875069773144259461}
+  m_health: {fileID: 306573739864938989}
+  m_movement: {fileID: 606783867811322470}
   m_playerMovement: {fileID: 606783867811322470}
-  m_playerHealth: {fileID: 306573739864938989}
-  m_playerAttack: {fileID: 2875069773144259461}
 --- !u!114 &606783867811322470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,7 +495,7 @@ MonoBehaviour:
   m_characterController: {fileID: 4252489991149073973}
   m_upGravityMultiplier: 1
   m_downGravityMultiplier: 1
-  m_groundCheckDistance: 0.3
+  m_groundCheckDistance: 0.1
   m_groundCheckOffset: {x: 0, y: 0, z: 0}
   m_jumpForce: 6
   m_jumpFrontForce: 0.5
@@ -530,6 +531,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_health: 8
+  m_meshToDeactive: {fileID: 8686667826697080639}
+  m_damageCooldown: 3
 --- !u!1 &3180970899159478526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,9 +1052,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faa33309d5c163c4180e260f8d7d2fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_attackCollider: {fileID: 5812580558403113970}
   m_attackDamage: 2
   m_attackDelay: 1
-  m_attackCollider: {fileID: 5812580558403113970}
 --- !u!65 &5812580558403113970
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -33,7 +33,7 @@ public class PlayerMovement : JumpingCharacter {
 
             //Privadas.
             private float m_stamina;
-            private CameraBrain m_cameraBrain = null;                               //Referencia a la camara.
+            private CameraController m_cameraBrain = null;                               //Referencia a la camara.
 			private bool m_run = false;
             private bool m_tired = false;
 
@@ -46,7 +46,7 @@ public class PlayerMovement : JumpingCharacter {
 
             //Establecer referencia de la camara.
             m_stamina = m_staminaMaxSecs;
-            m_cameraBrain = CameraBrain.GetSingleton();
+            m_cameraBrain = CameraController.GetSingleton();
             }
         protected override void Update() {
 

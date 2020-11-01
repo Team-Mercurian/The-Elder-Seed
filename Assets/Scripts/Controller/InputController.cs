@@ -29,13 +29,13 @@ public class InputController : MonoBehaviour {
             private InputAction m_lookAction = null;                                //Referencia a la accion de mirar del jugador.
 			
             //Privadas.
-            private CameraBrain m_cameraBrain;
+            private CameraController m_cameraBrain;
             private CursorController m_cursorController;
 
             private bool m_isShowingCursor = false;
 
             private PlayerMovement m_playerMovement;
-            private PlayerAttack m_playerAttack;
+            private EntityAttack m_playerAttack;
 			
 			
     //Funciones
@@ -44,8 +44,8 @@ public class InputController : MonoBehaviour {
         private void Start() {
 			
             //Establecer referencias a componentes.
-            m_cameraBrain = CameraBrain.GetSingleton();
-            m_playerMovement = PlayerBrain.GetSingleton().GetMovement();
+            m_cameraBrain = CameraController.GetSingleton();
+            m_playerMovement = PlayerBrain.GetSingleton().GetPlayerMovement();
             m_playerAttack = PlayerBrain.GetSingleton().GetAttack();
             m_cursorController = CursorController.GetSingleton();
 

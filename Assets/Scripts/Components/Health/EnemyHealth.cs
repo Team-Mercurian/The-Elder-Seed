@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealth : HealthBehaviour {
+public class EnemyHealth : EntityHealth {
 	
     //Establecer variables.
 		

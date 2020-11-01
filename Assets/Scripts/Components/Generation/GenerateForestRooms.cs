@@ -44,7 +44,7 @@ public class GenerateForestRooms : GameBehaviour {
             private ForestPassageController m_passageUp;
             private ForestPassageController m_passageDown;
 
-            private PlayerMovement m_playerMovement;
+            private JumpingCharacter m_playerMovement;
 
     //Funciones
 		
@@ -54,7 +54,7 @@ public class GenerateForestRooms : GameBehaviour {
             m_playerMovement = PlayerBrain.GetSingleton().GetMovement();
             m_dataSystem = DataSystem.GetSingleton();
             GenerateAllRooms();
-            CameraBrain.GetSingleton().SetTransformTargetPositions();
+            CameraController.GetSingleton().SetTransformTargetPositions();
             }
 		
         //Funciones privadas.
