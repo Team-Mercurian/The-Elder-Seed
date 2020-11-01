@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : EntityHealth {
+public class EntityBrain : MonoBehaviour {
 	
     //Establecer variables.
 		
@@ -19,6 +19,10 @@ public class PlayerHealth : EntityHealth {
         //Establecer variables.
 		
             //Publicas.
+            [Header("References")]
+            [SerializeField] protected EntityAttack m_attack = null;
+            [SerializeField] protected EntityHealth m_health = null;
+            [SerializeField] protected JumpingCharacter m_movement = null;
 			
             //Privadas.
 			
@@ -30,19 +34,14 @@ public class PlayerHealth : EntityHealth {
         //Funciones privadas.
 		
         //Funciones publicas.
-		
-        //Funciones heredadas.
-		protected override int SetActualHealth() {
-
-            return m_health;
-            }
-		protected override void Dead() {
+        public JumpingCharacter GetMovement() => m_movement;
+        public EntityAttack GetAttack() => m_attack;
+        public EntityHealth GetHealth() => m_health;
             
-            Debug.Log("Dead is not implemented yet.");
-            }
 
+        //Funciones heredadas.
+		
         //Funciones ha heredar.
 		
         //Corotinas.
-		
         }

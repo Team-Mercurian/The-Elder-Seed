@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Forest Path
   - Forest Passage
+  - Entity
   - Enemy
   layers:
   - Default
