@@ -30,7 +30,7 @@ public class PlayerEvents : MonoBehaviour {
 			
             if (collider.CompareTag("Forest Path")) {
 
-                SceneController.GetSingleton().LoadScene(SceneController.Scenes.Forest);
+                SceneController.GetSingleton().LoadScene(SceneController.Scenes.Ruins);
                 }
 
             if (collider.CompareTag("Forest Passage")) {
@@ -43,7 +43,7 @@ public class PlayerEvents : MonoBehaviour {
                 GenerateForestRooms.SetAppearDirection(m_direction);
 
                 DataSystem.GetSingleton().SetActualRoom(m_pos);
-                SceneController.GetSingleton().LoadScene(SceneController.Scenes.Forest);
+                SceneController.GetSingleton().LoadScene(SceneController.Scenes.Ruins);
                 }
             }
 		
