@@ -65,3 +65,19 @@ public abstract class GameBehaviour : MonoBehaviour {
         //Corotinas.
 		
         }
+public abstract class GravityValues : GameBehaviour{
+
+    //Establecer variables.
+    private readonly float m_upGravity = 15;
+    private readonly float m_downGravity = 35;
+
+    //Establecer funciones.
+    protected float GetGravityUpIntensity(float multiplier) {
+
+        return m_upGravity * multiplier;
+        }
+    protected float GetGravityDownIntensity(float multiplier) {
+
+        return m_downGravity * multiplier;
+        }
+    }
