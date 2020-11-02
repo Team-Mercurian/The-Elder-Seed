@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : EntityHealth {
+public class EnemyMovement : JumpingCharacter {
 	
     //Establecer variables.
 		
@@ -25,24 +25,15 @@ public class PlayerHealth : EntityHealth {
 			
     //Funciones
 		
-        //Funciones de MonoBehaviour
-		
+        //Funciones de MonoBehaviour.
+
         //Funciones privadas.
 		
         //Funciones publicas.
-		
+
         //Funciones heredadas.
-		protected override int SetActualHealth() {
-
-            return m_health;
-            }
-		protected override void Dead() {
-            
-            Debug.Log("Dead is not implemented yet.");
-            }
-
+		
         //Funciones ha heredar.
 		
         //Corotinas.
-		
         }

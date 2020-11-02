@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.92260784, g: 0.6162768, b: 0.94636303, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -135,8 +135,10 @@ GameObject:
   - component: {fileID: 269271112}
   - component: {fileID: 269271111}
   - component: {fileID: 269271113}
-  - component: {fileID: 269271110}
+  - component: {fileID: 269271115}
   - component: {fileID: 269271109}
+  - component: {fileID: 269271114}
+  - component: {fileID: 269271110}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Enemy
@@ -157,6 +159,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_health: 8
+  m_meshToDeactive: {fileID: 800141571}
+  m_damageCooldown: 0.1
   m_drop: {fileID: 0}
   m_dropCount: 0
   m_probability: 100
@@ -169,7 +173,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 269271108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa8138e7fd6c1764fb16fbe50d20730b, type: 3}
+  m_Script: {fileID: 11500000, guid: e726ad04a6f9cca48abfb195c10d8839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementSpeed: 4
@@ -178,12 +182,10 @@ MonoBehaviour:
   m_characterController: {fileID: 269271111}
   m_upGravityMultiplier: 1
   m_downGravityMultiplier: 1
-  m_groundCheckDistance: 0.3
+  m_groundCheckDistance: 0.1
   m_groundCheckOffset: {x: 0, y: 0, z: 0}
   m_jumpForce: 6
   m_jumpFrontForce: 1
-  m_minSecsBetweenJumps: 1
-  m_maxSecsBetweenJumps: 3
 --- !u!143 &269271111
 CharacterController:
   m_ObjectHideFlags: 0
@@ -228,8 +230,39 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.25, z: 0}
+--- !u!114 &269271114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269271108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 003191c2fab5a4643a4c9f9eac0490a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_attackCollider: {fileID: 269271113}
+  m_attackDamage: 1
+--- !u!114 &269271115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269271108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 855881e8e55a7314c857d26f1fd35964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_attack: {fileID: 269271114}
+  m_health: {fileID: 269271109}
+  m_movement: {fileID: 269271110}
+  m_minRandomJump: 2
+  m_maxRandomJump: 3
 --- !u!1 &315935229
 GameObject:
   m_ObjectHideFlags: 0

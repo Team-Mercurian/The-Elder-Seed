@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeMovement : EnemyMovement {
+public class PlayerBrain : EntityBrain {
 	
     //Establecer variables.
 		
@@ -13,31 +13,37 @@ public class SlimeMovement : EnemyMovement {
         //Establecer variables estaticas.
 		
             //Publicas.
-			
+			private static PlayerBrain m_instance;
+
             //Privadas
 			
         //Establecer variables.
 		
             //Publicas.
-            [Header("Constant Jump")]
-            [SerializeField] private float m_minSecsBetweenJumps = 1;
-            [SerializeField] private float m_maxSecsBetweenJumps = 3;
+            [SerializeField] private PlayerMovement m_playerMovement = null;
 			
             //Privadas.
 			
-			
     //Funciones
 		
-        //Funciones de MonoBehaviour.
-        protected override void Start() {
+        //Funciones de MonoBehaviour
+        private void Awake() {
 
-            base.Start();
-            ConstantJump(m_minSecsBetweenJumps, m_maxSecsBetweenJumps);
+            m_instance = this;
             }
-		
+
         //Funciones privadas.
 		
         //Funciones publicas.
+        public PlayerMovement GetPlayerMovement() {
+
+            return m_playerMovement;
+            }
+
+        public static PlayerBrain GetSingleton() {
+            
+            return m_instance;
+            }
 		
         //Funciones heredadas.
 		

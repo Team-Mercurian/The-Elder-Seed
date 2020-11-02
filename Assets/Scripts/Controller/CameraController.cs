@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraBrain : MonoBehaviour {
+public class CameraController : MonoBehaviour {
 	
     //Establecer variables.
 		
@@ -13,7 +13,7 @@ public class CameraBrain : MonoBehaviour {
         //Establecer variables estaticas.
 		
             //Privadas
-            private static CameraBrain m_instance;                                                              //Singleton.
+            private static CameraController m_instance;                                                              //Singleton.
 			
         //Establecer variables.
 		
@@ -294,7 +294,7 @@ public class CameraBrain : MonoBehaviour {
             m_reachDistance = Mathf.Clamp(m_reachDistance + ((value/120f) * m_zoomSensitivity), m_minDistance, m_maxDistance);   
             }
 
-        public static CameraBrain GetSingleton() {
+        public static CameraController GetSingleton() {
 
             return m_instance;
             }
