@@ -35,12 +35,12 @@ public class PlayerEvents : MonoBehaviour {
 
             if (collider.CompareTag("Forest Passage")) {
 
-                ForestPassageController m_forestPassage = collider.GetComponent<ForestPassageController>();
+                RuinsPassageController m_forestPassage = collider.GetComponent<RuinsPassageController>();
 
                 Vector2Int m_pos = m_forestPassage.GetPositionToMove();
-                GameBehaviour.Direction m_direction = m_forestPassage.GetDirectionToMove();
+                //GameBehaviour.Direction m_direction = m_forestPassage.GetDirectionToMove();
 
-                GenerateForestRooms.SetAppearDirection(m_direction);
+                //GenerateRuinsRooms.SetAppearDirection(m_direction);
 
                 DataSystem.GetSingleton().SetActualRoom(m_pos);
                 SceneController.GetSingleton().LoadScene(SceneController.Scenes.Ruins);

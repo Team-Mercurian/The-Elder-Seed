@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.92260784, g: 0.6162768, b: 0.94636303, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -143,7 +143,7 @@ PrefabInstance:
     - target: {fileID: 1593205710513468862, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.136485
+      value: 3.8864853
       objectReference: {fileID: 0}
     - target: {fileID: 1593205710513468862, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
         type: 3}
@@ -482,7 +482,8 @@ PrefabInstance:
     - target: {fileID: 3946739865721119917, guid: ed8d925df7329c741a933c3d566e52ff,
         type: 3}
       propertyPath: m_Name
-      value: Generate Room
+      value: Dungeon Controller
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3946739865721119914, guid: ed8d925df7329c741a933c3d566e52ff, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ed8d925df7329c741a933c3d566e52ff, type: 3}

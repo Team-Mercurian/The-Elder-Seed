@@ -6,12 +6,18 @@ using System.IO;
 public class DataSystem : MonoBehaviour {
 
     //Establecer variables.
-    private static MasterData m_masterData;
-    private static GameData m_gameData;
-    private static DataSystem m_instance;
+        
+        //Privadas estaticas.
+        private static MasterData m_masterData;
+        private static GameData m_gameData;
+        private static DataSystem m_instance;
 
-    private static List<RoomData> m_runRoomsData;
-    private static Vector2Int m_actualRoom;
+        private static List<RoomData> m_runRoomsData;
+        private static Vector2Int m_actualRoom;
+
+        //Publicas.
+        [Header("Persistent Room Holder")]
+        [SerializeField] private GameObject[] m_rooms = null;
 
     //Funciones de MonoBehaviour.
     private void Awake() {
@@ -93,6 +99,15 @@ public class DataSystem : MonoBehaviour {
         
         return null;
         }
+
+    public GameObject GetRoomPrefab(int index) {
+
+        return m_rooms[index];
+        }
+    public int GetRandomRoomPrefabIndex() {
+
+        return Random.Range(0, m_rooms.Length);
+        }
     }
 
 [System.Serializable]
@@ -124,46 +139,20 @@ public class GameData {
 public class RoomData {
     
     [SerializeField] private Vector2Int m_roomPosition;
-    [SerializeField] private List<Vector2Int> m_tilePositions;
-
-    [SerializeField] private Vector2? m_leftPassage = null;
-    [SerializeField] private Vector2? m_rightPassage = null;
-    [SerializeField] private Vector2? m_upPassage = null;
-    [SerializeField] private Vector2? m_downPassage = null;
+    [SerializeField] private int m_roomPrefabIndex;
     
-    public RoomData(Vector2Int roomPosition, List<Vector2Int> tilePositions) {
+    public RoomData(Vector2Int roomPosition, int prefabIndex) {
         
         m_roomPosition = roomPosition;
-        m_tilePositions = tilePositions;
+        m_roomPrefabIndex = prefabIndex;
         }
     public Vector2Int GetRoomPosition() {
 
         return m_roomPosition;
         }
-    public List<Vector2Int> GetTilePositions() {
+    public int GetRoomPrefabIndex() {
 
-        return m_tilePositions;
-        }
-
-    public void SetPassages(Vector2 left, Vector2 right, Vector2 up, Vector2 down) {
-
-        m_leftPassage = new Vector2?(left);
-        m_rightPassage = new Vector2?(right);;
-        m_upPassage = new Vector2?(up);;
-        m_downPassage = new Vector2?(down);;
-        }
-    
-    public Vector2? GetPassagePosition(GameBehaviour.Direction direction) {
-
-        switch(direction) {
-
-            case GameBehaviour.Direction.Left : return m_leftPassage;
-            case GameBehaviour.Direction.Right : return m_rightPassage;
-            case GameBehaviour.Direction.Up : return m_upPassage;
-            case GameBehaviour.Direction.Down : return m_downPassage;
-            }
-        
-        return Vector2.zero;
+        return m_roomPrefabIndex;
         }
     }
 
