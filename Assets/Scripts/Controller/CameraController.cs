@@ -14,7 +14,11 @@ public class CameraController : MonoBehaviour {
 		
             //Privadas
             private static CameraController m_instance;                                                              //Singleton.
-			
+            private static Vector2 m_reachAngle;
+            private static float m_reachDistance;
+
+            private static bool m_resetCamera = true;
+
         //Establecer variables.
 		
             //Publicas.
@@ -46,14 +50,12 @@ public class CameraController : MonoBehaviour {
 			
             //Privadas.
             private Vector3 m_positionVelocity = new Vector3();                                                 //Velocidad de la posicion.
-            private Vector2 m_actualAngle = new Vector2();                                                      //Angulo de la camara.
             private Vector3 m_direction = new Vector3();                                                        //Direccion de la camara (X y Z).
             private Vector3 m_targetPosition = new Vector3();                                                   //Posicion a guardar del objetivo.
             private Vector2 m_rotationVelocity = new Vector2();
 
-            private Vector2 m_reachAngle = new Vector2();
+            private Vector2 m_actualAngle;                                                    //Angulo de la camara.
 
-            private float m_reachDistance = 0;
             private float m_smoothedDistance = 0;
             private float m_zoomVelocity = 0;
 			
@@ -68,10 +70,18 @@ public class CameraController : MonoBehaviour {
 
         private void Start() {
 
-            SetTransformTargetPositions();
+            if (m_resetCamera) {
+                
+                m_reachAngle = m_defaultAngle;
+                m_reachDistance = m_defaultDistance;
+                m_resetCamera = false;
+                }
 
-            m_reachDistance = m_defaultDistance;
-            m_smoothedDistance = m_defaultDistance;
+            m_actualAngle = m_reachAngle;
+            m_smoothedDistance = m_reachDistance;
+            SetTransformTargetPosition();
+            SetTargetPosition();
+            transform.position = new Vector3(m_targetPosition.x, 0, m_targetPosition.z);
             }     
         private void Update() {
             
@@ -299,18 +309,12 @@ public class CameraController : MonoBehaviour {
             return m_instance;
             }
 
-        public void SetTransformTargetPositions() {
+        public void SetTransformTargetPosition() {
 
             if (m_target != null) {
-                
-                
-                
-                m_defaultAngle = new Vector2(m_target.eulerAngles.y - 90, m_defaultAngle.y);
+                                
                 transform.position = m_target.position;
                 }
-
-            m_actualAngle = m_defaultAngle;
-            m_reachAngle = m_actualAngle;
             }   
         //Funciones heredadas.
 		

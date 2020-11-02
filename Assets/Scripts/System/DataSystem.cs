@@ -6,12 +6,18 @@ using System.IO;
 public class DataSystem : MonoBehaviour {
 
     //Establecer variables.
-    private static MasterData m_masterData;
-    private static GameData m_gameData;
-    private static DataSystem m_instance;
+        
+        //Privadas estaticas.
+        private static MasterData m_masterData;
+        private static GameData m_gameData;
+        private static DataSystem m_instance;
 
-    private static List<RoomData> m_runRoomsData;
-    private static Vector2Int m_actualRoom;
+        private static List<RoomData> m_runRoomsData;
+        private static Vector2Int m_actualRoom;
+
+        //Publicas.
+        [Header("Persistent Room Holder")]
+        [SerializeField] private GameObject[] m_rooms = null;
 
     //Funciones de MonoBehaviour.
     private void Awake() {
@@ -93,6 +99,15 @@ public class DataSystem : MonoBehaviour {
         
         return null;
         }
+
+    public GameObject GetRoomPrefab(int index) {
+
+        return m_rooms[index];
+        }
+    public int GetRandomRoomPrefabIndex() {
+
+        return Random.Range(0, m_rooms.Length);
+        }
     }
 
 [System.Serializable]
@@ -121,6 +136,27 @@ public class GameData {
         }
     }
 
+public class RoomData {
+    
+    [SerializeField] private Vector2Int m_roomPosition;
+    [SerializeField] private int m_roomPrefabIndex;
+    
+    public RoomData(Vector2Int roomPosition, int prefabIndex) {
+        
+        m_roomPosition = roomPosition;
+        m_roomPrefabIndex = prefabIndex;
+        }
+    public Vector2Int GetRoomPosition() {
+
+        return m_roomPosition;
+        }
+    public int GetRoomPrefabIndex() {
+
+        return m_roomPrefabIndex;
+        }
+    }
+
+/* Deprecated generation.
 public class RoomData {
     
     [SerializeField] private Vector2Int m_roomPosition;
@@ -166,3 +202,4 @@ public class RoomData {
         return Vector2Int.zero;
         }
     }
+    */

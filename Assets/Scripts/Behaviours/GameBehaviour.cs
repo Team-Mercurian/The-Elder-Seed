@@ -57,7 +57,13 @@ public abstract class GameBehaviour : MonoBehaviour {
             
             return m_pos;
             }
-
+        public Direction GetDirection(Vector2Int direction) {
+            
+            if (direction == Vector2Int.up) return Direction.Up;   
+            else if (direction == Vector2Int.down) return Direction.Down;  
+            else if (direction == Vector2Int.left) return Direction.Left;  
+            else return Direction.Right;  
+            }
         //Funciones heredadas.
 		
         //Funciones ha heredar.

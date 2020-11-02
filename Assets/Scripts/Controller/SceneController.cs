@@ -13,7 +13,7 @@ public class SceneController : MonoBehaviour {
         public enum Scenes {
 
             House,
-            Forest,
+            Ruins,
             }
 		
         //Establecer variables estaticas.
@@ -44,8 +44,7 @@ public class SceneController : MonoBehaviour {
         //Funciones publicas.
         public void LoadScene(Scenes scene) {
 
-            if (m_coroutine != null) StopCoroutine(m_coroutine);
-            m_coroutine = StartCoroutine(LoadSceneCoroutine((int) scene));
+            if (m_coroutine == null) m_coroutine = StartCoroutine(LoadSceneCoroutine((int) scene));
             }
         public static SceneController GetSingleton() {
 
@@ -67,5 +66,6 @@ public class SceneController : MonoBehaviour {
             yield return null;
 
             m_async.allowSceneActivation = true;
+            m_coroutine = null;
             }
         }
