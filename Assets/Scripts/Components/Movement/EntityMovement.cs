@@ -140,6 +140,12 @@ public abstract class EntityMovement : GravityValues {
 
             return m_velocity;
             }
+        public void SetPosition(Vector3 position) {
+
+            m_characterController.enabled = false;
+            transform.position = position;
+            m_characterController.enabled = true;
+            }
         public virtual void SetHorizontalVelocity(Vector2 velocity) {
 
             SetReachVelocity(velocity);

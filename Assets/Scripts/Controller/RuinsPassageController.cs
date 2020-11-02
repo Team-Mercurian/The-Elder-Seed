@@ -26,7 +26,8 @@ public class RuinsPassageController : GameBehaviour {
             [SerializeField] private BoxCollider m_teleportTrigger = null;
 			
             //Privadas.
-			private Vector2Int m_positionToMove;
+			private Vector2Int m_roomPositionToMove;
+            private Vector2Int m_directionToMove;
 			
     //Funciones
 		
@@ -43,24 +44,35 @@ public class RuinsPassageController : GameBehaviour {
             Gizmos.DrawLine(m_tp + (m_rot * Vector3.Scale(new Vector3(0.5f, 2, -0.5f), m_tls)), m_tp + (m_rot * Vector3.Scale(new Vector3(0.5f, 2, 0.5f), m_tls)));
             Gizmos.DrawLine(m_tp + (m_rot * Vector3.Scale(new Vector3(0.5f, 2, 0.5f), m_tls)), m_tp + (m_rot * Vector3.Scale(new Vector3(0.5f, 0, 0.5f), m_tls)));
             Gizmos.DrawLine(m_tp + (m_rot * Vector3.Scale(new Vector3(0.5f, 0, 0.5f), m_tls)), m_tp + (m_rot * Vector3.Scale(new Vector3(0.5f, 0, -0.5f), m_tls)));
+
+            Gizmos.DrawWireSphere(m_tp + (m_rot * (Vector3.Scale(Vector3.right, m_tls))), 0.25f);
             }
 		
         //Funciones privadas.
 		
         //Funciones publicas.
-        public void SetData(bool opened, Vector2Int teleportPosition) {
+        public void SetData(bool opened, Vector2Int teleportPosition, Vector2Int direction) {
             
-            if (teleportPosition == new Vector2Int(0, -1)) opened = true;
+            if (teleportPosition + direction == new Vector2Int(0, -1)) opened = true;
             m_teleportTrigger.enabled = opened;
 
             GameObject m_passage = opened ? m_passageOpenPrefab : m_passageClosedPrefab;
             Instantiate(m_passage, transform.position, transform.rotation * Quaternion.Euler(0, 180, 0), transform);
 
-            m_positionToMove = teleportPosition;
+            m_roomPositionToMove = teleportPosition + direction;
+            m_directionToMove = direction;
             }
         public Vector2Int GetPositionToMove() {
 
-            return m_positionToMove;
+            return m_roomPositionToMove;
+            }
+        public Vector2Int GetDirectionToMove() {
+
+            return m_directionToMove;
+            }
+        public Vector3 GetPlayerAppearPosition() {
+            
+            return transform.position - (Vector3.Scale(new Vector3(m_directionToMove.x, 0, m_directionToMove.y), transform.localScale));
             }
 		
         //Funciones heredadas.

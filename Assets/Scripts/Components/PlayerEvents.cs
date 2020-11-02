@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEvents : MonoBehaviour {
+public class PlayerEvents : GameBehaviour {
 	
     //Establecer variables.
 		
@@ -38,12 +38,23 @@ public class PlayerEvents : MonoBehaviour {
                 RuinsPassageController m_forestPassage = collider.GetComponent<RuinsPassageController>();
 
                 Vector2Int m_pos = m_forestPassage.GetPositionToMove();
-                //GameBehaviour.Direction m_direction = m_forestPassage.GetDirectionToMove();
 
-                //GenerateRuinsRooms.SetAppearDirection(m_direction);
+                if (m_pos == new Vector2Int(0, -1)) {
+                    
+                    Debug.Log("Going to House Scene");
+                    SceneController.GetSingleton().LoadScene(SceneController.Scenes.House);
+                    }
+                    
+                else {
+                    
+                    Debug.Log("Going to room in " + m_pos.x + ", " + m_pos.y);
 
-                DataSystem.GetSingleton().SetActualRoom(m_pos);
-                SceneController.GetSingleton().LoadScene(SceneController.Scenes.Ruins);
+                    Direction m_direction = GetDirection(m_forestPassage.GetDirectionToMove());
+                    RoomController.SetAppearDirection(m_direction);
+
+                    DataSystem.GetSingleton().SetActualRoom(m_pos);
+                    SceneController.GetSingleton().LoadScene(SceneController.Scenes.Ruins);
+                    }
                 }
             }
 		

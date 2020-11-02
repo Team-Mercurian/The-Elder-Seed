@@ -15,7 +15,6 @@ public class GenerateRuinsRooms : GameBehaviour {
             //Publicas.
 			
             //Privadas
-            private static Direction m_appearDirection = Direction.Up;
             
         //Establecer variables.
 		
@@ -28,17 +27,14 @@ public class GenerateRuinsRooms : GameBehaviour {
 
             //Privadas.
             private DataSystem m_dataSystem;
-            private PlayerMovement m_player;
 
     //Funciones
 		
         //Funciones de MonoBehaviour.
         private void Start() {
 
-            m_player = PlayerMovement.GetSingleton();
             m_dataSystem = DataSystem.GetSingleton();
             GenerateAllRooms();
-            CameraBrain.GetSingleton().SetTransformTargetPositions();
             }
 		
         //Funciones privadas.
@@ -84,37 +80,6 @@ public class GenerateRuinsRooms : GameBehaviour {
                 }
                 
             GenerateRoom(m_dataSystem.GetRoomData(m_dataSystem.GetActualRoom()));
-
-            /*
-            Vector3 m_playerPos = new Vector3();
-            float m_playerRot = 0;
-
-            switch(m_appearDirection) {
-
-                case Direction.Left : 
-                    m_playerPos = m_passageRight.transform.position + new Vector3(-1 * m_tileSizeMultiplier, 0, 0); 
-                    m_playerRot = 270;
-                    break;
-
-                case Direction.Right : 
-                    m_playerPos = m_passageLeft.transform.position + new Vector3(1 * m_tileSizeMultiplier, 0, 0);
-                    m_playerRot = 90;
-                    break;
-
-                case Direction.Up : 
-                    m_playerPos = m_passageDown.transform.position + new Vector3(0, 0, 1 * m_tileSizeMultiplier);
-                    m_playerRot = 0;
-                    break;
-
-                case Direction.Down : 
-                    m_playerPos = m_passageUp.transform.position + new Vector3(0, 0, -1 * m_tileSizeMultiplier);
-                    m_playerRot = 180;
-                    break;
-                }
-
-            m_player.transform.position = m_playerPos;
-            m_player.transform.rotation = Quaternion.Euler(0, m_playerRot, 0);
-            */
             }
         private void GenerateRoom(RoomData roomData) {
 
@@ -136,14 +101,6 @@ public class GenerateRuinsRooms : GameBehaviour {
                 }
             
             return false;
-            }
-        public static Direction GetAppearDirection() {
-
-            return m_appearDirection;
-            }
-        public static void SetAppearDirection(Direction direction) {
-
-            m_appearDirection = direction;
             }
 		
         //Funciones heredadas.
