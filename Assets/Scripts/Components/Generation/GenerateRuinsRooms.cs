@@ -34,6 +34,7 @@ public class GenerateRuinsRooms : GameBehaviour {
         private void Start() {
 
             m_dataSystem = DataSystem.GetSingleton();
+            DataSystem.GetSingleton().SetTemporalData(new TemporalData(new PlayerData(PlayerBrain.GetSingleton().GetHealth().GetMaxHealth())));
             GenerateAllRooms();
             }
 		

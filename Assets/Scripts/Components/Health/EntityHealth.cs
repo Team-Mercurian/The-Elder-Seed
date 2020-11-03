@@ -70,6 +70,19 @@ public abstract class EntityHealth : MonoBehaviour {
             m_actualHealth = Mathf.Clamp(m_actualHealth + health, 0, m_health);
             }
 		
+        public int GetMaxHealth() => m_health;
+
+        [ContextMenu("Get Debug Damage")]
+        private void DebugReceiveDamage() {
+
+            GetDamage(1);
+            }
+            
+        [ContextMenu("Debug Dead")]
+        private void DebugDead() {
+
+            Dead();
+            }
         //Funciones heredadas.
 		
         //Funciones ha heredar.

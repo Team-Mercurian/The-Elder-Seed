@@ -316,6 +316,10 @@ public class CameraController : MonoBehaviour {
                 transform.position = m_target.position;
                 }
             }   
+        public static void ResetCameraInStart() {
+
+            m_resetCamera = true;
+            }
         //Funciones heredadas.
 		
         //Funciones ha heredar.
