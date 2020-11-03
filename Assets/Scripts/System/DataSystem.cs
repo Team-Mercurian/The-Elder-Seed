@@ -18,6 +18,7 @@ public class DataSystem : MonoBehaviour {
         //Publicas.
         [Header("Persistent Room Holder")]
         [SerializeField] private GameObject[] m_rooms = null;
+        [SerializeField] private GameObject[] m_enemies = null;
 
     //Funciones de MonoBehaviour.
     private void Awake() {
@@ -87,6 +88,9 @@ public class DataSystem : MonoBehaviour {
 
     public GameObject GetRoomPrefab(int index) => m_rooms[index];
     public int GetRandomRoomPrefabIndex() => Random.Range(0, m_rooms.Length);
+
+    public GameObject GetEnemyPrefab(int index) => m_enemies[index];
+    public int GetRandomEnemyPrefabIndex() => Random.Range(0, m_enemies.Length);
 
     public void SetTemporalData(TemporalData temporalData) => m_temporalData = temporalData;
     public TemporalData GetTemporalData() => m_temporalData;

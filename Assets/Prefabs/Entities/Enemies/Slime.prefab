@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_health: 8
   m_meshToDeactive: {fileID: 5215380406721348892}
-  m_damageCooldown: 1
+  m_damageCooldown: 0
   m_drop: {fileID: 0}
   m_dropCount: 0
   m_probability: 100
