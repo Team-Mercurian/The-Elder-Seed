@@ -116,10 +116,15 @@ public class MasterData {
 [System.Serializable]
 public class GameData {
 
+    [SerializeField] private int m_seedsCount;
+
     public GameData() { 
         
-        
+        m_seedsCount = 0;
         }
+
+    public void AddSeeds(int value) => m_seedsCount += value;
+    public int GetSeedCount() => m_seedsCount;
     }
 
 public class RoomData {

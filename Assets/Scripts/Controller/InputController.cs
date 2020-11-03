@@ -24,6 +24,9 @@ public class InputController : MonoBehaviour {
             [Header("Input References")]
             [SerializeField] private PlayerInput m_playerInput = null;              //Referencia al Input System del jugador.
 			
+            [Header("Input Values")]
+            [SerializeField] private float m_secsToQuitDungeon = 3;
+
             //Privadas.
             private InputAction m_moveAction = null;                                //Referencia a la accion de mover del jugador.
             private InputAction m_lookAction = null;                                //Referencia a la accion de mirar del jugador.
@@ -36,6 +39,8 @@ public class InputController : MonoBehaviour {
 
             private PlayerMovement m_playerMovement;
             private EntityAttack m_playerAttack;
+
+            private Coroutine m_dungeonQuitCoroutine;
 			
 			
     //Funciones
@@ -123,11 +128,33 @@ public class InputController : MonoBehaviour {
             
             m_playerAttack.Attack();
             }
+        public void QuitDungeon(InputAction.CallbackContext context) {
+
+            if (SceneController.GetActualScene() == SceneController.Scenes.Ruins) {
+
+                if (context.phase == InputActionPhase.Started) if (m_dungeonQuitCoroutine == null) m_dungeonQuitCoroutine = StartCoroutine(DungeonQuitCoroutine(m_secsToQuitDungeon));
+                else if (context.phase == InputActionPhase.Canceled) {
+
+                    if (m_dungeonQuitCoroutine != null) StopCoroutine(m_dungeonQuitCoroutine); 
+                    }
+                }
+            }
 		
         //Funciones heredadas.
 		
         //Funciones ha heredar.
 		
         //Corotinas.
-		
+        private IEnumerator DungeonQuitCoroutine(float quitTime) {
+
+            float m_count = 0;
+
+            while(m_count < quitTime) {
+
+                m_count += Time.deltaTime;
+                yield return null;
+                }
+
+            SceneController.GetSingleton().LoadScene(SceneController.Scenes.House);
+            }
         }

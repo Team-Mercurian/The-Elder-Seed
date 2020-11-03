@@ -1054,7 +1054,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_attackCollider: {fileID: 5812580558403113970}
   m_attackDamage: 2
-  m_attackDelay: 1
+  m_attackDelay: 0.7
 --- !u!65 &5812580558403113970
 BoxCollider:
   m_ObjectHideFlags: 0

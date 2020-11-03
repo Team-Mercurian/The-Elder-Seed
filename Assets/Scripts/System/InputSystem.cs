@@ -73,6 +73,14 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Quit Dungeon"",
+                    ""type"": ""Button"",
+                    ""id"": ""5743e228-d244-48b5-b5e6-93db04025d80"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -381,6 +389,28 @@ public class @InputSystem : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30aee824-abb8-40e2-b481-20ad945f83cd"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Quit Dungeon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed12f406-5fd4-4b21-ad96-d530cab80aa6"",
+                    ""path"": ""<Gamepad>/leftStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Quit Dungeon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -904,6 +934,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_QuitDungeon = m_Player.FindAction("Quit Dungeon", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
@@ -972,6 +1003,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Zoom;
     private readonly InputAction m_Player_Run;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_QuitDungeon;
     public struct PlayerActions
     {
         private @InputSystem m_Wrapper;
@@ -983,6 +1015,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         public InputAction @Zoom => m_Wrapper.m_Player_Zoom;
         public InputAction @Run => m_Wrapper.m_Player_Run;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @QuitDungeon => m_Wrapper.m_Player_QuitDungeon;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1013,6 +1046,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @QuitDungeon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuitDungeon;
+                @QuitDungeon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuitDungeon;
+                @QuitDungeon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnQuitDungeon;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1038,6 +1074,9 @@ public class @InputSystem : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @QuitDungeon.started += instance.OnQuitDungeon;
+                @QuitDungeon.performed += instance.OnQuitDungeon;
+                @QuitDungeon.canceled += instance.OnQuitDungeon;
             }
         }
     }
@@ -1156,6 +1195,7 @@ public class @InputSystem : IInputActionCollection, IDisposable
         void OnZoom(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnQuitDungeon(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
