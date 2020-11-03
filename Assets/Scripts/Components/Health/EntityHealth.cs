@@ -61,7 +61,7 @@ public abstract class EntityHealth : MonoBehaviour {
 
             else {
 
-                m_damageCoroutine = StartCoroutine(CooldownAnimation());
+                if (m_damageCooldown > 0) m_damageCoroutine = StartCoroutine(CooldownAnimation());
                 }
             }
         public void AddHealth(int health) {
