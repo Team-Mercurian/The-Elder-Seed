@@ -20,6 +20,7 @@ public class SceneController : MonoBehaviour {
 		
             //Publicas.
             private static SceneController m_instance;
+            private static Scenes m_actualScene;
 			
             //Privadas
 			
@@ -37,6 +38,7 @@ public class SceneController : MonoBehaviour {
         private void Awake() {
 
             m_instance = this;
+            m_actualScene = (Scenes) SceneManager.GetActiveScene().buildIndex;
             }
 		
         //Funciones privadas.
@@ -46,10 +48,9 @@ public class SceneController : MonoBehaviour {
 
             if (m_coroutine == null) m_coroutine = StartCoroutine(LoadSceneCoroutine((int) scene));
             }
-        public static SceneController GetSingleton() {
-
-            return m_instance;
-            }
+        public static SceneController GetSingleton() => m_instance;
+        public static Scenes GetActualScene() => m_actualScene;
+            
 		
         //Funciones heredadas.
 		
@@ -65,6 +66,7 @@ public class SceneController : MonoBehaviour {
             yield return (m_async.progress > 0.9f);
             yield return null;
 
+            m_actualScene = (Scenes) sceneNumber;
             m_async.allowSceneActivation = true;
             m_coroutine = null;
             }
