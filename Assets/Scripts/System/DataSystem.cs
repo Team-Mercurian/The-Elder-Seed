@@ -6,14 +6,14 @@ using System.IO;
 public class DataSystem : MonoBehaviour {
 
     //Establecer variables.
-        
-        //Privadas estaticas.
-        private static MasterData m_masterData;
-        private static GameData m_gameData;
-        private static DataSystem m_instance;
+    private static MasterData m_masterData;
+    private static GameData m_gameData;
+    private static DataSystem m_instance;
 
-        private static List<RoomData> m_runRoomsData;
-        private static Vector2Int m_actualRoom;
+    private static List<RoomData> m_runRoomsData;
+    private static Vector2Int m_actualRoom;
+        
+    private static TemporalData m_temporalData;
 
         //Publicas.
         [Header("Persistent Room Holder")]
@@ -61,33 +61,10 @@ public class DataSystem : MonoBehaviour {
 
         return m_data;
         }
-    public static DataSystem GetSingleton() {
 
-        return m_instance;
-        }
-
-
-    public GameData GetGameData() {
-
-        return m_gameData;
-        }
-    
-    public List<RoomData> GetRoomsData() {
-
-        return m_runRoomsData;
-        }
     public void SetRoomsData(List<RoomData> runRoomsData) {
 
         m_runRoomsData = runRoomsData;
-        }
-
-    public Vector2Int GetActualRoom() {
-
-        return m_actualRoom;
-        }
-    public void SetActualRoom(Vector2Int actualRoom) {
-        
-        m_actualRoom = actualRoom;
         }
 
     public RoomData GetRoomData(Vector2Int roomPosition) {
@@ -100,14 +77,19 @@ public class DataSystem : MonoBehaviour {
         return null;
         }
 
-    public GameObject GetRoomPrefab(int index) {
+    public static DataSystem GetSingleton() => m_instance;
 
-        return m_rooms[index];
-        }
-    public int GetRandomRoomPrefabIndex() {
+    public GameData GetGameData() => m_gameData;    
+    public List<RoomData> GetRoomsData() => m_runRoomsData;
 
-        return Random.Range(0, m_rooms.Length);
-        }
+    public Vector2Int GetActualRoom() => m_actualRoom;
+    public void SetActualRoom(Vector2Int actualRoom) => m_actualRoom = actualRoom;
+
+    public GameObject GetRoomPrefab(int index) => m_rooms[index];
+    public int GetRandomRoomPrefabIndex() => Random.Range(0, m_rooms.Length);
+
+    public void SetTemporalData(TemporalData temporalData) => m_temporalData = temporalData;
+    public TemporalData GetTemporalData() => m_temporalData;
     }
 
 [System.Serializable]
@@ -156,6 +138,32 @@ public class RoomData {
         }
     }
 
+public class TemporalData {
+
+    [SerializeField] private PlayerData m_playerData; 
+
+    public TemporalData(PlayerData playerData) {
+
+        m_playerData = playerData;
+        }   
+        
+    public void SetPlayer(PlayerData playerData) => m_playerData = playerData; 
+    public PlayerData GetPlayer() => m_playerData;
+    }
+
+public class PlayerData {
+
+    [SerializeField] private int m_playerHealth;
+
+    public PlayerData(int playerHealth) {
+
+        m_playerHealth = playerHealth;
+        }   
+
+    public void SetHealth(int health) => m_playerHealth = health; 
+    public int GetHealth() => m_playerHealth;
+    }
+
 /* Deprecated generation.
 public class RoomData {
     
@@ -201,5 +209,4 @@ public class RoomData {
         
         return Vector2Int.zero;
         }
-    }
-    */
+    }*/

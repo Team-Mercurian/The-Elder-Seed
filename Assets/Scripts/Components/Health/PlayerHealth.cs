@@ -34,11 +34,18 @@ public class PlayerHealth : EntityHealth {
         //Funciones heredadas.
 		protected override int SetActualHealth() {
 
+            int m_h = m_health;
+
+            TemporalData m_p = DataSystem.GetSingleton().GetTemporalData();
+            if (m_p != null) m_h = m_p.GetPlayer().GetHealth();
+
             return m_health;
             }
 		protected override void Dead() {
             
-            Debug.Log("Dead is not implemented yet.");
+            CameraController.ResetCameraInStart();
+            DataSystem.GetSingleton().SetTemporalData(null);
+            SceneController.GetSingleton().LoadScene(SceneController.Scenes.House);
             }
 
         //Funciones ha heredar.
