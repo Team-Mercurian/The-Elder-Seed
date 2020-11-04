@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28881f1d49f82e846b76596dcbae4457, type: 3}
   m_Name: Default Sword
   m_EditorClassIdentifier: 
-  m_name: 
+  m_name: Default Sword
   m_type: 0
   m_rarity: 0
-  m_minDamage: 4
-  m_maxDamage: 10
-  m_uses: 100
+  m_minDamage: 65
+  m_maxDamage: 140
+  m_uses: 200
