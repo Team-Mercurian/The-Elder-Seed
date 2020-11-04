@@ -19,6 +19,7 @@ public class DataSystem : MonoBehaviour {
         [Header("Persistent Room Holder")]
         [SerializeField] private GameObject[] m_rooms = null;
         [SerializeField] private GameObject[] m_enemies = null;
+        [SerializeField] private Weapon[] m_weapons = null;
 
     //Funciones de MonoBehaviour.
     private void Awake() {
@@ -48,6 +49,8 @@ public class DataSystem : MonoBehaviour {
 
         string m_rawData = JsonUtility.ToJson(m_masterData, true);
         File.WriteAllText(Application.persistentDataPath + "/save.json", m_rawData);
+
+        Debug.Log("Saved");
         }
 
     private MasterData Load() {
@@ -94,17 +97,26 @@ public class DataSystem : MonoBehaviour {
 
     public void SetTemporalData(TemporalData temporalData) => m_temporalData = temporalData;
     public TemporalData GetTemporalData() => m_temporalData;
+
+    public void SetActualWeapon(int index) => m_gameData.SetActualWeapon(index);
+
+    public Weapon GetActualWeapon() => m_weapons[GetActualWeaponData().GetIndex()];   
+    public WeaponData GetActualWeaponData() => m_gameData.GetActualWeapon();   
+    
+    public Weapon GetWeapon(int index) => m_weapons[index];   
+
+    public void UseActualWeapon() => m_gameData.UseWeapon(0);
     }
 
 [System.Serializable]
 public class MasterData {
 
-    [SerializeField] private GameData[] m_gameDatas;
+    [SerializeField] private List<GameData> m_gameDatas;
 
     public MasterData() {
 
-        m_gameDatas = new GameData[4];
-        m_gameDatas[0] = new GameData();
+        m_gameDatas = new List<GameData>();
+        m_gameDatas.Add(new GameData());
         }
 
     public GameData GetGameData(int file) {
@@ -117,14 +129,63 @@ public class MasterData {
 public class GameData {
 
     [SerializeField] private int m_seedsCount;
+    [SerializeField] private int m_actualWeaponInventoryIndex;
+
+    [SerializeField] private List<WeaponData> m_inventoryWeapons;
 
     public GameData() { 
         
         m_seedsCount = 0;
+
+        m_inventoryWeapons = new List<WeaponData>();
+        m_inventoryWeapons.Add(new WeaponData(0, DataSystem.GetSingleton().GetWeapon(0).GetUses()));
+
+        m_actualWeaponInventoryIndex = 0;
         }
 
     public void AddSeeds(int value) => m_seedsCount += value;
     public int GetSeedCount() => m_seedsCount;
+
+    public void SetActualWeapon(int index) => m_actualWeaponInventoryIndex = index;
+    public WeaponData GetActualWeapon() => SearchInWeaponInventory(m_actualWeaponInventoryIndex);
+
+    public void UseWeapon(int index)  {
+        
+        m_inventoryWeapons[index].UseWeapon();
+        } 
+
+    public WeaponData SearchInWeaponInventory(int index) {
+
+        foreach(WeaponData m_w in m_inventoryWeapons) {
+
+            if (m_w.GetIndex() == index) return m_w;
+            }
+
+        return new WeaponData(-1, 0);
+        }
+    }
+
+[System.Serializable]
+public class WeaponData {
+    
+    [SerializeField] private int m_weaponIndex;
+    [SerializeField] private int m_uses;
+
+    public WeaponData() {
+
+        m_weaponIndex = -1;
+        m_uses = 0;
+        }
+    public WeaponData(int weaponIndex, int uses) {
+
+        m_weaponIndex = weaponIndex;
+        m_uses = uses;
+        }
+
+    public int GetIndex() => m_weaponIndex;
+    public void UseWeapon() => m_uses --;
+    public void SetUses(int count) => m_uses = count;
+    public int GetUses() => m_uses;
     }
 
 public class RoomData {
