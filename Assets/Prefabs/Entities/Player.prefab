@@ -490,8 +490,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementSpeed: 4
-  m_movementSmoothness: 0.1
-  m_rotationSmoothness: 0.2
+  m_movementSmoothness: 0.05
+  m_rotationSmoothness: 0.05
   m_characterController: {fileID: 4252489991149073973}
   m_upGravityMultiplier: 1
   m_downGravityMultiplier: 1
@@ -1053,7 +1053,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_attackCollider: {fileID: 5812580558403113970}
-  m_attackDamage: 2
   m_attackDelay: 0.7
 --- !u!65 &5812580558403113970
 BoxCollider:
@@ -1066,5 +1065,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 2, z: 2}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 1, z: 0.5}

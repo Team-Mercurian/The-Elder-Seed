@@ -59,8 +59,6 @@ public class RoomController : GameBehaviour {
             Vector3 m_playerPos = new Vector3();
             float m_playerRot = 0;
 
-            Debug.Log(m_appearDirection);
-
             switch(m_appearDirection) {
 
                 case Direction.Left : 

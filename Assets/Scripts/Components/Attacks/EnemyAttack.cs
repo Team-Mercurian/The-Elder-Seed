@@ -19,6 +19,8 @@ public class EnemyAttack : EntityAttack {
         //Establecer variables.
 		
             //Publicas.
+            [Header("Damage")]
+            [SerializeField] protected int m_attackDamage = 2;
 			
             //Privadas.
 			
@@ -35,6 +37,10 @@ public class EnemyAttack : EntityAttack {
         protected override string SetOtherTag() {
 
             return "Player";
+            }
+        protected override void SetDamage() {
+
+            m_damage = m_attackDamage;
             }
 		
         //Funciones ha heredar.

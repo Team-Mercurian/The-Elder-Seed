@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae805963038f834b9d0eb2af324e962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_health: 8
+  m_health: 850
   m_meshToDeactive: {fileID: 5215380406721348892}
   m_damageCooldown: 0
   m_drop: {fileID: 0}

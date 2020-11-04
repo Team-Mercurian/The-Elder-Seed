@@ -21,6 +21,7 @@ public class PlayerEvents : GameBehaviour {
             //Publicas.
 			
             //Privadas.
+            private bool m_triggered;
 			
 			
     //Funciones
@@ -28,13 +29,17 @@ public class PlayerEvents : GameBehaviour {
         //Funciones de MonoBehaviour
         private void OnTriggerEnter(Collider collider) {
 			
+            if (m_triggered) return;
+
             if (collider.CompareTag("Forest Path")) {
 
+                m_triggered = true;
                 SceneController.GetSingleton().LoadScene(SceneController.Scenes.Ruins);
                 }
 
             if (collider.CompareTag("Forest Passage")) {
 
+                m_triggered = true;
                 RuinsPassageController m_forestPassage = collider.GetComponent<RuinsPassageController>();
 
                 Vector2Int m_pos = m_forestPassage.GetPositionToMove();

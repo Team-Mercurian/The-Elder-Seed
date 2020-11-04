@@ -23,11 +23,9 @@ public abstract class EntityAttack : MonoBehaviour {
             [Header("References")]
             [SerializeField] protected BoxCollider m_attackCollider = null;
 			
-            [Header("Damage")]
-            [SerializeField] protected int m_attackDamage = 2;
-
             //Privadas.
-            private string m_otherTag;
+            protected string m_otherTag;
+            protected int m_damage;
 			
 			
     //Funciones
@@ -40,16 +38,17 @@ public abstract class EntityAttack : MonoBehaviour {
         protected virtual void Start() {
 
             m_attackCollider.enabled = false;
+            SetDamage();
             }
 		
         //Funciones privadas.
 		
         //Funciones publicas.
-        private void OnTriggerEnter(Collider collider) {
+        protected virtual void OnTriggerEnter(Collider collider) {
 
             if (collider.CompareTag(m_otherTag)) {
 
-                collider.GetComponent<EntityHealth>().GetDamage(m_attackDamage);
+                collider.GetComponent<EntityHealth>().GetDamage(m_damage);
                 }
             }
 		
@@ -61,6 +60,7 @@ public abstract class EntityAttack : MonoBehaviour {
             StartCoroutine(AttackCoroutine());
             }
         protected abstract string SetOtherTag();
+        protected abstract void SetDamage();
 
         //Corotinas.
 		protected virtual IEnumerator AttackCoroutine() {

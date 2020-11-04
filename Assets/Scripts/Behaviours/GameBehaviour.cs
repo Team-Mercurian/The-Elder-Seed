@@ -2,6 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Establecer enumeradores globales.
+    public enum Axis {
+
+        X,
+        Y,
+        Z
+        }
+    public enum Direction {
+
+        Left,
+        Right,
+        Up,
+        Down,
+        }
+    public enum Rarity {
+
+        Common,
+        Rare,
+        Epic,
+        Legendary
+        }
+
 public abstract class GameBehaviour : MonoBehaviour {
 	
     //Establecer variables.
@@ -9,19 +31,6 @@ public abstract class GameBehaviour : MonoBehaviour {
         //Establecer estructuras.
 		
         //Establecer enumeradores.
-        public enum Axis {
-
-            X,
-            Y,
-            Z
-            }
-        public enum Direction {
-
-            Left,
-            Right,
-            Up,
-            Down,
-            }
 		
         //Establecer variables estaticas.
 		
@@ -43,7 +52,7 @@ public abstract class GameBehaviour : MonoBehaviour {
         //Funciones privadas.
 		
         //Funciones publicas.
-        public Vector2Int GetDirection(Direction direction) {
+        public static Vector2Int GetDirection(Direction direction) {
             
             Vector2Int m_pos = new Vector2Int();
 
@@ -57,7 +66,7 @@ public abstract class GameBehaviour : MonoBehaviour {
             
             return m_pos;
             }
-        public Direction GetDirection(Vector2Int direction) {
+        public static Direction GetDirection(Vector2Int direction) {
             
             if (direction == Vector2Int.up) return Direction.Up;   
             else if (direction == Vector2Int.down) return Direction.Down;  
