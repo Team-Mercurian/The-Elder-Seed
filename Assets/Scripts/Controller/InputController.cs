@@ -24,16 +24,23 @@ public class InputController : MonoBehaviour {
             [Header("Input References")]
             [SerializeField] private PlayerInput m_playerInput = null;              //Referencia al Input System del jugador.
 			
+            [Header("Input Values")]
+            [SerializeField] private float m_secsToQuitDungeon = 3;
+
             //Privadas.
             private InputAction m_moveAction = null;                                //Referencia a la accion de mover del jugador.
             private InputAction m_lookAction = null;                                //Referencia a la accion de mirar del jugador.
 			
             //Privadas.
-            private CameraBrain m_cameraBrain;
-            private PlayerBrain m_playerBrain;
+            private CameraController m_cameraBrain;
             private CursorController m_cursorController;
 
             private bool m_isShowingCursor = false;
+
+            private PlayerMovement m_playerMovement;
+            private EntityAttack m_playerAttack;
+
+            private Coroutine m_dungeonQuitCoroutine;
 			
 			
     //Funciones
@@ -42,8 +49,9 @@ public class InputController : MonoBehaviour {
         private void Start() {
 			
             //Establecer referencias a componentes.
-            m_cameraBrain = CameraBrain.GetSingleton();
-            m_playerBrain = PlayerBrain.GetSingleton();
+            m_cameraBrain = CameraController.GetSingleton();
+            m_playerMovement = PlayerBrain.GetSingleton().GetPlayerMovement();
+            m_playerAttack = PlayerBrain.GetSingleton().GetAttack();
             m_cursorController = CursorController.GetSingleton();
 
             //Establecer las referencias a las acciones.
@@ -61,7 +69,7 @@ public class InputController : MonoBehaviour {
 
             //Establecer la velocidad del jugador.
             Vector2 m_moveValue = m_moveAction.ReadValue<Vector2>();
-            SetPlayerVelocity(new Vector3(m_moveValue.x, 0, m_moveValue.y));
+            SetPlayerVelocity(new Vector2(m_moveValue.x, m_moveValue.y));
             }
 		
         //Funciones privadas.
@@ -70,10 +78,10 @@ public class InputController : MonoBehaviour {
             if (m_cameraBrain == null) return;
             m_cameraBrain.SetRotationVelocity(velocity);
             }
-        private void SetPlayerVelocity(Vector3 velocity) {
+        private void SetPlayerVelocity(Vector2 velocity) {
 
-            if (m_playerBrain == null) return;
-            m_playerBrain.SetVelocity(velocity);
+            if (m_playerMovement == null) return;
+            m_playerMovement.SetHorizontalVelocity(velocity);
             }
 		
         //Funciones publicas.
@@ -98,7 +106,7 @@ public class InputController : MonoBehaviour {
             }
         public void Run(InputAction.CallbackContext context) {
 
-            if (m_playerBrain == null) return;
+            if (m_playerMovement == null) return;
 
             bool m_run = false;
 
@@ -106,7 +114,30 @@ public class InputController : MonoBehaviour {
             else if (context.phase == InputActionPhase.Canceled) m_run = false;
             else return; 
 
-            m_playerBrain.SetRun(m_run);
+            m_playerMovement.SetRun(m_run);
+            }
+        public void Jump(InputAction.CallbackContext context) {
+            
+            if (context.phase != InputActionPhase.Started) return;
+            
+            m_playerMovement.Jump();
+            }
+        public void Attack(InputAction.CallbackContext context) {
+            
+            if (context.phase != InputActionPhase.Started) return;
+            
+            m_playerAttack.Attack();
+            }
+        public void QuitDungeon(InputAction.CallbackContext context) {
+
+            if (SceneController.GetActualScene() == SceneController.Scenes.Ruins) {
+
+                if (context.phase == InputActionPhase.Started) if (m_dungeonQuitCoroutine == null) m_dungeonQuitCoroutine = StartCoroutine(DungeonQuitCoroutine(m_secsToQuitDungeon));
+                else if (context.phase == InputActionPhase.Canceled) {
+
+                    if (m_dungeonQuitCoroutine != null) StopCoroutine(m_dungeonQuitCoroutine); 
+                    }
+                }
             }
 		
         //Funciones heredadas.
@@ -114,5 +145,16 @@ public class InputController : MonoBehaviour {
         //Funciones ha heredar.
 		
         //Corotinas.
-		
+        private IEnumerator DungeonQuitCoroutine(float quitTime) {
+
+            float m_count = 0;
+
+            while(m_count < quitTime) {
+
+                m_count += Time.deltaTime;
+                yield return null;
+                }
+
+            SceneController.GetSingleton().LoadScene(SceneController.Scenes.House);
+            }
         }

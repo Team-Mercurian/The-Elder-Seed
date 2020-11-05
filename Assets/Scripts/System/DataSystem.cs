@@ -12,6 +12,15 @@ public class DataSystem : MonoBehaviour {
 
     private static List<RoomData> m_runRoomsData;
     private static Vector2Int m_actualRoom;
+        
+    private static TemporalData m_temporalData;
+
+        //Publicas.
+        [Header("Persistent Room Holder")]
+        [SerializeField] private GameObject[] m_rooms = null;
+        [SerializeField] private GameObject[] m_chestRooms = null;
+        [SerializeField] private GameObject[] m_enemies = null;
+        [SerializeField] private Weapon[] m_weapons = null;
 
     //Funciones de MonoBehaviour.
     private void Awake() {
@@ -41,6 +50,8 @@ public class DataSystem : MonoBehaviour {
 
         string m_rawData = JsonUtility.ToJson(m_masterData, true);
         File.WriteAllText(Application.persistentDataPath + "/save.json", m_rawData);
+
+        Debug.Log("Saved");
         }
 
     private MasterData Load() {
@@ -55,33 +66,10 @@ public class DataSystem : MonoBehaviour {
 
         return m_data;
         }
-    public static DataSystem GetSingleton() {
 
-        return m_instance;
-        }
-
-
-    public GameData GetGameData() {
-
-        return m_gameData;
-        }
-    
-    public List<RoomData> GetRoomsData() {
-
-        return m_runRoomsData;
-        }
     public void SetRoomsData(List<RoomData> runRoomsData) {
 
         m_runRoomsData = runRoomsData;
-        }
-
-    public Vector2Int GetActualRoom() {
-
-        return m_actualRoom;
-        }
-    public void SetActualRoom(Vector2Int actualRoom) {
-        
-        m_actualRoom = actualRoom;
         }
 
     public RoomData GetRoomData(Vector2Int roomPosition) {
@@ -93,17 +81,56 @@ public class DataSystem : MonoBehaviour {
         
         return null;
         }
+
+    public static DataSystem GetSingleton() => m_instance;
+
+    public GameData GetGameData() => m_gameData;    
+    public List<RoomData> GetRoomsData() => m_runRoomsData;
+
+    public Vector2Int GetActualRoom() => m_actualRoom;
+    public void SetActualRoom(Vector2Int actualRoom) => m_actualRoom = actualRoom;
+
+    public GameObject GetRoomPrefab(int index) => m_rooms[index];
+    public int GetRandomRoomPrefabIndex() => Random.Range(0, m_rooms.Length);
+
+    public GameObject GetChestRoomPrefab(int index) => m_chestRooms[index];
+    public int GetRandomChestRoomPrefabIndex() => Random.Range(0, m_rooms.Length);
+
+    public GameObject GetEnemyPrefab(int index) => m_enemies[index];
+    public int GetRandomEnemyPrefabIndex() => Random.Range(0, m_enemies.Length);
+
+    public void SetTemporalData(TemporalData temporalData) => m_temporalData = temporalData;
+    public TemporalData GetTemporalData() => m_temporalData;
+
+    public void SetActualWeapon(int index) => m_gameData.SetActualWeapon(index);
+
+    public Weapon GetActualWeapon() => m_weapons[GetActualWeaponData().GetIndex()];   
+    public WeaponData GetActualWeaponData() => m_gameData.GetActualWeapon();   
+    
+    public Weapon GetWeapon(int index) => m_weapons[index];   
+
+    public void UseActualWeapon() => m_gameData.UseWeapon(0);
+
+    public Weapon AddRandomWeapon() {
+        
+        int m_weaponIndex = Random.Range(0, m_weapons.Length);
+        Weapon m_weapon = m_weapons[m_weaponIndex];
+
+        m_gameData.AddWeapon(m_weaponIndex, m_weapon.GetUses());
+
+        return m_weapon;
+        }
     }
 
 [System.Serializable]
 public class MasterData {
 
-    [SerializeField] private GameData[] m_gameDatas;
+    [SerializeField] private List<GameData> m_gameDatas;
 
     public MasterData() {
 
-        m_gameDatas = new GameData[4];
-        m_gameDatas[0] = new GameData();
+        m_gameDatas = new List<GameData>();
+        m_gameDatas.Add(new GameData());
         }
 
     public GameData GetGameData(int file) {
@@ -115,12 +142,124 @@ public class MasterData {
 [System.Serializable]
 public class GameData {
 
+    [SerializeField] private int m_seedsCount;
+    [SerializeField] private int m_actualWeaponInventoryIndex;
+
+    [SerializeField] private List<WeaponData> m_inventoryWeapons;
+
     public GameData() { 
         
-        
+        m_seedsCount = 0;
+
+        m_inventoryWeapons = new List<WeaponData>();
+        m_inventoryWeapons.Add(new WeaponData(0, DataSystem.GetSingleton().GetWeapon(0).GetUses()));
+
+        m_actualWeaponInventoryIndex = 0;
+        }
+
+    public void AddSeeds(int value) => m_seedsCount += value;
+    public int GetSeedCount() => m_seedsCount;
+
+    public void SetActualWeapon(int index) => m_actualWeaponInventoryIndex = index;
+    public WeaponData GetActualWeapon() => SearchInWeaponInventory(m_actualWeaponInventoryIndex);
+
+    public void UseWeapon(int index) => m_inventoryWeapons[index].UseWeapon();
+
+    public void AddWeapon(int index, int uses) => m_inventoryWeapons.Add(new WeaponData(index, uses));
+
+    public WeaponData SearchInWeaponInventory(int index) {
+
+        foreach(WeaponData m_w in m_inventoryWeapons) {
+
+            if (m_w.GetIndex() == index) return m_w;
+            }
+
+        return new WeaponData(-1, 0);
         }
     }
 
+[System.Serializable]
+public class WeaponData {
+    
+    [SerializeField] private int m_weaponIndex;
+    [SerializeField] private int m_uses;
+
+    public WeaponData() {
+
+        m_weaponIndex = -1;
+        m_uses = 0;
+        }
+    public WeaponData(int weaponIndex, int uses) {
+
+        m_weaponIndex = weaponIndex;
+        m_uses = uses;
+        }
+
+    public int GetIndex() => m_weaponIndex;
+    public void UseWeapon() => m_uses --;
+    public void SetUses(int count) => m_uses = count;
+    public int GetUses() => m_uses;
+    }
+
+public class RoomData {
+    
+    public enum RoomType {
+
+        Room,
+        Chest,
+        }
+
+    [SerializeField] private Vector2Int m_roomPosition;
+    [SerializeField] private int m_roomPrefabIndex;
+    [SerializeField] private RoomType m_roomType;
+    
+    public RoomData(Vector2Int roomPosition, int prefabIndex, RoomType roomType) {
+        
+        m_roomPosition = roomPosition;
+        m_roomPrefabIndex = prefabIndex;
+        m_roomType = roomType;
+        }
+    public Vector2Int GetRoomPosition() {
+
+        return m_roomPosition;
+        }
+    public int GetRoomPrefabIndex() {
+
+        return m_roomPrefabIndex;
+        }
+    public RoomType GetRoomType() {
+
+        return m_roomType;
+        }
+    }
+
+public class TemporalData {
+
+    [SerializeField] private PlayerData m_playerData; 
+
+    public TemporalData(PlayerData playerData) {
+
+        m_playerData = playerData;
+        }   
+        
+    public void SetPlayer(PlayerData playerData) => m_playerData = playerData; 
+    public PlayerData GetPlayer() => m_playerData;
+    }
+
+public class PlayerData {
+
+    [SerializeField] private int m_playerHealth;
+
+    public PlayerData(int playerHealth) {
+
+        m_playerHealth = playerHealth;
+        }   
+
+    public void SetHealth(int health) => m_playerHealth = health; 
+    public int GetHealth() => m_playerHealth;
+    }
+
+/* Deprecated generation.
 public class RoomData {
     
     [SerializeField] private Vector2Int m_roomPosition;
@@ -165,4 +304,4 @@ public class RoomData {
         
         return Vector2Int.zero;
         }
-    }
+    }*/
