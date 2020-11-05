@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEvents : GameBehaviour {
+public abstract class InteractableBehaviour : GameBehaviour {
 	
     //Establecer variables.
 		
@@ -26,17 +26,11 @@ public class PlayerEvents : GameBehaviour {
     //Funciones
 		
         //Funciones de MonoBehaviour
-        private void OnTriggerEnter(Collider collider) {
-			
-            if (collider.CompareTag("Interactable")) {
-
-                collider.GetComponent<InteractableBehaviour>().Interact();
-                }
-            }
 		
         //Funciones privadas.
 		
         //Funciones publicas.
+        public abstract void Interact();
 		
         //Funciones heredadas.
 		

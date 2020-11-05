@@ -18,6 +18,7 @@ public class DataSystem : MonoBehaviour {
         //Publicas.
         [Header("Persistent Room Holder")]
         [SerializeField] private GameObject[] m_rooms = null;
+        [SerializeField] private GameObject[] m_chestRooms = null;
         [SerializeField] private GameObject[] m_enemies = null;
         [SerializeField] private Weapon[] m_weapons = null;
 
@@ -92,6 +93,9 @@ public class DataSystem : MonoBehaviour {
     public GameObject GetRoomPrefab(int index) => m_rooms[index];
     public int GetRandomRoomPrefabIndex() => Random.Range(0, m_rooms.Length);
 
+    public GameObject GetChestRoomPrefab(int index) => m_chestRooms[index];
+    public int GetRandomChestRoomPrefabIndex() => Random.Range(0, m_rooms.Length);
+
     public GameObject GetEnemyPrefab(int index) => m_enemies[index];
     public int GetRandomEnemyPrefabIndex() => Random.Range(0, m_enemies.Length);
 
@@ -106,6 +110,16 @@ public class DataSystem : MonoBehaviour {
     public Weapon GetWeapon(int index) => m_weapons[index];   
 
     public void UseActualWeapon() => m_gameData.UseWeapon(0);
+
+    public Weapon AddRandomWeapon() {
+        
+        int m_weaponIndex = Random.Range(0, m_weapons.Length);
+        Weapon m_weapon = m_weapons[m_weaponIndex];
+
+        m_gameData.AddWeapon(m_weaponIndex, m_weapon.GetUses());
+
+        return m_weapon;
+        }
     }
 
 [System.Serializable]
@@ -149,10 +163,9 @@ public class GameData {
     public void SetActualWeapon(int index) => m_actualWeaponInventoryIndex = index;
     public WeaponData GetActualWeapon() => SearchInWeaponInventory(m_actualWeaponInventoryIndex);
 
-    public void UseWeapon(int index)  {
-        
-        m_inventoryWeapons[index].UseWeapon();
-        } 
+    public void UseWeapon(int index) => m_inventoryWeapons[index].UseWeapon();
+
+    public void AddWeapon(int index, int uses) => m_inventoryWeapons.Add(new WeaponData(index, uses));
 
     public WeaponData SearchInWeaponInventory(int index) {
 
@@ -190,13 +203,21 @@ public class WeaponData {
 
 public class RoomData {
     
+    public enum RoomType {
+
+        Room,
+        Chest,
+        }
+
     [SerializeField] private Vector2Int m_roomPosition;
     [SerializeField] private int m_roomPrefabIndex;
+    [SerializeField] private RoomType m_roomType;
     
-    public RoomData(Vector2Int roomPosition, int prefabIndex) {
+    public RoomData(Vector2Int roomPosition, int prefabIndex, RoomType roomType) {
         
         m_roomPosition = roomPosition;
         m_roomPrefabIndex = prefabIndex;
+        m_roomType = roomType;
         }
     public Vector2Int GetRoomPosition() {
 
@@ -205,6 +226,10 @@ public class RoomData {
     public int GetRoomPrefabIndex() {
 
         return m_roomPrefabIndex;
+        }
+    public RoomType GetRoomType() {
+
+        return m_roomType;
         }
     }
 

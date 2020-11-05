@@ -45,6 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rooms:
   - {fileID: 719703697605135045, guid: 92d20d0261850cc40bebd235363566a6, type: 3}
+  m_chestRooms:
+  - {fileID: 719703697605135045, guid: bd9615e5b4cac0649930ce32e9debe67, type: 3}
   m_enemies:
   - {fileID: 5215380405671523419, guid: bb46ab08b2ff42a4c90306a5cb23c2b3, type: 3}
   m_weapons:

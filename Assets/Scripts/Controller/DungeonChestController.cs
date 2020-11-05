@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEvents : GameBehaviour {
+public class DungeonChestController : InteractableBehaviour {
 	
     //Establecer variables.
 		
@@ -26,17 +26,16 @@ public class PlayerEvents : GameBehaviour {
     //Funciones
 		
         //Funciones de MonoBehaviour
-        private void OnTriggerEnter(Collider collider) {
-			
-            if (collider.CompareTag("Interactable")) {
-
-                collider.GetComponent<InteractableBehaviour>().Interact();
-                }
-            }
 		
         //Funciones privadas.
 		
         //Funciones publicas.
+        public override void Interact() {
+
+            Weapon m_weapon = DataSystem.GetSingleton().AddRandomWeapon();
+            Debug.Log("Added the weapon: " + m_weapon.GetName() + " to the inventory.");
+            Destroy(gameObject);            
+            }
 		
         //Funciones heredadas.
 		
