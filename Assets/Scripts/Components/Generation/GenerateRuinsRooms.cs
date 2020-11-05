@@ -21,6 +21,7 @@ public class GenerateRuinsRooms : GameBehaviour {
             //Publicas.
             [Header("Generate All Rooms")]
 			[SerializeField] private int m_roomsCount = 10;       
+			[SerializeField] private int m_chestsRooms = 2;       
 
             [Header("Debug")]
             [SerializeField] private GameObject m_testScene = null;
@@ -51,15 +52,29 @@ public class GenerateRuinsRooms : GameBehaviour {
 
                 List<Vector2Int> m_roomsPositions = new List<Vector2Int>();
 
-                while(m_generatedRooms < m_roomsCount) {
+                while(m_generatedRooms < (m_roomsCount + m_chestsRooms)) {
 
                     if (!GetValueInList(m_pos, m_roomsPositions)) {
-                        
-                        int m_roomPrefabIndex = m_dataSystem.GetRandomRoomPrefabIndex();
-                        
-                        m_roomsPositions.Add(m_pos);
-                        m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex));
-                        m_generatedRooms ++;
+
+                        bool m_generateChest = GetIfIsGenerateChest(m_generatedRooms);
+
+                        if (m_generateChest) {
+
+                            int m_roomPrefabIndex = m_dataSystem.GetRandomChestRoomPrefabIndex();
+                            
+                            m_roomsPositions.Add(m_pos);
+                            m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex, RoomData.RoomType.Chest));
+                            m_generatedRooms++;
+                            }
+
+                        else {
+
+                            int m_roomPrefabIndex = m_dataSystem.GetRandomRoomPrefabIndex();
+                            
+                            m_roomsPositions.Add(m_pos);
+                            m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex, RoomData.RoomType.Room));
+                            m_generatedRooms ++;
+                            }
                         }
 
                     int m_directionRaw = Random.Range(0, 4);
@@ -84,17 +99,38 @@ public class GenerateRuinsRooms : GameBehaviour {
             }
         private void GenerateRoom(RoomData roomData) {
 
-            GameObject m_roomPrefab;
+            GameObject m_roomPrefab = null;
 
-            if (m_testScene == null) m_roomPrefab = m_dataSystem.GetRoomPrefab(roomData.GetRoomPrefabIndex());
-            else m_roomPrefab = m_testScene;
+            if (roomData.GetRoomType() == RoomData.RoomType.Room) {
+
+                if (m_testScene == null) m_roomPrefab = m_dataSystem.GetRoomPrefab(roomData.GetRoomPrefabIndex());
+                else m_roomPrefab = m_testScene;
+                }
+            
+            else if (roomData.GetRoomType() == RoomData.RoomType.Chest) {
+
+                m_roomPrefab = m_dataSystem.GetChestRoomPrefab(roomData.GetRoomPrefabIndex());
+                }
 
             RoomController m_roomController = Instantiate(m_roomPrefab, transform).GetComponent<RoomController>();
             m_roomController.SetData(roomData.GetRoomPosition());
             }		
+        private bool GetIfIsGenerateChest(int actual) {
 
-        //Funciones publicas.
-        public bool GetValueInList(Vector2Int value, List<Vector2Int> list) {
+            int m_calc = Mathf.FloorToInt(((float) (m_roomsCount + m_chestsRooms) / m_chestsRooms));
+            bool m_return = false;
+
+            for(int i = m_calc - 1; i <= m_roomsCount + m_chestsRooms; i += m_calc) {
+                
+                if (i == actual) {
+                    
+                    m_return = true;
+                    }
+                }
+            
+            return m_return;
+            }
+        private bool GetValueInList(Vector2Int value, List<Vector2Int> list) {
 
             foreach(Vector2Int m_pos in list) {
 
@@ -103,6 +139,8 @@ public class GenerateRuinsRooms : GameBehaviour {
             
             return false;
             }
+
+        //Funciones publicas.
 		
         //Funciones heredadas.
 		

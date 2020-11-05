@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuinsPassageController : GameBehaviour {
+public class RuinsPassageController : InteractableBehaviour {
 	
     //Establecer variables.
 		
@@ -73,6 +73,27 @@ public class RuinsPassageController : GameBehaviour {
         public Vector3 GetPlayerAppearPosition() {
             
             return transform.position - (Vector3.Scale(new Vector3(m_directionToMove.x, 0, m_directionToMove.y), transform.localScale));
+            }
+        public override void Interact() {
+
+            Vector2Int m_pos = GetPositionToMove();
+
+            if (m_pos == new Vector2Int(0, -1)) {
+                
+                Debug.Log("Going to House Scene");
+                SceneController.GetSingleton().LoadScene(SceneController.Scenes.House);
+                }
+                
+            else {
+                
+                Debug.Log("Going to room in " + m_pos.x + ", " + m_pos.y);
+
+                Direction m_direction = GetDirection(GetDirectionToMove());
+                RoomController.SetAppearDirection(m_direction);
+
+                DataSystem.GetSingleton().SetActualRoom(m_pos);
+                SceneController.GetSingleton().LoadScene(SceneController.Scenes.Ruins);
+                }
             }
 		
         //Funciones heredadas.

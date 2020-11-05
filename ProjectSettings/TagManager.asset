@@ -8,6 +8,7 @@ TagManager:
   - Forest Passage
   - Entity
   - Enemy
+  - Interactable
   layers:
   - Default
   - TransparentFX
