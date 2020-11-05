@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3198526749835665216}
   - component: {fileID: 4285454606735808335}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 3413153672149178781}
   - component: {fileID: 6058404322266407006}
   - component: {fileID: 507926866000316804}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Passage Template Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
