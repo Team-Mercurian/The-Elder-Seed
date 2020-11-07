@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 2825488261882708786}
   - component: {fileID: 2825488261882708797}
   - component: {fileID: 2825488261882708796}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 2825488262500319681}
   - component: {fileID: 8061321852115285891}
   m_Layer: 0
-  m_Name: Forest Path
+  m_Name: Ruins Entry
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
