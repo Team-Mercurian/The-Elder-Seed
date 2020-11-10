@@ -22,6 +22,8 @@ public class SeedTerrainEditorController : MonoBehaviour {
             //Publicas.
 			
             //Privadas.
+            private FarmingEnviromentController m_farmController;
+            private int m_gridSize;
 			
     //Funciones
 		
@@ -29,14 +31,22 @@ public class SeedTerrainEditorController : MonoBehaviour {
         #if UNITY_EDITOR
         private void Update() {
 
+            if (m_farmController == null) {
+
+                m_farmController = FarmingEnviromentController.GetSingleton();
+                }
+
             transform.position = new Vector3(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z));
             transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x, 1, Mathf.Infinity), 1, Mathf.Clamp(transform.localScale.z, 1, Mathf.Infinity));
+            m_gridSize = m_farmController.GetGridSize();
             }
         private void OnDrawGizmos() {
 
             //Establecer variables.
-            Vector2 m_tls = new Vector2(transform.localScale.x - 1, transform.localScale.z - 1);
             Vector3 m_tp = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+            Vector2 m_tls = new Vector2(transform.localScale.x - 1, transform.localScale.z - 1);
+
+            bool m_isEven = m_gridSize % 2 < 1;
 
             float m_xSraw = m_tls.x/2f;
             float m_ySraw = m_tls.y/2f;
@@ -52,17 +62,17 @@ public class SeedTerrainEditorController : MonoBehaviour {
             //Dibujar grid.
             Gizmos.color = Color.red;
 
-            for(float m_x = -m_xS; m_x <= m_xS; m_x ++) {
+            for(float m_x = -m_xS; m_x <= m_xS; m_x += m_gridSize) {
 
-                for(float m_y = -m_yS; m_y <= m_yS; m_y ++) {
-                                    
+                for(float m_y = -m_yS; m_y <= m_yS; m_y += m_gridSize) {
+
                     float m_lXS = m_x;
                     float m_lYS = m_y;
                     
-                    m_uL = m_tp + new Vector3(-m_lXS, 0, m_lYS);
-                    m_uR = m_tp + new Vector3(m_lXS, 0, m_lYS);
-                    m_dL = m_tp + new Vector3(m_lXS, 0, -m_lYS);
-                    m_dR = m_tp + new Vector3(-m_lXS, 0, -m_lYS);
+                    m_uL = m_tp + new Vector3(m_lXS - m_gridSize, 0, m_lYS - m_gridSize);
+                    m_uR = m_tp + new Vector3(m_lXS + m_gridSize, 0, m_lYS - m_gridSize);
+                    m_dL = m_tp + new Vector3(m_lXS + m_gridSize, 0, m_lYS + m_gridSize);
+                    m_dR = m_tp + new Vector3(m_lXS - m_gridSize, 0, m_lYS + m_gridSize);
 
                     Gizmos.DrawLine(m_uL, m_uR);
                     Gizmos.DrawLine(m_uR, m_dL);
@@ -71,6 +81,7 @@ public class SeedTerrainEditorController : MonoBehaviour {
                     }
                 }
                 
+            
             //Dibujar borde.
             Gizmos.color = Color.green;
 
