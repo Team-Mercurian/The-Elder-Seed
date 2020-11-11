@@ -23,7 +23,7 @@ public class SeedTerrainEditorController : MonoBehaviour {
 			
             //Privadas.
             private FarmingEnviromentController m_farmController;
-            private int m_gridSize;
+            private int m_gridSize = 1;
 			
     //Funciones
 		
@@ -38,7 +38,7 @@ public class SeedTerrainEditorController : MonoBehaviour {
 
             transform.position = new Vector3(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z));
             transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x, 1, Mathf.Infinity), 1, Mathf.Clamp(transform.localScale.z, 1, Mathf.Infinity));
-            m_gridSize = m_farmController.GetGridSize();
+            m_gridSize = m_farmController.GetCellSize();
             }
         private void OnDrawGizmos() {
 

@@ -22,9 +22,10 @@ public class FarmingEnviromentController : MonoBehaviour {
 		
             //Publicas.
             [Header("Farming Controller")]
-			[SerializeField] private int m_gridSize = 2;
+			private int m_gridSize = 2;
 
             //Privadas.
+            private List<Vector3Int> m_grid;
 			
 			
     //Funciones
@@ -33,6 +34,7 @@ public class FarmingEnviromentController : MonoBehaviour {
         private void Awake() {
 
             m_instance = this;
+            m_grid = new List<Vector3Int>();
             }
         private void Update() {
 
@@ -46,14 +48,12 @@ public class FarmingEnviromentController : MonoBehaviour {
         //Funciones privadas.
 		
         //Funciones publicas.
-        public int GetGridSize() {
+        public List<Vector3Int> GetGrid() => m_grid;
+        public void AddCells(List<Vector3Int> cells) => m_grid.AddRange(cells);
+        public int GetCellSize() => m_gridSize;
 
-            return m_gridSize;
-            }
-        public static FarmingEnviromentController GetSingleton() {
-
-            return m_instance;
-            }
+        public static FarmingEnviromentController GetSingleton() => m_instance;
+            
 		
         //Funciones heredadas.
 		
