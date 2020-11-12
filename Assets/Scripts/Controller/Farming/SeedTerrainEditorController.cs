@@ -62,9 +62,9 @@ public class SeedTerrainEditorController : MonoBehaviour {
             //Dibujar grid.
             Gizmos.color = Color.red;
 
-            for(float m_x = -m_xS; m_x <= m_xS; m_x += m_gridSize) {
+            for(float m_x = -m_xS + 1; m_x <= m_xS - 1; m_x += m_gridSize) {
 
-                for(float m_y = -m_yS; m_y <= m_yS; m_y += m_gridSize) {
+                for(float m_y = -m_yS + 1; m_y <= m_yS - 1; m_y += m_gridSize) {
 
                     float m_lXS = m_x;
                     float m_lYS = m_y;

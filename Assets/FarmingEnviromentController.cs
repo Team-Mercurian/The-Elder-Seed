@@ -22,7 +22,7 @@ public class FarmingEnviromentController : MonoBehaviour {
 		
             //Publicas.
             [Header("Farming Controller")]
-			private int m_gridSize = 2;
+			private int m_gridSize = 1;
 
             //Privadas.
             private List<Vector3Int> m_grid;
