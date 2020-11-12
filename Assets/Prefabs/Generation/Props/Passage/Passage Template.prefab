@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3148012921055431026}
   - component: {fileID: 8110605786009882547}
   - component: {fileID: 3044723477119939484}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Passage Template
   m_TagString: Interactable
   m_Icon: {fileID: 0}

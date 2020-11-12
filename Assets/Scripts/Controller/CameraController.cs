@@ -44,10 +44,14 @@ public class CameraController : MonoBehaviour {
             [SerializeField] private float m_minVerticalAngle = -80;                                            //Limite del suelo del jugador.
             [SerializeField] private float m_maxVerticalAngle = 80;                                            //Limite del suelo del jugador.
 
+            [Header("Physics")]
+            [SerializeField] private float m_minPhysicsDistance = 0.5f;
+            [SerializeField] private float m_physicsZoomSmoothness = 0.05f;
+
             [Header("Camera References")]
             [SerializeField] private Transform m_cameraHolder = null;                                           //Referencia del sostenedor de la camara (Hijo).
             [SerializeField] private Transform m_target = null;                                                 //Referencia al objetivo a seguir de la camara.
-			
+
             //Privadas.
             private Vector3 m_positionVelocity = new Vector3();                                                 //Velocidad de la posicion.
             private Vector3 m_direction = new Vector3();                                                        //Direccion de la camara (X y Z).
@@ -58,6 +62,8 @@ public class CameraController : MonoBehaviour {
 
             private float m_smoothedDistance = 0;
             private float m_zoomVelocity = 0;
+
+            private float m_physicsDistance = 100;
 			
     //Funciones
 		
@@ -91,7 +97,31 @@ public class CameraController : MonoBehaviour {
                 m_direction = new Vector3(-Mathf.Cos(m_actualAngle.x * Mathf.Deg2Rad), 0, -Mathf.Sin(m_actualAngle.x * Mathf.Deg2Rad));
             
             //Distancia
-                m_smoothedDistance = Mathf.SmoothDamp(m_smoothedDistance, m_reachDistance, ref m_zoomVelocity, m_zoomSmoothness);
+
+                //Detectar colisiones.
+                Vector3 m_yDifference = new Vector3(0, transform.position.y - m_targetPosition.y, 0);
+                Vector3 m_endPoint = CalculateCameraChildPosition(m_targetPosition, new Vector2(m_reachDistance, m_reachDistance)) + m_yDifference;
+                RaycastHit m_hit;
+
+                float m_finalZoomSmoothness;
+                Ray m_ray = new Ray(m_targetPosition, m_endPoint);
+
+                Debug.DrawRay(m_ray.origin, m_ray.direction);
+
+                if (Physics.Raycast(m_ray, out m_hit, m_reachDistance, 1 << 8, QueryTriggerInteraction.Ignore)) {
+                    
+                    m_physicsDistance = Mathf.Min(Mathf.Clamp(m_hit.distance, m_minPhysicsDistance, m_maxDistance), m_reachDistance);
+                    m_finalZoomSmoothness = m_physicsZoomSmoothness;
+                    }
+                else {
+                    
+                    m_physicsDistance = m_reachDistance;
+                    m_finalZoomSmoothness = m_zoomSmoothness;
+                    }
+
+                //Mover de manera suave la distancia.
+                float m_finalDistance = m_physicsDistance;
+                m_smoothedDistance = Mathf.SmoothDamp(m_smoothedDistance, m_finalDistance, ref m_zoomVelocity, m_finalZoomSmoothness);
 
             //Posicion 
 
@@ -99,7 +129,7 @@ public class CameraController : MonoBehaviour {
                 SetTargetPosition();
 
                 //Establecer las posiciones del hijo.
-                SetCameraChildPosition(m_targetPosition, new Vector2(m_smoothedDistance, m_smoothedDistance));
+                m_cameraHolder.localPosition = CalculateCameraChildPosition(m_targetPosition, new Vector2(m_smoothedDistance, m_smoothedDistance));
                 }
         private void FixedUpdate() {
 
@@ -125,7 +155,7 @@ public class CameraController : MonoBehaviour {
             m_defaultDistance = Mathf.Clamp(m_defaultDistance, m_minDistance, m_maxDistance);
 
             SetTargetPosition();
-            SetCameraChildPosition(m_targetPosition, new Vector2(m_defaultDistance, m_defaultDistance));
+            m_cameraHolder.localPosition = CalculateCameraChildPosition(m_targetPosition, new Vector2(m_defaultDistance, m_defaultDistance));
 
             MoveToATarget(new Vector3(m_targetPosition.x, 0, m_targetPosition.z));
             SetCameraRotation(m_targetPosition);
@@ -187,6 +217,13 @@ public class CameraController : MonoBehaviour {
 
                 Gizmos.DrawLine(m_targetPos + m_posA, m_targetPos + m_posB);
                 }
+
+            //Dibujar distancia colisionada de la camara.
+            Vector3 m_a = m_targetPos;
+            Vector3 m_b = m_cameraHolder.position;
+
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(m_a, m_b);
 
             //Dibujar arco vertical.
             Gizmos.color = Color.red;
@@ -254,7 +291,7 @@ public class CameraController : MonoBehaviour {
 
             m_targetPosition = m_target == null ? transform.position : m_target.position;
             }
-        private void SetCameraChildPosition(Vector3 targetPosition, Vector2 distance) {
+        private Vector3 CalculateCameraChildPosition(Vector3 targetPosition, Vector2 distance) {
 
             //Calculo matematico que encierra un arco vertical dependiendo de el angulo actual.
             int m_sign = Mathf.RoundToInt(Mathf.Sign(m_actualAngle.y));
@@ -272,13 +309,14 @@ public class CameraController : MonoBehaviour {
             float m_z = ((Mathf.Sin(m_actualAngle.x * Mathf.Deg2Rad)) * m_positionMultiplier.x) * Mathf.Cos(m_actualAngle.y * Mathf.Deg2Rad);
             
             //Establecer la posicion del hijo multiplicando la distancia.
-            m_cameraHolder.localPosition = new Vector3(m_x * distance.x, m_y, m_z * distance.x);
+            return new Vector3(m_x * distance.x, m_y, m_z * distance.x);
             }
 
         //Funciones publicas.
         public void SetRotationVelocity(Vector2 velocity) {
             
-            m_reachAngle += new Vector2(-velocity.x, -velocity.y) * m_cameraRotationSensitivity;
+            Vector2 m_savedAngle = new Vector2(-velocity.x, -velocity.y) * m_cameraRotationSensitivity;
+            m_reachAngle = new Vector2(m_reachAngle.x + m_savedAngle.x, Mathf.Clamp(m_reachAngle.y + m_savedAngle.y, m_minVerticalAngle, m_maxVerticalAngle));
 
             m_actualAngle = new Vector2(Mathf.SmoothDampAngle(m_actualAngle.x, m_reachAngle.x, ref m_rotationVelocity.x, m_rotationSmoothness), Mathf.SmoothDampAngle(m_actualAngle.y, m_reachAngle.y, ref m_rotationVelocity.y, m_rotationSmoothness));// Vector2.SmoothDamp(m_actualAngle, m_reachAngle, ref m_rotationVelocity, m_rotationSmoothness);
             m_actualAngle = GetProcessedAngle(m_actualAngle);
