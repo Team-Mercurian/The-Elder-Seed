@@ -50,6 +50,7 @@ public class PlayerMovement : JumpingCharacter {
             m_stamina = m_staminaMaxSecs;
             m_cameraBrain = CameraController.GetSingleton();
             }
+        
         protected override void Update() {
 
             base.Update();

@@ -101,6 +101,7 @@ MonoBehaviour:
   m_runSpeed: 6
   m_defaultSlopeLimit: 45
   m_runSlopeLimit: 60
+  m_animator: {fileID: 0}
 --- !u!114 &6333725622104679913
 MonoBehaviour:
   m_ObjectHideFlags: 0
