@@ -46,17 +46,8 @@ public class SeedTerrainController : MonoBehaviour {
             m_material = m_renderer.material;
             m_material.SetTextureScale("_UnlitColorMap", new Vector2((m_xS * 2) + 1, (m_yS * 2) + 1));
 
-            List<Vector3Int> m_cells = new List<Vector3Int>();
-            
-            for(int m_x = -m_xS; m_x < m_xS + 1; m_x ++) {
-
-                for(int m_y = -m_yS; m_y < m_yS + 1; m_y ++) {
-
-                    m_cells.Add(m_tpInt + new Vector3Int(m_x, 0, m_y));
-                    }
-                }
-            
-            FarmingEnviromentController.GetSingleton().AddCells(m_cells);
+            FarmingEnviromentController.FarmSections m_farmSection = new FarmingEnviromentController.FarmSections(m_tpInt, new Vector2Int(m_xS + 1, m_yS + 1));
+            FarmingEnviromentController.GetSingleton().AddSection(m_farmSection);
             }
 		private void OnValidate() {
 

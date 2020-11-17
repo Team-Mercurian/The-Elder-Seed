@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : MonoBehaviour, IHasLookInput {
 	
     //Establecer variables.
 		
@@ -313,8 +312,10 @@ public class CameraController : MonoBehaviour {
             }
 
         //Funciones publicas.
-        public void SetRotationVelocity(Vector2 velocity) {
+        public void Look(Vector2 velocity) {
             
+            if (Cursor.visible) return;
+
             Vector2 m_savedAngle = new Vector2(-velocity.x, -velocity.y) * m_cameraRotationSensitivity;
             m_reachAngle = new Vector2(m_reachAngle.x + m_savedAngle.x, Mathf.Clamp(m_reachAngle.y + m_savedAngle.y, m_minVerticalAngle, m_maxVerticalAngle));
 

@@ -51,14 +51,14 @@ public class PlayerFarming : MonoBehaviour {
                 
                 m_actualGrid = null;
 
-                foreach(Vector3Int m_cell in FarmingEnviromentController.GetSingleton().GetGrid()) {
+                foreach(FarmingEnviromentController.FarmSections m_section in FarmingEnviromentController.GetSingleton().GetGrid()) {
 
-                    if (new Vector2Int(m_cell.x, m_cell.z) == m_pos) {
+                    if (m_pos.x > m_section.GetMinPosition().x && m_pos.x < m_section.GetMaxPosition().x && m_pos.y > m_section.GetMinPosition().y && m_pos.y < m_section.GetMaxPosition().y) {// new Vector2Int(m_cell.x, m_cell.z) == m_pos) {
 
-                        m_actualGrid = new Vector2Int(m_cell.x, m_cell.z);
+                        m_actualGrid = new Vector2Int(m_pos.x, m_pos.y);
 
                         m_playerCell.gameObject.SetActive(true);
-                        m_playerCell.position = new Vector3(m_actualGrid.Value.x, m_cell.y, m_actualGrid.Value.y);
+                        m_playerCell.position = new Vector3(m_actualGrid.Value.x, m_section.GetPosition().y + 0.01f, m_actualGrid.Value.y);
                         }
                     }
 

@@ -16,7 +16,8 @@ public class InputController : MonoBehaviour {
 		
             //Publicas.
 			
-            //Privadas
+            //Privadas.
+            private static IHasLookInput m_lookInput;
 			
         //Establecer variables.
 		
@@ -50,6 +51,8 @@ public class InputController : MonoBehaviour {
 			
             //Establecer referencias a componentes.
             m_cameraBrain = CameraController.GetSingleton();
+            m_lookInput = m_cameraBrain;
+
             m_playerMovement = PlayerBrain.GetSingleton().GetPlayerMovement();
             m_playerAttack = PlayerBrain.GetSingleton().GetAttack();
             m_cursorController = CursorController.GetSingleton();
@@ -61,11 +64,8 @@ public class InputController : MonoBehaviour {
         private void Update() {
 
             //Establecer la velocidad de rotacion de la camara solo si no se esta mostrando el cursor.
-            if (!m_isShowingCursor) {
-
-                Vector2 m_lookValue = m_lookAction.ReadValue<Vector2>();
-                SetCameraVelocity(m_lookValue);
-                }
+            Vector2 m_lookValue = m_lookAction.ReadValue<Vector2>();
+            Look(m_lookValue);
 
             //Establecer la velocidad del jugador.
             Vector2 m_moveValue = m_moveAction.ReadValue<Vector2>();
@@ -73,10 +73,10 @@ public class InputController : MonoBehaviour {
             }
 		
         //Funciones privadas.
-        private void SetCameraVelocity(Vector2 velocity) {
+        private void Look(Vector2 velocity) {
 
-            if (m_cameraBrain == null) return;
-            m_cameraBrain.SetRotationVelocity(velocity);
+            if (m_lookInput == null) return;
+            m_lookInput.Look(velocity);
             }
         private void SetPlayerVelocity(Vector2 velocity) {
 
@@ -130,7 +130,7 @@ public class InputController : MonoBehaviour {
             }
         public void QuitDungeon(InputAction.CallbackContext context) {
 
-            if (SceneController.GetActualScene() == SceneController.Scenes.Ruins) {
+            if (SceneController.GetActualScene() == Scenes.Ruins) {
 
                 if (context.phase == InputActionPhase.Started) if (m_dungeonQuitCoroutine == null) m_dungeonQuitCoroutine = StartCoroutine(DungeonQuitCoroutine(m_secsToQuitDungeon));
                 else if (context.phase == InputActionPhase.Canceled) {
@@ -140,6 +140,11 @@ public class InputController : MonoBehaviour {
                 }
             }
 		
+        public static void SetLookObject(IHasLookInput lookInput) {
+
+            m_lookInput = lookInput;
+            }
+
         //Funciones heredadas.
 		
         //Funciones ha heredar.
@@ -155,6 +160,6 @@ public class InputController : MonoBehaviour {
                 yield return null;
                 }
 
-            SceneController.GetSingleton().LoadScene(SceneController.Scenes.House);
+            SceneController.GetSingleton().LoadScene(Scenes.House);
             }
         }

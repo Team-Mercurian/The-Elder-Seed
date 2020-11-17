@@ -81,7 +81,7 @@ public class RuinsPassageController : InteractableBehaviour {
             if (m_pos == new Vector2Int(0, -1)) {
                 
                 Debug.Log("Going to House Scene");
-                SceneController.GetSingleton().LoadScene(SceneController.Scenes.House);
+                SceneController.GetSingleton().LoadScene(Scenes.House);
                 }
                 
             else {
@@ -92,7 +92,7 @@ public class RuinsPassageController : InteractableBehaviour {
                 RoomController.SetAppearDirection(m_direction);
 
                 DataSystem.GetSingleton().SetActualRoom(m_pos);
-                SceneController.GetSingleton().LoadScene(SceneController.Scenes.Ruins);
+                SceneController.GetSingleton().LoadScene(Scenes.Ruins);
                 }
             }
 		

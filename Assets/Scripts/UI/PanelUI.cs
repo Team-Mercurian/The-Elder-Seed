@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RuinsEntryController : InteractableBehaviour {
+public abstract class PanelUI : MonoBehaviour {
 	
     //Establecer variables.
 		
@@ -19,26 +19,30 @@ public class RuinsEntryController : InteractableBehaviour {
         //Establecer variables.
 		
             //Publicas.
+            [Header("Base Values")]
+            [SerializeField] private bool m_closeAtStart = true;
 			
             //Privadas.
 			
 			
     //Funciones
 		
-        //Funciones de MonoBehaviour
+        //Funciones de MonoBehaviour.
+        protected virtual void Start() {
 
+            gameObject.SetActive(!m_closeAtStart);
+            }
+		
         //Funciones privadas.
 		
         //Funciones publicas.
-        public override void Interact() {
-
-            SceneController.GetSingleton().LoadScene(Scenes.Ruins);
-            }
 		
         //Funciones heredadas.
 		
         //Funciones ha heredar.
-		
+        public abstract void Open();
+        public abstract void Close();
+
         //Corotinas.
 		
         }

@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum Scenes {
+
+    House,
+    Ruins,
+    }
+
 public class SceneController : MonoBehaviour {
 	
     //Establecer variables.
@@ -10,11 +16,6 @@ public class SceneController : MonoBehaviour {
         //Establecer estructuras.
 		
         //Establecer enumeradores.
-        public enum Scenes {
-
-            House,
-            Ruins,
-            }
 		
         //Establecer variables estaticas.
 		

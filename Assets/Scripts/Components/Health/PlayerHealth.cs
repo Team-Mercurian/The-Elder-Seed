@@ -45,7 +45,7 @@ public class PlayerHealth : EntityHealth {
             
             CameraController.ResetCameraInStart();
             DataSystem.GetSingleton().SetTemporalData(null);
-            SceneController.GetSingleton().LoadScene(SceneController.Scenes.House);
+            SceneController.GetSingleton().LoadScene(Scenes.House);
             }
 
         //Funciones ha heredar.
