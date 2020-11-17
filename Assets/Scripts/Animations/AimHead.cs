@@ -45,7 +45,6 @@ public class AimHead:MonoBehaviour
         if (m_angle > 180) m_angle -= 360;
         if (m_angle < -180) m_angle += 360;
 
-        Debug.Log(m_angle);
         bool m_canLookTarget = m_angle > 0 && m_angle < 180;
 
         m_lookPosition = m_canLookTarget ? m_lookPosition : m_defaultPos;
