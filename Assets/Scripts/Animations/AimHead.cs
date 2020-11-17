@@ -41,13 +41,10 @@ public class AimHead:MonoBehaviour
         if (m_targets.Count > 0) m_lookPosition = m_targets[0].transform.position;
         else m_lookPosition = m_defaultPos;
         
-        
-        float m_angle = Mathf.Atan2(m_lookPosition.z - m_player.position.z, m_lookPosition.x - m_player.position.x) * Mathf.Rad2Deg;
+        float m_angle = (Mathf.Atan2(m_lookPosition.z - m_player.position.z, m_lookPosition.x - m_player.position.x) * Mathf.Rad2Deg) + m_player.eulerAngles.y;
         bool m_canLookTarget = m_angle > 0 && m_angle < 180;
 
-        m_lookPosition = m_canLookTarget? m_lookPosition:m_defaultPos;
-
-        Debug.Log(m_angle);
+        m_lookPosition = m_canLookTarget ? m_lookPosition : m_defaultPos;
 
         m_aimTarget.position = Vector3.SmoothDamp(m_aimTarget.position, m_lookPosition, ref m_velocity, m_smoothness);
     }
