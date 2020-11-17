@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_health: 8
-  m_meshToDeactive: {fileID: 0}
+  m_meshToDeactive: {fileID: 1610120377487229094}
   m_damageCooldown: 3
 --- !u!1 &3180970899159478526
 GameObject:
@@ -287,6 +287,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae710def9d193b843b1c30ba6c3bda8f, type: 3}
+--- !u!1 &1610120377487229094 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8361326672604976168, guid: ae710def9d193b843b1c30ba6c3bda8f,
+    type: 3}
+  m_PrefabInstance: {fileID: 7084493979175146638}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2095189085106657820 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9170092874689023634, guid: ae710def9d193b843b1c30ba6c3bda8f,

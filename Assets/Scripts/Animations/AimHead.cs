@@ -42,6 +42,10 @@ public class AimHead:MonoBehaviour
         else m_lookPosition = m_defaultPos;
         
         float m_angle = (Mathf.Atan2(m_lookPosition.z - m_player.position.z, m_lookPosition.x - m_player.position.x) * Mathf.Rad2Deg) + m_player.eulerAngles.y;
+        if (m_angle > 180) m_angle -= 360;
+        if (m_angle < -180) m_angle += 360;
+
+        Debug.Log(m_angle);
         bool m_canLookTarget = m_angle > 0 && m_angle < 180;
 
         m_lookPosition = m_canLookTarget ? m_lookPosition : m_defaultPos;
