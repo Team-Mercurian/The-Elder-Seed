@@ -1,14 +1,9 @@
 fileFormatVersion: 2
-guid: bc507d7a5d2eaa348b62665a8a83a368
+guid: e335bf45bc00fdf4f8cf008d95b5a776
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Scarf
-    second: {fileID: 2100000, guid: c20d1088406ff0040bb7949b3b0be8ad, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 1
     materialName: 0
