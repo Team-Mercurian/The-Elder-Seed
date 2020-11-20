@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum InputType {
+
+    Keyboard,
+    Gamepad
+    }
+
 [RequireComponent(typeof(PlayerInput))]
 public class InputController : MonoBehaviour {
 	
@@ -18,6 +24,7 @@ public class InputController : MonoBehaviour {
 			
             //Privadas.
             private static IHasLookInput m_lookInput;
+            private static InputType m_currentInput = InputType.Keyboard;
 			
         //Establecer variables.
 		
@@ -70,6 +77,9 @@ public class InputController : MonoBehaviour {
             //Establecer la velocidad del jugador.
             Vector2 m_moveValue = m_moveAction.ReadValue<Vector2>();
             SetPlayerVelocity(new Vector2(m_moveValue.x, m_moveValue.y));
+
+            if (m_playerInput.currentControlScheme == "Keyboard") m_currentInput = InputType.Keyboard;
+            else if (m_playerInput.currentControlScheme == "Gamepad") m_currentInput = InputType.Gamepad;
             }
 		
         //Funciones privadas.
@@ -143,6 +153,11 @@ public class InputController : MonoBehaviour {
         public static void SetLookObject(IHasLookInput lookInput) {
 
             m_lookInput = lookInput;
+            }
+
+        public static InputType GetInputType() {
+
+            return m_currentInput;
             }
 
         //Funciones heredadas.

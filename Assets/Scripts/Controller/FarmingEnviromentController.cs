@@ -43,6 +43,7 @@ public class FarmingEnviromentController : MonoBehaviour {
 
             //Privadas.
             private List<FarmSections> m_grid;
+            private List<PlantController> m_plants;
 			
 			
     //Funciones
@@ -52,6 +53,7 @@ public class FarmingEnviromentController : MonoBehaviour {
 
             m_instance = this;
             m_grid = new List<FarmSections>();
+            m_plants = new List<PlantController>();
             }
         private void Update() {
 
@@ -67,6 +69,22 @@ public class FarmingEnviromentController : MonoBehaviour {
         //Funciones publicas.
         public List<FarmSections> GetGrid() => m_grid;
         public void AddSection(FarmSections section) => m_grid.Add(section);
+
+        public List<PlantController> GetPlantControllers() => m_plants;
+        public PlantController GetPlantController(int index) => m_plants[index]; 
+        public PlantController GetPlantController(Vector3Int position) {
+
+            foreach(PlantController m_p in m_plants) {
+                
+                if (m_p.GetPosition() == position) return m_p;
+                }
+            
+            return null;
+            }
+
+        public void AddPlant(PlantController plant) => m_plants.Add(plant);
+        public void RemovePlant(PlantController plant) => m_plants.Remove(plant);
+
         public int GetCellSize() => m_gridSize;
 
         public static FarmingEnviromentController GetSingleton() => m_instance;

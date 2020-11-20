@@ -21,6 +21,7 @@ public class DataSystem : MonoBehaviour {
         [SerializeField] private GameObject[] m_chestRooms = null;
         [SerializeField] private GameObject[] m_enemies = null;
         [SerializeField] private Weapon[] m_weapons = null;
+        [SerializeField] private Seed[] m_seedTypes = null;
 
     //Funciones de MonoBehaviour.
     private void Awake() {
@@ -109,6 +110,25 @@ public class DataSystem : MonoBehaviour {
     
     public Weapon GetWeapon(int index) => m_weapons[index];   
 
+    public Seed GetSeed(int index) => m_seedTypes[index];   
+    public Seed[] GetAllSeeds() => m_seedTypes;   
+
+    public void AddGridData(GridData data) => m_gameData.AddGridData(data);
+    public void RemoveGridData(Vector3Int position) {
+        GridData m_d = null;
+
+        foreach(GridData m_gd in m_gameData.GetGridDatas()) {
+
+            if (position == m_gd.GetSeedPosition()) {
+
+                m_d = m_gd;
+                break;
+                }
+            }
+
+        m_gameData.RemoveGridData(m_d);
+        }    
+    
     public void UseActualWeapon() => m_gameData.UseWeapon(0);
 
     public Weapon AddRandomWeapon() {
@@ -120,6 +140,16 @@ public class DataSystem : MonoBehaviour {
 
         return m_weapon;
         }
+
+    public bool GetIfGridIsUsed(Vector3Int position) {
+
+        foreach(GridData m_gd in m_gameData.GetGridDatas()) {
+
+            if (m_gd.GetSeedPosition() == position) return true;
+            }
+
+        return false;
+        }    
     }
 
 [System.Serializable]
@@ -142,23 +172,43 @@ public class MasterData {
 [System.Serializable]
 public class GameData {
 
-    [SerializeField] private int m_seedsCount;
     [SerializeField] private int m_actualWeaponInventoryIndex;
 
     [SerializeField] private List<WeaponData> m_inventoryWeapons;
+    [SerializeField] private List<GridData> m_gridDatas;
+
+    [SerializeField] private List<int> m_harvestedSeeds;
+    [SerializeField] private List<int> m_seedsInInventory;
 
     public GameData() { 
         
-        m_seedsCount = 0;
+        m_seedsInInventory = new List<int>();
+
+        for(int i = 0; i < 5; i ++) m_seedsInInventory.Add(0);
+        for(int i = 0; i < 5; i ++) m_seedsInInventory.Add(1);
 
         m_inventoryWeapons = new List<WeaponData>();
         m_inventoryWeapons.Add(new WeaponData(0, DataSystem.GetSingleton().GetWeapon(0).GetUses()));
 
+        m_gridDatas = new List<GridData>();
+
+        m_harvestedSeeds = new List<int>();
+
         m_actualWeaponInventoryIndex = 0;
         }
 
-    public void AddSeeds(int value) => m_seedsCount += value;
-    public int GetSeedCount() => m_seedsCount;
+    public void AddSeeds(int index) => m_seedsInInventory.Add(index);
+    public int GetSeedCount(int index) {
+
+        int m_count = 0;
+
+        foreach(int m_i in m_seedsInInventory) {
+
+            if (m_i == index) m_count ++;
+            }
+
+        return m_count;
+        }
 
     public void SetActualWeapon(int index) => m_actualWeaponInventoryIndex = index;
     public WeaponData GetActualWeapon() => SearchInWeaponInventory(m_actualWeaponInventoryIndex);
@@ -166,6 +216,13 @@ public class GameData {
     public void UseWeapon(int index) => m_inventoryWeapons[index].UseWeapon();
 
     public void AddWeapon(int index, int uses) => m_inventoryWeapons.Add(new WeaponData(index, uses));
+
+    public void AddGridData(GridData data) => m_gridDatas.Add(data);
+    public void RemoveGridData(GridData data) => m_gridDatas.Remove(data);
+
+    public List<GridData> GetGridDatas() => m_gridDatas;
+
+    public void AddHarvestedSeed(int index) => m_harvestedSeeds.Add(index);
 
     public WeaponData SearchInWeaponInventory(int index) {
 
@@ -199,6 +256,25 @@ public class WeaponData {
     public void UseWeapon() => m_uses --;
     public void SetUses(int count) => m_uses = count;
     public int GetUses() => m_uses;
+    }
+
+[System.Serializable] 
+public class GridData {
+
+    [SerializeField] private int m_seedIndex;
+    [SerializeField] private Vector3Int m_position;
+    [SerializeField] private System.TimeSpan m_plantStartTime;
+
+    public GridData(int seedIndex, Vector3Int position, System.TimeSpan plantStart) {
+
+        m_seedIndex = seedIndex;
+        m_position = position;
+
+        m_plantStartTime = plantStart;
+        }   
+
+    public int GetSeedIndex() => m_seedIndex;
+    public Vector3Int GetSeedPosition() => m_position;
     }
 
 public class RoomData {

@@ -30,6 +30,9 @@ public class Seed : ScriptableObject {
             [SerializeField] private SeedType m_type = SeedType.A;
             [SerializeField] private Rarity m_rarity = Rarity.Common;
             [SerializeField] private Sprite m_UIIcon = null;
+            [SerializeField] private Mesh m_seedMesh = null;
+            [SerializeField] private Mesh m_plantMesh = null;
+            [SerializeField] private float m_timeToGrow = 5;
 			
             //Privadas.
 			
@@ -45,6 +48,9 @@ public class Seed : ScriptableObject {
         public SeedType GetSeedType() => m_type;
         public Rarity GetRarity() => m_rarity;
         public Sprite GetIcon() => m_UIIcon;
+        public Mesh GetSeedMesh() => m_seedMesh;
+        public Mesh GetPlantMesh() => m_plantMesh;
+        public float GetTimeToGrow() => m_timeToGrow;
 
         //Funciones heredadas.
 		

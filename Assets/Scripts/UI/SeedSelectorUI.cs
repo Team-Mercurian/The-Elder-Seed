@@ -24,9 +24,11 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             [SerializeField] private CanvasGroup m_canvasGroup = null;
 
             [Space]
+            [SerializeField] private RectTransform m_selector = null;
+
+            [Space]
             [SerializeField] private GameObject m_seed = null;
             [SerializeField] private GameObject m_lineSeparator = null;
-			[SerializeField] private Seed[] m_seedTypes = null;
 
             [Header("Values")]
             [SerializeField] private AnimationCurve m_animationCurve = null;
@@ -36,7 +38,8 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             private List<Transform> m_seedsTransform;
             private Coroutine m_IORoutine = null;
 			
-			
+            private int m_selectedSeed;
+
     //Funciones
 		
         //Funciones de MonoBehaviour
@@ -53,7 +56,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
         private void CreateSeeds() {
 
             m_seedsTransform = new List<Transform>();
-            int m_count = m_seedTypes.Length;
+            int m_count = DataSystem.GetSingleton().GetAllSeeds().Length;
 
             for(int i = 0; i < m_count * 2; i ++) {
 
@@ -81,7 +84,11 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
 
             for(int i = 0; i < m_seedsTransform.Count; i ++) {
                 
-                if (selectedSeedIndex == i) m_seedsTransform[i].localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                if (selectedSeedIndex == i) {
+
+                    m_seedsTransform[i].localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                    m_selectedSeed = i;
+                    }
                 else m_seedsTransform[i].localScale = Vector3.one;
                 }
             }
@@ -98,6 +105,9 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             m_IORoutine = StartCoroutine(PanelIOCoroutine(true));
             
             InputController.SetLookObject(this);
+
+            m_selector.anchoredPosition = Vector2.zero;
+            m_selectedSeed = -1;
             }
             
         [ContextMenu("Debug Close")]
@@ -107,21 +117,36 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             m_IORoutine = StartCoroutine(PanelIOCoroutine(false));
             
             InputController.SetLookObject(CameraController.GetSingleton());
+            PlayerFarming.SetSeed(m_selectedSeed);
             } 
 		
         public void Look(Vector2 velocity) {
             
-            if (Mathf.Abs(velocity.x) < 5f && Mathf.Abs(velocity.y) < 5f) return;
-            
-            float m_angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+            if (InputController.GetInputType() == InputType.Keyboard) m_selector.anchoredPosition += velocity;
+            else m_selector.anchoredPosition = velocity * m_distance;
+
+            float m_angle = Mathf.Atan2(m_selector.anchoredPosition.y, m_selector.anchoredPosition.x) * Mathf.Rad2Deg;
             if (m_angle < 0) m_angle += 360f;
+
+            float m_selectorDistance = Vector2.Distance(Vector2.zero, m_selector.anchoredPosition);
+            m_selectorDistance = Mathf.Clamp(m_selectorDistance, -m_distance, m_distance);
+
+            m_selector.anchoredPosition = new Vector2(Mathf.Cos(m_angle * Mathf.Deg2Rad), Mathf.Sin(m_angle * Mathf.Deg2Rad)) * m_selectorDistance;
 
             float m_angleDistance = (360f / m_seedsTransform.Count);
 
             for(int i = 0; i < m_seedsTransform.Count; i ++) {
 
-                if (i == 0 && (m_angle > (-(m_angleDistance/2)) || m_angle < (m_angleDistance/2))) SelectSeed(0);
-                else if (m_angle > (m_angleDistance / 2f) + (m_angleDistance * (i - 1)) && m_angle < (m_angleDistance / 2f) + (m_angleDistance * (i))) SelectSeed(i); 
+                if (m_selectorDistance > m_distance/2) {
+
+                    if (i == 0 && (m_angle > (-(m_angleDistance/2)) || m_angle < (m_angleDistance/2))) SelectSeed(0);
+                    else if (m_angle > (m_angleDistance / 2f) + (m_angleDistance * (i - 1)) && m_angle < (m_angleDistance / 2f) + (m_angleDistance * (i))) SelectSeed(i); 
+                    }
+
+                else {
+
+                    SelectSeed(-1);
+                    }
                 }
             }
 

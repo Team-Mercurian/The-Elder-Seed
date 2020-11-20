@@ -51,8 +51,7 @@ public class EnemyHealth : EntityHealth {
 		protected override void Dead() {
             
             DropObject();
-            DataSystem.GetSingleton().GetGameData().AddSeeds(1);
-            Debug.Log("Added a seed, actual seeds: " + DataSystem.GetSingleton().GetGameData().GetSeedCount());
+            DataSystem.GetSingleton().GetGameData().AddSeeds(0);
             Destroy(gameObject);
             }
 		
