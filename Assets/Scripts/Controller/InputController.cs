@@ -93,7 +93,7 @@ public class InputController : MonoBehaviour {
             if (m_playerMovement == null) return;
             m_playerMovement.SetHorizontalVelocity(velocity);
             }
-		
+
         //Funciones publicas.
         public void ShowCursor(InputAction.CallbackContext context) {
 
@@ -140,13 +140,10 @@ public class InputController : MonoBehaviour {
             }
         public void QuitDungeon(InputAction.CallbackContext context) {
 
-            if (SceneController.GetActualScene() == Scenes.Ruins) {
+            if (context.phase == InputActionPhase.Started) if (m_dungeonQuitCoroutine == null) m_dungeonQuitCoroutine = StartCoroutine(DungeonQuitCoroutine(m_secsToQuitDungeon));
+            else if (context.phase == InputActionPhase.Canceled) {
 
-                if (context.phase == InputActionPhase.Started) if (m_dungeonQuitCoroutine == null) m_dungeonQuitCoroutine = StartCoroutine(DungeonQuitCoroutine(m_secsToQuitDungeon));
-                else if (context.phase == InputActionPhase.Canceled) {
-
-                    if (m_dungeonQuitCoroutine != null) StopCoroutine(m_dungeonQuitCoroutine); 
-                    }
+                if (m_dungeonQuitCoroutine != null) StopCoroutine(m_dungeonQuitCoroutine); 
                 }
             }
 		
@@ -175,6 +172,6 @@ public class InputController : MonoBehaviour {
                 yield return null;
                 }
 
-            SceneController.GetSingleton().LoadScene(Scenes.House);
+            GenerateRuinsRooms.ExitRuins(false);
             }
         }

@@ -21,8 +21,6 @@ public class EnemyHealth : EntityHealth {
             //Publicas.
             [Header("Drops")]
             [SerializeField] private GameObject m_drop = null;
-            [SerializeField] private int m_dropCount = 0;
-			[SerializeField] [Range(0, 100)] private float m_probability = 100;
 
             //Privadas.
 			
@@ -34,13 +32,13 @@ public class EnemyHealth : EntityHealth {
         //Funciones privadas.
 		private void DropObject() {
             
-            for(int i = 0; i < m_dropCount; i ++) {
-                
-                if (Random.Range(0, 100) <= m_probability) {
-                    
-                    Instantiate(m_drop, transform.position, Quaternion.identity);
-                    }
-                }
+            if (Random.Range(0f, 100f) > 75f) return;
+
+            Seed.SeedType m_type = Random.Range(0, 2) < 1 ? Seed.SeedType.Durability : Seed.SeedType.Potion;
+            DataSystem.GetSingleton().GetGameData().GetFarmData().AddSeed(m_type, Rarity.Common);
+
+            if (m_drop == null) return;
+            Instantiate(m_drop, transform.position, Quaternion.identity);
             }
 
         //Funciones publicas.
@@ -51,7 +49,6 @@ public class EnemyHealth : EntityHealth {
 		protected override void Dead() {
             
             DropObject();
-            DataSystem.GetSingleton().GetGameData().AddSeeds(0);
             Destroy(gameObject);
             }
 		

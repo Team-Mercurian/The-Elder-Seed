@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class FarmingEnviromentController : MonoBehaviour {
 	
     //Establecer variables.
@@ -32,6 +31,7 @@ public class FarmingEnviromentController : MonoBehaviour {
 		
             //Publicas.
             private static FarmingEnviromentController m_instance;
+			private static int m_gridSize = 2;
 			
             //Privadas
 			
@@ -39,7 +39,8 @@ public class FarmingEnviromentController : MonoBehaviour {
 		
             //Publicas.
             [Header("Farming Controller")]
-			private int m_gridSize = 1;
+            [SerializeField] private Transform m_playerGrid = null;
+            [SerializeField] private GameObject m_plant = null;
 
             //Privadas.
             private List<FarmSections> m_grid;
@@ -55,13 +56,14 @@ public class FarmingEnviromentController : MonoBehaviour {
             m_grid = new List<FarmSections>();
             m_plants = new List<PlantController>();
             }
-        private void Update() {
+        private void Start() {
 
-            if (m_instance == null) m_instance = this;
-            }
-		private void OnValidate() {
+            foreach(GridData m_d in DataSystem.GetSingleton().GetGameData().GetFarmData().GetGridDatas()) {
+                
+                CreatePlant(m_d.GetSeedPosition() * m_gridSize, m_d.GetSeedIndex(), m_d.GetHarvest());
+                }   
 
-            m_gridSize = Mathf.Clamp(m_gridSize, 1, 5);
+            m_playerGrid.localScale = Vector3.one * m_gridSize;
             }
 
         //Funciones privadas.
@@ -84,12 +86,18 @@ public class FarmingEnviromentController : MonoBehaviour {
 
         public void AddPlant(PlantController plant) => m_plants.Add(plant);
         public void RemovePlant(PlantController plant) => m_plants.Remove(plant);
+        public void CreatePlant(Vector3Int position, int seedIndex, bool canHarvest) {
+        
+            GameObject m_entity = Instantiate(m_plant, position, Quaternion.identity); 
+            m_entity.GetComponent<PlantController>().SetData(seedIndex, position, canHarvest);
 
-        public int GetCellSize() => m_gridSize;
+            FarmingEnviromentController.GetSingleton().AddPlant(m_entity.GetComponent<PlantController>());
+            }
+
+        public static int GetCellSize() => m_gridSize;
 
         public static FarmingEnviromentController GetSingleton() => m_instance;
-            
-		
+
         //Funciones heredadas.
 		
         //Funciones ha heredar.

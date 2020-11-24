@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Test Scene/Test Scene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
+    path: Assets/Scenes/Farm Room.unity
+    guid: 21af270827ea5d34aa9c1e89cdd39111
   - enabled: 1
     path: Assets/Scenes/Ruins Room.unity
     guid: e3305140cd3e46c4eba01c4eeccbf943

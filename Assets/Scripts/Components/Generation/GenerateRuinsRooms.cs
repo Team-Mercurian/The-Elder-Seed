@@ -35,14 +35,33 @@ public class GenerateRuinsRooms : GameBehaviour {
         private void Start() {
 
             m_dataSystem = DataSystem.GetSingleton();
-            DataSystem.GetSingleton().SetTemporalData(new TemporalData(new PlayerData(PlayerBrain.GetSingleton().GetHealth().GetMaxHealth())));
             GenerateAllRooms();
             }
 		
+        //Funciones publicas.
+        public static void ExitRuins(bool dead) {
+            
+            if (dead) {
+
+
+                }
+
+            foreach(GridData m_d in DataSystem.GetSingleton().GetGameData().GetFarmData().GetGridDatas()) {
+
+                m_d.SetHarvest(true);
+                }
+
+            DataSystem.GetSingleton().SetDungeonData(null);
+            DataSystem.Save();
+            SceneController.GetSingleton().LoadScene(Scenes.House);
+            }
+
         //Funciones privadas.
         private void GenerateAllRooms() {
 
-            List<RoomData> m_roomsDatas = m_dataSystem.GetRoomsData();
+            if (m_dataSystem.GetDungeonData() == null) m_dataSystem.SetDungeonData(new DungeonData(new PlayerData(PlayerBrain.GetSingleton().GetHealth().GetMaxHealth())));
+
+            List<RoomData> m_roomsDatas = m_dataSystem.GetDungeonData().GetRoomsDatas();
 
             if (m_roomsDatas == null) {
 
@@ -91,11 +110,11 @@ public class GenerateRuinsRooms : GameBehaviour {
                     m_pos = new Vector2Int(m_pos.x + m_direction.x, Mathf.Clamp(m_pos.y + m_direction.y, 0, 100));
                     }
 
-                m_dataSystem.SetRoomsData(m_roomsDatas);
-                m_dataSystem.SetActualRoom(new Vector2Int(0, 0));
+                m_dataSystem.GetDungeonData().SetRoomDatas(m_roomsDatas);
+                m_dataSystem.GetDungeonData().SetActualRoom(new Vector2Int(0, 0));
                 }
                 
-            GenerateRoom(m_dataSystem.GetRoomData(m_dataSystem.GetActualRoom()));
+            GenerateRoom(m_dataSystem.GetDungeonData().GetRoomData(m_dataSystem.GetDungeonData().GetActualRoom()));
             }
         private void GenerateRoom(RoomData roomData) {
 

@@ -60,10 +60,12 @@ public class PlayerAttack : EntityAttack {
 
                 collider.GetComponent<EntityHealth>().GetDamage(m_damage);
 
-                DataSystem.GetSingleton().UseActualWeapon();
+                InventoryData m_data = DataSystem.GetSingleton().GetGameData().GetInventoryData();
+
+                m_data.UseActualWeapon();
 
                 Weapon m_weapon = DataSystem.GetSingleton().GetActualWeapon();
-                int m_uses = DataSystem.GetSingleton().GetActualWeaponData().GetUses();
+                int m_uses = m_data.GetActualWeapon().GetUses();
 
                 m_damage = m_weapon.GetCalculatedDamage(m_uses);
 

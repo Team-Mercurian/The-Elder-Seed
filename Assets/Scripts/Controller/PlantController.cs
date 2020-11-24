@@ -21,13 +21,12 @@ public class PlantController : MonoBehaviour {
             //Publicas.
             [Header("References")]
             [SerializeField] private MeshFilter m_meshFilter = null;
-			[SerializeField] private PlantClockController m_plantClock = null;
 
             //Privadas.
             private bool m_canHarvest = false;
             private Vector3Int m_position;
 
-            private Seed m_seed;
+            private int m_seedIndex;
 			
 			
     //Funciones
@@ -37,33 +36,25 @@ public class PlantController : MonoBehaviour {
         //Funciones privadas.
 		
         //Funciones publicas.
-        public void SetData(Seed seed, Vector3Int position) {
+        public void SetData(int seedIndex, Vector3Int position, bool canHarvest) {
 
-            m_seed = seed;
+            m_seedIndex = seedIndex;
+            Seed m_seed = DataSystem.GetSingleton().GetSeed(seedIndex);
 
-            m_meshFilter.mesh = seed.GetSeedMesh();
+            m_meshFilter.mesh = m_seed.GetSeedMesh();
             m_position = position;
 
-            StartCoroutine(GrowCoroutine(seed.GetTimeToGrow()));
+            m_canHarvest = canHarvest;
+
+            m_meshFilter.mesh = m_canHarvest ? m_seed.GetPlantMesh() : m_seed.GetSeedMesh();
             }
         public bool GetIfCanHarvest() => m_canHarvest;
 		public Vector3Int GetPosition() => m_position;
+        public int GetSeedIndex() => m_seedIndex;
 
         //Funciones heredadas.
 		
         //Funciones ha heredar.
 		
         //Corotinas.
-        private IEnumerator GrowCoroutine(float timeToGrow) {
-
-            for(float i = 0; i < timeToGrow; i += Time.deltaTime) {
-
-                m_plantClock.SetValue(Mathf.Lerp(0, 1, i / timeToGrow));
-                yield return null;
-                }
-            
-            m_canHarvest = true;
-            m_meshFilter.mesh = m_seed.GetPlantMesh();
-            m_plantClock.gameObject.SetActive(false);
-            }
         }

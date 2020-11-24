@@ -23,10 +23,10 @@ public class PlayerFarming : MonoBehaviour {
             //Publicas.
             [Header("References")]
             [SerializeField] private Transform m_playerCell = null;
-            [SerializeField] private GameObject m_plant = null;
 			
             //Privadas.
             private Vector3Int? m_actualGrid;
+            private FarmData m_data;
 			
 			
     //Funciones
@@ -35,19 +35,27 @@ public class PlayerFarming : MonoBehaviour {
         private void Start() {
 			
             StartCoroutine(CheckGrid(0.025f));
+            m_data = DataSystem.GetSingleton().GetGameData().GetFarmData();
             }
 		
         //Funciones privadas.
-		private void Harvest() {
+		private void Harvest(Vector3Int pos, int cellSize) {
 
-            PlantController m_plant = FarmingEnviromentController.GetSingleton().GetPlantController(new Vector3Int(m_actualGrid.Value.x, m_actualGrid.Value.y, m_actualGrid.Value.z));
+            PlantController m_plant = FarmingEnviromentController.GetSingleton().GetPlantController(pos);
             
             if (m_plant != null && m_plant.GetIfCanHarvest()) {
                 
-                DataSystem.GetSingleton().RemoveGridData(m_plant.GetPosition());
+                m_data.AddHarvestedSeed(m_plant.GetSeedIndex());
+                Seed m_seed = DataSystem.GetSingleton().GetSeed(m_plant.GetSeedIndex());
+
+                if (Random.Range(0f, 100f) < (20 - (4 * (int) m_seed.GetRarity()))) {
+                    
+                    m_data.AddSeed(m_seed.GetSeedType(), m_seed.GetRarity());
+                    }
+
+                m_data.RemoveGridData(pos / cellSize);
 
                 FarmingEnviromentController.GetSingleton().RemovePlant(m_plant);
-
                 Destroy(m_plant.gameObject);
                 }
             }
@@ -58,23 +66,29 @@ public class PlayerFarming : MonoBehaviour {
             if (m_seedIndex < 0 || m_actualGrid == null || context.phase != InputActionPhase.Canceled) return;
 
             Vector3Int m_pos = new Vector3Int(m_actualGrid.Value.x, m_actualGrid.Value.y, m_actualGrid.Value.z);
+            int m_cellSize = FarmingEnviromentController.GetCellSize();
 
-            if (DataSystem.GetSingleton().GetIfGridIsUsed(m_pos)) {
+            Seed m_seed = DataSystem.GetSingleton().GetSeed(m_seedIndex);
 
-                Harvest();
+            if (m_data.GetIfGridIsUsed(m_pos / m_cellSize)) {
+
+                Harvest(m_pos, m_cellSize);
                 }
             
             else {
 
-                Seed m_seed = DataSystem.GetSingleton().GetSeed(m_seedIndex);
+                if (m_data.GetSeedCount(m_seed.GetSeedType(), m_seed.GetRarity()) > 0) {
+                        
+                    FarmingEnviromentController.GetSingleton().CreatePlant(m_pos, m_seedIndex, false);
 
-                GameObject m_entity = Instantiate(m_plant, m_pos, Quaternion.identity); 
-                m_entity.GetComponent<PlantController>().SetData(m_seed, m_pos);
+                    m_data.AddGridData(new GridData(m_seedIndex, m_pos / m_cellSize));
+                    m_data.RemoveSeed(m_seed.GetSeedType(), m_seed.GetRarity());
+                    }
+                
+                else {
 
-                FarmingEnviromentController.GetSingleton().AddPlant(m_entity.GetComponent<PlantController>());
-
-                DataSystem.GetSingleton().AddGridData(new GridData(m_seedIndex, m_pos, new System.TimeSpan(System.DateTime.Now.Ticks)));
-                DataSystem.Save();
+                    Debug.Log("Insuficientes semillas");
+                    }
                 }
             }
 
@@ -90,9 +104,11 @@ public class PlayerFarming : MonoBehaviour {
         //Corotinas.
         private IEnumerator CheckGrid(float presition) {
 
+            int m_gridSize = FarmingEnviromentController.GetCellSize();
+
             while(true) {
                 
-                Vector2Int m_pos = new Vector2Int(Mathf.CeilToInt(transform.position.x - 0.5f), Mathf.CeilToInt(transform.position.z - 0.5f));
+                Vector2Int m_pos = new Vector2Int(Mathf.CeilToInt((transform.position.x / m_gridSize) - 0.5f) * m_gridSize, Mathf.CeilToInt((transform.position.z / m_gridSize) - 0.5f) * m_gridSize);
                 
                 m_actualGrid = null;
 
@@ -108,7 +124,6 @@ public class PlayerFarming : MonoBehaviour {
                     }
 
                 if (m_actualGrid == null) m_playerCell.gameObject.SetActive(false);
-
                 yield return new WaitForSeconds(presition);
                 }
             }

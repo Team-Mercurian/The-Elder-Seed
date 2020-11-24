@@ -80,18 +80,15 @@ public class RuinsPassageController : InteractableBehaviour {
 
             if (m_pos == new Vector2Int(0, -1)) {
                 
-                Debug.Log("Going to House Scene");
-                SceneController.GetSingleton().LoadScene(Scenes.House);
+                GenerateRuinsRooms.ExitRuins(false);
                 }
                 
             else {
                 
-                Debug.Log("Going to room in " + m_pos.x + ", " + m_pos.y);
-
                 Direction m_direction = GetDirection(GetDirectionToMove());
                 RoomController.SetAppearDirection(m_direction);
 
-                DataSystem.GetSingleton().SetActualRoom(m_pos);
+                DataSystem.GetSingleton().GetDungeonData().SetActualRoom(m_pos);
                 SceneController.GetSingleton().LoadScene(Scenes.Ruins);
                 }
             }

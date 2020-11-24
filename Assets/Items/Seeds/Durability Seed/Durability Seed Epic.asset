@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48740e4164b62e5438b3ef406d149dc0, type: 3}
-  m_Name: Seed A
+  m_Name: Durability Seed Epic
   m_EditorClassIdentifier: 
-  m_name: Common Upgrade Seed
+  m_name: Epic Durability Seed
   m_type: 0
-  m_rarity: 0
+  m_rarity: 2
   m_UIIcon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_seedMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   m_plantMesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  m_timeToGrow: 0

@@ -39,6 +39,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             private Coroutine m_IORoutine = null;
 			
             private int m_selectedSeed;
+            List<SeedData> m_seeds;
 
     //Funciones
 		
@@ -56,7 +57,16 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
         private void CreateSeeds() {
 
             m_seedsTransform = new List<Transform>();
-            int m_count = DataSystem.GetSingleton().GetAllSeeds().Length;
+
+            List<SeedData> m_allSeeds = DataSystem.GetSingleton().GetGameData().GetFarmData().GetSeedDatas();
+            m_seeds = new List<SeedData>();
+
+            for(int i = 0; i < m_allSeeds.Count; i ++) {
+
+                if (m_allSeeds[i].GetUnlocked()) m_seeds.Add(m_allSeeds[i]);
+                }
+
+            int m_count = m_seeds.Count;
 
             for(int i = 0; i < m_count * 2; i ++) {
 
@@ -74,6 +84,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
                 else {
 
                     m_object = Instantiate(m_seed, m_seedHolder);
+                    m_object.GetComponent<UnityEngine.UI.Image>().sprite = m_seeds[i/2].GetSeed().GetIcon();
                     m_seedsTransform.Add(m_object.transform);
                     }
 
@@ -87,7 +98,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
                 if (selectedSeedIndex == i) {
 
                     m_seedsTransform[i].localScale = new Vector3(1.2f, 1.2f, 1.2f);
-                    m_selectedSeed = i;
+                    m_selectedSeed = selectedSeedIndex == -1 ? -1 : m_seeds[i].GetIndex();
                     }
                 else m_seedsTransform[i].localScale = Vector3.one;
                 }
@@ -140,7 +151,8 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
                 if (m_selectorDistance > m_distance/2) {
 
                     if (i == 0 && (m_angle > (-(m_angleDistance/2)) || m_angle < (m_angleDistance/2))) SelectSeed(0);
-                    else if (m_angle > (m_angleDistance / 2f) + (m_angleDistance * (i - 1)) && m_angle < (m_angleDistance / 2f) + (m_angleDistance * (i))) SelectSeed(i); 
+                    else if (m_angle > (m_angleDistance / 2f) + (m_angleDistance * (i - 1)) && m_angle < (m_angleDistance / 2f) + (m_angleDistance * (i))) 
+                        SelectSeed(i); 
                     }
 
                 else {

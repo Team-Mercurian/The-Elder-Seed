@@ -12,8 +12,9 @@ public class Seed : ScriptableObject {
         //Establecer enumeradores.
         public enum SeedType {
 
-            A,
-            B,
+            Durability,
+            Potion,
+            Unlock,
             }
 		
         //Establecer variables estaticas.
@@ -27,13 +28,11 @@ public class Seed : ScriptableObject {
             //Publicas.
             [Header("Seed Values")]
             [SerializeField] private string m_name = "";
-            [SerializeField] private SeedType m_type = SeedType.A;
+            [SerializeField] private SeedType m_type = SeedType.Durability;
             [SerializeField] private Rarity m_rarity = Rarity.Common;
             [SerializeField] private Sprite m_UIIcon = null;
             [SerializeField] private Mesh m_seedMesh = null;
-            [SerializeField] private Mesh m_plantMesh = null;
-            [SerializeField] private float m_timeToGrow = 5;
-			
+            [SerializeField] private Mesh m_plantMesh = null;			
             //Privadas.
 			
 			
@@ -50,7 +49,6 @@ public class Seed : ScriptableObject {
         public Sprite GetIcon() => m_UIIcon;
         public Mesh GetSeedMesh() => m_seedMesh;
         public Mesh GetPlantMesh() => m_plantMesh;
-        public float GetTimeToGrow() => m_timeToGrow;
 
         //Funciones heredadas.
 		

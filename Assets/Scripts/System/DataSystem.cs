@@ -6,14 +6,14 @@ using System.IO;
 public class DataSystem : MonoBehaviour {
 
     //Establecer variables.
-    private static MasterData m_masterData;
-    private static GameData m_gameData;
-    private static DataSystem m_instance;
 
-    private static List<RoomData> m_runRoomsData;
-    private static Vector2Int m_actualRoom;
-        
-    private static TemporalData m_temporalData;
+        //Privadas 
+        private static DataSystem m_instance;
+
+        private static MasterData m_masterData;
+        private static GameData m_gameData;
+            
+        private static DungeonData m_dungeonData;
 
         //Publicas.
         [Header("Persistent Room Holder")]
@@ -55,6 +55,7 @@ public class DataSystem : MonoBehaviour {
         Debug.Log("Saved");
         }
 
+    //Funciones privadas.
     private MasterData Load() {
 
         MasterData m_data = new MasterData();
@@ -68,89 +69,60 @@ public class DataSystem : MonoBehaviour {
         return m_data;
         }
 
-    public void SetRoomsData(List<RoomData> runRoomsData) {
+    //Funciones publicas.
 
-        m_runRoomsData = runRoomsData;
-        }
+        //Getters and Setters
 
-    public RoomData GetRoomData(Vector2Int roomPosition) {
+            //Data System
+            public static DataSystem GetSingleton() => m_instance;
 
-        foreach(RoomData m_room in m_runRoomsData) {
+            //Temporal Data
+            public void SetDungeonData(DungeonData dungeonData) => m_dungeonData = dungeonData;
+            public DungeonData GetDungeonData() => m_dungeonData;
 
-            if (m_room.GetRoomPosition() == roomPosition) return m_room;
-            }
-        
-        return null;
-        }
+            //Game Data
+            public GameData GetGameData() => m_gameData;    
 
-    public static DataSystem GetSingleton() => m_instance;
+            //Prefab Data
 
-    public GameData GetGameData() => m_gameData;    
-    public List<RoomData> GetRoomsData() => m_runRoomsData;
+                //Dungeon Room Prefabs
+                public GameObject GetRoomPrefab(int index) => m_rooms[index];
+                public int GetRandomRoomPrefabIndex() => Random.Range(0, m_rooms.Length);
 
-    public Vector2Int GetActualRoom() => m_actualRoom;
-    public void SetActualRoom(Vector2Int actualRoom) => m_actualRoom = actualRoom;
+                //Chest Rooms Prefabs
+                public GameObject GetChestRoomPrefab(int index) => m_chestRooms[index];
+                public int GetRandomChestRoomPrefabIndex() => Random.Range(0, m_rooms.Length);
 
-    public GameObject GetRoomPrefab(int index) => m_rooms[index];
-    public int GetRandomRoomPrefabIndex() => Random.Range(0, m_rooms.Length);
+                //Enemies Prefabs
+                public GameObject GetEnemyPrefab(int index) => m_enemies[index];
+                public int GetRandomEnemyPrefabIndex() => Random.Range(0, m_enemies.Length);
 
-    public GameObject GetChestRoomPrefab(int index) => m_chestRooms[index];
-    public int GetRandomChestRoomPrefabIndex() => Random.Range(0, m_rooms.Length);
+                //Weapons
+                public Weapon GetWeapon(int index) => m_weapons[index];   
+                public Weapon[] GetAllWeapons() => m_weapons;
 
-    public GameObject GetEnemyPrefab(int index) => m_enemies[index];
-    public int GetRandomEnemyPrefabIndex() => Random.Range(0, m_enemies.Length);
+                public Weapon GetActualWeapon() => m_weapons[m_gameData.GetInventoryData().GetActualWeapon().GetIndex()];   
 
-    public void SetTemporalData(TemporalData temporalData) => m_temporalData = temporalData;
-    public TemporalData GetTemporalData() => m_temporalData;
+                //Seeds
+                public Seed GetSeed(int index) => m_seedTypes[index];   
+                public Seed[] GetAllSeeds() => m_seedTypes;    
 
-    public void SetActualWeapon(int index) => m_gameData.SetActualWeapon(index);
+        //Functions
+        public Weapon AddRandomWeapon() {
+            
+            int m_weaponIndex = Random.Range(0, m_weapons.Length);
+            Weapon m_weapon = m_weapons[m_weaponIndex];
 
-    public Weapon GetActualWeapon() => m_weapons[GetActualWeaponData().GetIndex()];   
-    public WeaponData GetActualWeaponData() => m_gameData.GetActualWeapon();   
-    
-    public Weapon GetWeapon(int index) => m_weapons[index];   
+            m_gameData.GetInventoryData().AddWeapon(m_weaponIndex, m_weapon.GetUses());
 
-    public Seed GetSeed(int index) => m_seedTypes[index];   
-    public Seed[] GetAllSeeds() => m_seedTypes;   
-
-    public void AddGridData(GridData data) => m_gameData.AddGridData(data);
-    public void RemoveGridData(Vector3Int position) {
-        GridData m_d = null;
-
-        foreach(GridData m_gd in m_gameData.GetGridDatas()) {
-
-            if (position == m_gd.GetSeedPosition()) {
-
-                m_d = m_gd;
-                break;
-                }
+            return m_weapon;
             }
 
-        m_gameData.RemoveGridData(m_d);
-        }    
-    
-    public void UseActualWeapon() => m_gameData.UseWeapon(0);
+        public Seed AddRandomSeed() {
 
-    public Weapon AddRandomWeapon() {
-        
-        int m_weaponIndex = Random.Range(0, m_weapons.Length);
-        Weapon m_weapon = m_weapons[m_weaponIndex];
-
-        m_gameData.AddWeapon(m_weaponIndex, m_weapon.GetUses());
-
-        return m_weapon;
-        }
-
-    public bool GetIfGridIsUsed(Vector3Int position) {
-
-        foreach(GridData m_gd in m_gameData.GetGridDatas()) {
-
-            if (m_gd.GetSeedPosition() == position) return true;
+            return null;
             }
-
-        return false;
-        }    
-    }
+        }
 
 [System.Serializable]
 public class MasterData {
@@ -172,68 +144,162 @@ public class MasterData {
 [System.Serializable]
 public class GameData {
 
-    [SerializeField] private int m_actualWeaponInventoryIndex;
-
-    [SerializeField] private List<WeaponData> m_inventoryWeapons;
-    [SerializeField] private List<GridData> m_gridDatas;
-
-    [SerializeField] private List<int> m_harvestedSeeds;
-    [SerializeField] private List<int> m_seedsInInventory;
+    [SerializeField] private FarmData m_farmData;
+    [SerializeField] private InventoryData m_inventoryData;
 
     public GameData() { 
-        
-        m_seedsInInventory = new List<int>();
 
-        for(int i = 0; i < 5; i ++) m_seedsInInventory.Add(0);
-        for(int i = 0; i < 5; i ++) m_seedsInInventory.Add(1);
+        m_farmData = new FarmData();
+        m_inventoryData = new InventoryData();
+        }
+
+    public FarmData GetFarmData() => m_farmData;
+    public InventoryData GetInventoryData() => m_inventoryData;
+    }
+
+[System.Serializable] 
+public class FarmData {
+
+    [SerializeField] private List<GridData> m_gridDatas;
+    [SerializeField] private List<SeedData> m_seedDatas;
+
+    [SerializeField] private List<int> m_harvestedSeeds;
+
+    public FarmData() {
+
+        //Establecer listas.
+        m_gridDatas = new List<GridData>();
+        m_seedDatas = new List<SeedData>();
+        m_harvestedSeeds = new List<int>();
+        
+        //Añadir semillas por defecto.
+        for(int i = 0; i < DataSystem.GetSingleton().GetAllSeeds().Length; i ++) {
+
+            m_seedDatas.Add(new SeedData(0, false, i));
+            }
+
+        AddSeed(Seed.SeedType.Durability, Rarity.Common, 5);
+        AddSeed(Seed.SeedType.Potion, Rarity.Common, 5);
+        }
+
+    //Getters and Setters
+
+        //Seed Data.
+        private int FindSeedIndex(Seed.SeedType seedType, Rarity rarity) {
+
+            Seed[] m_seeds = DataSystem.GetSingleton().GetAllSeeds();
+            int m_index = -1;
+
+            for(int i = 0; i < m_seeds.Length; i ++) {
+
+                if (m_seeds[i].GetSeedType() == seedType && m_seeds[i].GetRarity() == rarity) {
+
+                    m_index = i;
+                    break;
+                    }    
+                }
+            
+            return m_index;
+            }
+        private SeedData FindSeedData(Seed.SeedType seedType, Rarity rarity) {
+
+            int m_index = FindSeedIndex(seedType, rarity);
+
+            foreach(SeedData m_sd in m_seedDatas) {
+
+                if (m_index == m_sd.GetIndex()) return m_sd;
+                }    
+
+            return null;
+            }    
+        
+        public int GetSeedCount(Seed.SeedType seedType, Rarity rarity) => FindSeedData(seedType, rarity).GetCount();
+
+        public SeedData GetSeedData(Seed.SeedType seedType, Rarity rarity) => FindSeedData(seedType, rarity); 
+        public List<SeedData> GetSeedDatas() => m_seedDatas;
+
+        public void AddSeed(Seed.SeedType seedType, Rarity rarity) => AddSeedData(seedType, rarity, 1);
+        public void AddSeed(Seed.SeedType seedType, Rarity rarity, int count) => AddSeedData(seedType, rarity, count);
+        public void RemoveSeed(Seed.SeedType seedType, Rarity rarity) => FindSeedData(seedType, rarity).AddCount(-1);
+
+        private void AddSeedData(Seed.SeedType seedType, Rarity rarity, int count) {
+
+            SeedData m_seedData = FindSeedData(seedType, rarity);
+
+            m_seedData.AddCount(count);
+            m_seedData.SetUnlocked(true);
+            }    
+            
+        //Harvested Seeds.
+        public void AddHarvestedSeed(int index) => m_harvestedSeeds.Add(index);
+
+        //Grid Data.
+        public void AddGridData(GridData data) => m_gridDatas.Add(data);
+        public void RemoveGridData(GridData data) => m_gridDatas.Remove(data);
+        public void RemoveGridData(Vector3Int position) {
+            
+            GridData m_d = null;
+
+            foreach(GridData m_gd in m_gridDatas) {
+
+                if (position == m_gd.GetSeedPosition()) {
+
+                    m_d = m_gd;
+                    break;
+                    }
+                }
+
+            m_gridDatas.Remove(m_d);
+            }   
+
+        public List<GridData> GetGridDatas() => m_gridDatas;
+
+        public bool GetIfGridIsUsed(Vector3Int position) {
+
+            foreach(GridData m_gd in m_gridDatas) {
+
+                if (m_gd.GetSeedPosition() == position) return true;
+                }
+
+            return false;
+            }    
+        }
+
+[System.Serializable]
+public class InventoryData {
+
+    [SerializeField] private int m_actualWeaponInventoryIndex;
+    [SerializeField] private List<WeaponData> m_inventoryWeapons;
+
+    public InventoryData() {
 
         m_inventoryWeapons = new List<WeaponData>();
         m_inventoryWeapons.Add(new WeaponData(0, DataSystem.GetSingleton().GetWeapon(0).GetUses()));
 
-        m_gridDatas = new List<GridData>();
-
-        m_harvestedSeeds = new List<int>();
-
         m_actualWeaponInventoryIndex = 0;
         }
+        
+    //Getters and Setters
 
-    public void AddSeeds(int index) => m_seedsInInventory.Add(index);
-    public int GetSeedCount(int index) {
+        //Weapons
+        public void SetActualWeapon(int index) => m_actualWeaponInventoryIndex = index;
+        public WeaponData GetActualWeapon() => SearchInWeaponInventory(m_actualWeaponInventoryIndex);
 
-        int m_count = 0;
+        public void UseWeapon(int index) => m_inventoryWeapons[index].UseWeapon();
+        public void AddWeapon(int index, int uses) => m_inventoryWeapons.Add(new WeaponData(index, uses));
 
-        foreach(int m_i in m_seedsInInventory) {
+        public void UseActualWeapon() => UseWeapon(m_actualWeaponInventoryIndex);
 
-            if (m_i == index) m_count ++;
+        public WeaponData SearchInWeaponInventory(int index) {
+
+            foreach(WeaponData m_w in m_inventoryWeapons) {
+
+                if (m_w.GetIndex() == index) return m_w;
+                }
+
+            return new WeaponData(-1, 0);
             }
-
-        return m_count;
         }
-
-    public void SetActualWeapon(int index) => m_actualWeaponInventoryIndex = index;
-    public WeaponData GetActualWeapon() => SearchInWeaponInventory(m_actualWeaponInventoryIndex);
-
-    public void UseWeapon(int index) => m_inventoryWeapons[index].UseWeapon();
-
-    public void AddWeapon(int index, int uses) => m_inventoryWeapons.Add(new WeaponData(index, uses));
-
-    public void AddGridData(GridData data) => m_gridDatas.Add(data);
-    public void RemoveGridData(GridData data) => m_gridDatas.Remove(data);
-
-    public List<GridData> GetGridDatas() => m_gridDatas;
-
-    public void AddHarvestedSeed(int index) => m_harvestedSeeds.Add(index);
-
-    public WeaponData SearchInWeaponInventory(int index) {
-
-        foreach(WeaponData m_w in m_inventoryWeapons) {
-
-            if (m_w.GetIndex() == index) return m_w;
-            }
-
-        return new WeaponData(-1, 0);
-        }
-    }
 
 [System.Serializable]
 public class WeaponData {
@@ -263,20 +329,92 @@ public class GridData {
 
     [SerializeField] private int m_seedIndex;
     [SerializeField] private Vector3Int m_position;
-    [SerializeField] private System.TimeSpan m_plantStartTime;
+    [SerializeField] private bool m_canHarvest;
 
-    public GridData(int seedIndex, Vector3Int position, System.TimeSpan plantStart) {
+    public GridData(int seedIndex, Vector3Int position) {
 
         m_seedIndex = seedIndex;
         m_position = position;
 
-        m_plantStartTime = plantStart;
+        m_canHarvest = false;
         }   
 
     public int GetSeedIndex() => m_seedIndex;
     public Vector3Int GetSeedPosition() => m_position;
+    public bool GetHarvest() => m_canHarvest;
+    public void SetHarvest(bool harvest) => m_canHarvest = harvest;
     }
 
+[System.Serializable]
+public class SeedData {
+
+    [SerializeField] private int m_count;
+    [SerializeField] private bool m_unlocked;
+    [SerializeField] private int m_index;
+
+    public SeedData() {
+
+        m_count = 0;
+        m_index = -1;
+        m_unlocked = false;
+        }
+    public SeedData(int count, bool unlocked, int index) {
+
+        m_count = count;
+        m_index = index;
+        m_unlocked = unlocked;
+        }
+
+    public int GetCount() => m_count;
+    public void SetCount(int count) => SetCountAndUnlock(count);
+    public void AddCount(int count) => SetCountAndUnlock(m_count + count);
+
+    private void SetCountAndUnlock(int count) {
+        
+        m_count = count;
+        m_unlocked = true;
+        }
+
+    public bool GetUnlocked() => m_unlocked;
+    public void SetUnlocked(bool unlocked) => m_unlocked = unlocked; 
+
+    public int GetIndex() => m_index;
+    public Seed GetSeed() => DataSystem.GetSingleton().GetSeed(m_index);
+    }
+
+
+public class DungeonData {
+
+    [SerializeField] private PlayerData m_playerData; 
+    [SerializeField] private List<RoomData> m_rooms;
+    [SerializeField] private Vector2Int m_actualRoom;
+
+    public DungeonData(PlayerData playerData) {
+
+        m_playerData = playerData;
+        m_rooms = null;
+        m_actualRoom = Vector2Int.zero;
+        }   
+        
+    public PlayerData GetPlayer() => m_playerData;
+    public RoomData GetRoomData(int index) => m_rooms[index];
+    public RoomData GetRoomData(Vector2Int position) {
+
+        foreach(RoomData m_d in m_rooms) {
+
+            if (m_d.GetRoomPosition() == position) return m_d;
+            }
+
+        return null;
+        }    
+
+    public List<RoomData> GetRoomsDatas() => m_rooms;
+
+    public void SetRoomDatas(List<RoomData> rooms) => m_rooms = rooms;
+
+    public void SetActualRoom(Vector2Int position) => m_actualRoom = position;
+    public Vector2Int GetActualRoom() => m_actualRoom;
+    }
 public class RoomData {
     
     public enum RoomType {
@@ -295,33 +433,11 @@ public class RoomData {
         m_roomPrefabIndex = prefabIndex;
         m_roomType = roomType;
         }
-    public Vector2Int GetRoomPosition() {
 
-        return m_roomPosition;
-        }
-    public int GetRoomPrefabIndex() {
-
-        return m_roomPrefabIndex;
-        }
-    public RoomType GetRoomType() {
-
-        return m_roomType;
-        }
+    public Vector2Int GetRoomPosition() => m_roomPosition;
+    public int GetRoomPrefabIndex() => m_roomPrefabIndex;
+    public RoomType GetRoomType() => m_roomType;
     }
-
-public class TemporalData {
-
-    [SerializeField] private PlayerData m_playerData; 
-
-    public TemporalData(PlayerData playerData) {
-
-        m_playerData = playerData;
-        }   
-        
-    public void SetPlayer(PlayerData playerData) => m_playerData = playerData; 
-    public PlayerData GetPlayer() => m_playerData;
-    }
-
 public class PlayerData {
 
     [SerializeField] private int m_playerHealth;
@@ -334,50 +450,3 @@ public class PlayerData {
     public void SetHealth(int health) => m_playerHealth = health; 
     public int GetHealth() => m_playerHealth;
     }
-
-/* Deprecated generation.
-public class RoomData {
-    
-    [SerializeField] private Vector2Int m_roomPosition;
-    [SerializeField] private List<Vector2Int> m_tilePositions;
-
-    [SerializeField] private Vector2Int? m_leftPassage = null;
-    [SerializeField] private Vector2Int? m_rightPassage = null;
-    [SerializeField] private Vector2Int? m_upPassage = null;
-    [SerializeField] private Vector2Int? m_downPassage = null;
-    
-    public RoomData(Vector2Int roomPosition, List<Vector2Int> tilePositions) {
-        
-        m_roomPosition = roomPosition;
-        m_tilePositions = tilePositions;
-        }
-    public Vector2Int GetRoomPosition() {
-
-        return m_roomPosition;
-        }
-    public List<Vector2Int> GetTilePositions() {
-
-        return m_tilePositions;
-        }
-
-    public void SetPassages(Vector2Int left, Vector2Int right, Vector2Int up, Vector2Int down) {
-
-        m_leftPassage = new Vector2Int?(left);
-        m_rightPassage = new Vector2Int?(right);;
-        m_upPassage = new Vector2Int?(up);;
-        m_downPassage = new Vector2Int?(down);;
-        }
-    
-    public Vector2Int? GetPassagePosition(GameBehaviour.Direction direction) {
-
-        switch(direction) {
-
-            case GameBehaviour.Direction.Left : return m_leftPassage;
-            case GameBehaviour.Direction.Right : return m_rightPassage;
-            case GameBehaviour.Direction.Up : return m_upPassage;
-            case GameBehaviour.Direction.Down : return m_downPassage;
-            }
-        
-        return Vector2Int.zero;
-        }
-    }*/

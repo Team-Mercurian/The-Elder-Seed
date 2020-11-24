@@ -40,7 +40,7 @@ public class RoomController : GameBehaviour {
         //Funciones privadas.
 		private void GeneratePassages() {
             
-            List<RoomData> m_roomsDatas = m_dataSystem.GetRoomsData();
+            List<RoomData> m_roomsDatas = m_dataSystem.GetDungeonData().GetRoomsDatas();
             List<Vector2Int> m_roomPositions = GetAllRoomsPositions(m_roomsDatas);
 
             bool m_generateLeftPassage = GetValueInList(m_roomPosition + Vector2Int.left, m_roomPositions);

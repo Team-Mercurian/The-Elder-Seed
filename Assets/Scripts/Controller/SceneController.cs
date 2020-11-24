@@ -62,7 +62,6 @@ public class SceneController : MonoBehaviour {
             
             AsyncOperation m_async = SceneManager.LoadSceneAsync(sceneNumber);
             m_async.allowSceneActivation = false;
-            DataSystem.Save();
 
             yield return (m_async.progress > 0.9f);
             yield return null;
