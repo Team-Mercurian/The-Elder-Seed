@@ -30,6 +30,9 @@ public class PlayerMovement : JumpingCharacter {
             [SerializeField] private float m_defaultSlopeLimit = 45;
             [SerializeField] private float m_runSlopeLimit = 60;
 
+            [Header("Player Reference")]
+            [SerializeField] private Animator m_animator = null;
+            
             //Privadas.
             private float m_stamina;
 			private bool m_run = false;
@@ -94,6 +97,7 @@ public class PlayerMovement : JumpingCharacter {
             
             Vector3 m_calculatedVelocity = CameraController.GetDirection() * new Vector3(velocity.x, 0, velocity.y);
             velocity = new Vector2(m_calculatedVelocity.x, m_calculatedVelocity.z);
+            m_animator.SetFloat("velocity",velocity.magnitude);
             base.SetHorizontalVelocity(velocity);
             }
 

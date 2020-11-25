@@ -38,7 +38,7 @@ public class AimHead:MonoBehaviour
         Vector3 m_defaultPos = m_player.position + Vector3.Scale(m_player.forward, new Vector3(m_defaultTargetPos.z, 1, m_defaultTargetPos.z)) + (Vector3.up * m_defaultTargetPos.y);
 
         //if list has targets
-        if (m_targets.Count > 0) m_lookPosition = m_targets[0].transform.position;
+        if (m_targets.Count > 0 && m_targets[0] != null) m_lookPosition = m_targets[0].transform.position;
         else m_lookPosition = m_defaultPos;
         
         float m_angle = (Mathf.Atan2(m_lookPosition.z - m_player.position.z, m_lookPosition.x - m_player.position.x) * Mathf.Rad2Deg) + m_player.eulerAngles.y;
