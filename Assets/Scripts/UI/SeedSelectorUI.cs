@@ -25,6 +25,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
 
             [Space]
             [SerializeField] private RectTransform m_selector = null;
+            [SerializeField] private TMPro.TextMeshProUGUI m_selectedText = null;
 
             [Space]
             [SerializeField] private GameObject m_seed = null;
@@ -35,7 +36,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             [SerializeField] private float m_distance = 64;
 
             //Privadas.
-            private List<Transform> m_seedsTransform;
+            private List<SeedSelector_SeedUI> m_seedsController;
             private Coroutine m_IORoutine = null;
 			
             private int m_selectedSeed;
@@ -46,7 +47,6 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
         //Funciones de MonoBehaviour
         protected override void Start() {
 
-            CreateSeeds();
             m_canvasGroup.alpha = 0;
             m_canvasGroup.interactable = false;
 
@@ -56,7 +56,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
         //Funciones privadas.
         private void CreateSeeds() {
 
-            m_seedsTransform = new List<Transform>();
+            m_seedsController = new List<SeedSelector_SeedUI>();
 
             List<SeedData> m_allSeeds = DataSystem.GetSingleton().GetGameData().GetFarmData().GetSeedDatas();
             m_seeds = new List<SeedData>();
@@ -84,8 +84,11 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
                 else {
 
                     m_object = Instantiate(m_seed, m_seedHolder);
-                    m_object.GetComponent<UnityEngine.UI.Image>().sprite = m_seeds[i/2].GetSeed().GetIcon();
-                    m_seedsTransform.Add(m_object.transform);
+
+                    SeedSelector_SeedUI m_seedController = m_object.GetComponent<SeedSelector_SeedUI>();
+
+                    m_seedController.SetData(m_seeds[i/2].GetSeed().GetIcon(), m_seeds[i/2].GetCount());
+                    m_seedsController.Add(m_seedController);
                     }
 
                 m_object.GetComponent<RectTransform>().anchoredPosition = new Vector2(Mathf.Cos(m_angle * Mathf.Deg2Rad), Mathf.Sin(m_angle * Mathf.Deg2Rad)) * m_distance;
@@ -93,15 +96,19 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             }
         private void SelectSeed(int selectedSeedIndex) {
 
-            for(int i = 0; i < m_seedsTransform.Count; i ++) {
+            for(int i = 0; i < m_seedsController.Count; i ++) {
                 
                 if (selectedSeedIndex == i) {
 
-                    m_seedsTransform[i].localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                    m_seedsController[i].Select();
                     m_selectedSeed = selectedSeedIndex == -1 ? -1 : m_seeds[i].GetIndex();
+                    m_selectedText.text = DataSystem.GetSingleton().GetSeed(m_seeds[i].GetIndex()).GetName();
                     }
-                else m_seedsTransform[i].localScale = Vector3.one;
+                
+                else m_seedsController[i].UnSelect();
                 }
+
+            if (selectedSeedIndex == -1) m_selectedText.text = "";
             }
 		
         //Funciones publicas.
@@ -110,6 +117,8 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
         [ContextMenu("Debug Open")]
         public override void Open() {
 			
+            CreateSeeds();
+            m_selectedText.text = "";
             gameObject.SetActive(true);
 
             if (m_IORoutine != null) StopCoroutine(m_IORoutine);
@@ -124,6 +133,8 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
         [ContextMenu("Debug Close")]
         public override void Close() {
             
+            for(int i = 0; i < m_seedHolder.childCount; i ++) Destroy(m_seedHolder.GetChild(i).gameObject);
+
             if (m_IORoutine != null) StopCoroutine(m_IORoutine);
             m_IORoutine = StartCoroutine(PanelIOCoroutine(false));
             
@@ -144,9 +155,9 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
 
             m_selector.anchoredPosition = new Vector2(Mathf.Cos(m_angle * Mathf.Deg2Rad), Mathf.Sin(m_angle * Mathf.Deg2Rad)) * m_selectorDistance;
 
-            float m_angleDistance = (360f / m_seedsTransform.Count);
+            float m_angleDistance = (360f / m_seedsController.Count);
 
-            for(int i = 0; i < m_seedsTransform.Count; i ++) {
+            for(int i = 0; i < m_seedsController.Count; i ++) {
 
                 if (m_selectorDistance > m_distance/2) {
 

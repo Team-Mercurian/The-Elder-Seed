@@ -58,7 +58,7 @@ public class DataSystem : MonoBehaviour {
     //Funciones privadas.
     private MasterData Load() {
 
-        MasterData m_data = new MasterData();
+        MasterData m_data = new MasterData(m_seedTypes);
 
         if (File.Exists(Application.persistentDataPath + "/save.json")) {
 
@@ -129,10 +129,10 @@ public class MasterData {
 
     [SerializeField] private List<GameData> m_gameDatas;
 
-    public MasterData() {
+    public MasterData(Seed[] seeds) {
 
         m_gameDatas = new List<GameData>();
-        m_gameDatas.Add(new GameData());
+        m_gameDatas.Add(new GameData(seeds));
         }
 
     public GameData GetGameData(int file) {
@@ -147,9 +147,9 @@ public class GameData {
     [SerializeField] private FarmData m_farmData;
     [SerializeField] private InventoryData m_inventoryData;
 
-    public GameData() { 
+    public GameData(Seed[] seeds) { 
 
-        m_farmData = new FarmData();
+        m_farmData = new FarmData(seeds);
         m_inventoryData = new InventoryData();
         }
 
@@ -165,7 +165,7 @@ public class FarmData {
 
     [SerializeField] private List<int> m_harvestedSeeds;
 
-    public FarmData() {
+    public FarmData(Seed[] seeds) {
 
         //Establecer listas.
         m_gridDatas = new List<GridData>();
@@ -173,7 +173,7 @@ public class FarmData {
         m_harvestedSeeds = new List<int>();
         
         //Añadir semillas por defecto.
-        for(int i = 0; i < DataSystem.GetSingleton().GetAllSeeds().Length; i ++) {
+        for(int i = 0; i < seeds.Length; i ++) {
 
             m_seedDatas.Add(new SeedData(0, false, i));
             }
@@ -381,7 +381,6 @@ public class SeedData {
     public int GetIndex() => m_index;
     public Seed GetSeed() => DataSystem.GetSingleton().GetSeed(m_index);
     }
-
 
 public class DungeonData {
 

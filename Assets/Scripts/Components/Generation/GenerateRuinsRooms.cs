@@ -43,7 +43,7 @@ public class GenerateRuinsRooms : GameBehaviour {
             
             if (dead) {
 
-
+                //Perder porcentaje de semillas.
                 }
 
             foreach(GridData m_d in DataSystem.GetSingleton().GetGameData().GetFarmData().GetGridDatas()) {
