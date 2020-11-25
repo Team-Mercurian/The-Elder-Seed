@@ -97,12 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae805963038f834b9d0eb2af324e962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_health: 850
+  m_health: 400
   m_meshToDeactive: {fileID: 5215380406721348892}
   m_damageCooldown: 0
   m_drop: {fileID: 0}
-  m_dropCount: 0
-  m_probability: 100
 --- !u!114 &5215380405671523413
 MonoBehaviour:
   m_ObjectHideFlags: 0
