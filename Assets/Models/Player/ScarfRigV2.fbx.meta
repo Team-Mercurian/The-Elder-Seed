@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: 47443d87c841d4c4d97b7efd608146f5
+guid: 9cc3dc60ced6f8f468fdf7480613c11f
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ColorOutline
+    second: {fileID: 2100000, guid: 675958e5c1de5434abee04db3daa002f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Scarf
+    second: {fileID: 2100000, guid: c20d1088406ff0040bb7949b3b0be8ad, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
