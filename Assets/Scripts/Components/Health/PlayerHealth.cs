@@ -36,7 +36,7 @@ public class PlayerHealth : EntityHealth {
 
             int m_h = m_health;
 
-            TemporalData m_p = DataSystem.GetSingleton().GetTemporalData();
+            DungeonData m_p = DataSystem.GetSingleton().GetDungeonData();
             if (m_p != null) m_h = m_p.GetPlayer().GetHealth();
 
             return m_health;
@@ -44,8 +44,7 @@ public class PlayerHealth : EntityHealth {
 		protected override void Dead() {
             
             CameraController.ResetCameraInStart();
-            DataSystem.GetSingleton().SetTemporalData(null);
-            SceneController.GetSingleton().LoadScene(SceneController.Scenes.House);
+            GenerateRuinsRooms.ExitRuins(true);
             }
 
         //Funciones ha heredar.
