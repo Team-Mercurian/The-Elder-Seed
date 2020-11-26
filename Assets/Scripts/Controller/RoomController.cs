@@ -82,8 +82,7 @@ public class RoomController : GameBehaviour {
                     break;
                 }
 
-            m_player.GetMovement().SetPosition(m_playerPos);
-            m_player.transform.rotation = Quaternion.Euler(0, m_playerRot, 0);
+            m_player.GetMovement().SetPositionAndDirection(m_playerPos, m_playerRot);
             }
         private void SetPassageData(RuinsPassageController passage, bool opened, Vector2Int teleportPosition, Vector2Int direction) {
             

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
     
 [CreateAssetMenu(fileName = "Weapon", menuName = "Game/Items/Weapon")]
-public class Weapon : ScriptableObject {
+public class Weapon : Item {
 	
     //Establecer variables.
 		
@@ -26,11 +26,7 @@ public class Weapon : ScriptableObject {
 		
             //Publicas.
             [Header("Weapon Values")]
-            [SerializeField] private string m_name = "";
             [SerializeField] private WeaponType m_type = WeaponType.Melee;
-            [SerializeField] private Rarity m_rarity = Rarity.Common;
-
-            [Space]
             [SerializeField] private int m_minDamage = 4;
             [SerializeField] private int m_maxDamage = 10;
             [SerializeField] private int m_uses = 100;
@@ -45,9 +41,7 @@ public class Weapon : ScriptableObject {
         //Funciones privadas.
 		
         //Funciones publicas.
-        public string GetName() => m_name;
         public WeaponType GetWeaponType() => m_type;
-        public Rarity GetRarity() => m_rarity;
         public int GetMinDamage() => m_minDamage;
         public int GetMaxDamage() => m_maxDamage;
         public int GetUses() => m_uses;

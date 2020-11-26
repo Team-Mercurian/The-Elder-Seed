@@ -41,9 +41,11 @@ public class GenerateRuinsRooms : GameBehaviour {
         //Funciones publicas.
         public static void ExitRuins(bool dead) {
             
+            FarmSpawnController.SetSpawn(dead ? FarmSpawnController.SpawnType.Altar : FarmSpawnController.SpawnType.Ruins);
+
             if (dead) {
 
-                //Perder porcentaje de semillas.
+                DataSystem.GetSingleton().GetDungeonData().LoseInventoryPart(Random.Range(40, 61));
                 }
 
             foreach(GridData m_d in DataSystem.GetSingleton().GetGameData().GetFarmData().GetGridDatas()) {
