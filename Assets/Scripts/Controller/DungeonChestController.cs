@@ -32,21 +32,41 @@ public class DungeonChestController : InteractableBehaviour {
         //Funciones publicas.
         public override void Interact() {
 
+            //Establecer variables locales.
+            DataSystem m_dataSystem = DataSystem.GetSingleton();
+
+            //Dar semillas de desbloqueo aleatorias dependiendo de una probabilidad.
             if (Random.Range(0f, 100f) < 20f) { 
 
-                DataSystem.GetSingleton().GetGameData().GetFarmData().AddSeed(Seed.SeedType.Unlock, Rarity.Common);
+                m_dataSystem.GetDungeonData().AddSeed(m_dataSystem.GetRandomSeedIndex(0, Seed.SeedType.Unlock));
                 }
             
-            int m_count = (Random.Range(1, 5)); 
+            //Añadir semillas.
 
-            for(int i = 0; i < m_count; i ++) {
+                //Numero de semillas a dar.
+                int m_count = (Random.Range(1, 5)); 
 
-                Seed.SeedType m_type = Random.Range(0, 2) < 1 ? Seed.SeedType.Durability : Seed.SeedType.Potion;
-                DataSystem.GetSingleton().GetGameData().GetFarmData().AddSeed(m_type, Rarity.Common);
+                //Añadir aleatoriamente semillas.
+                for(int i = 0; i < m_count; i ++) {
+
+                    Seed.SeedType m_type = Random.Range(0, 2) < 1 ? Seed.SeedType.Durability : Seed.SeedType.Potion;
+                    int m_index = m_dataSystem.GetRandomSeedIndex(0, m_type);
+
+                    if (m_index != -1) m_dataSystem.GetDungeonData().AddSeed(m_index);
+                    }
+
+            //Dar un arma al azar.
+            int m_weaponIndex = m_dataSystem.GetRandomWeaponIndex(0);
+
+            if (m_weaponIndex != -1) { 
+
+                Weapon m_weapon = m_dataSystem.GetWeapon(m_weaponIndex);
+                m_dataSystem.GetGameData().GetInventoryData().AddWeapon(m_weaponIndex, m_weapon.GetUses());
+                Debug.Log("Added the weapon: " + m_weapon.GetName() + " to the inventory.");
                 }
 
-            Weapon m_weapon = DataSystem.GetSingleton().AddRandomWeapon();
-            Debug.Log("Added the weapon: " + m_weapon.GetName() + " to the inventory.");
+            //Destruir cofre.
+            RoomController.GetSingleton().DestroyProp(gameObject);
             Destroy(gameObject);            
             }
 		

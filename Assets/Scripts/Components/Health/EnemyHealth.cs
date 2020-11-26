@@ -49,6 +49,7 @@ public class EnemyHealth : EntityHealth {
 		protected override void Dead() {
             
             DropObject();
+            RoomController.GetSingleton().DestroyProp(gameObject);
             Destroy(gameObject);
             }
 		

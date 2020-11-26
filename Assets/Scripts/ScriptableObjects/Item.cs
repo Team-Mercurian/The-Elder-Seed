@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class SlimeBrain : EnemyBrain {
+    
+public class Item : ScriptableObject {
 	
     //Establecer variables.
 		
@@ -19,9 +19,10 @@ public class SlimeBrain : EnemyBrain {
         //Establecer variables.
 		
             //Publicas.
-            [Header("Constant Jump")]
-			[SerializeField] private float m_minRandomJump = 2;
-			[SerializeField] private float m_maxRandomJump = 3;
+            [Header("Base Values")]
+            [SerializeField] private string m_name = "";
+            [SerializeField] private Rarity m_rarity = Rarity.Common;
+            [SerializeField] private Sprite m_UIIcon = null;
 
             //Privadas.
 			
@@ -29,18 +30,18 @@ public class SlimeBrain : EnemyBrain {
     //Funciones
 		
         //Funciones de MonoBehaviour
-        private void Start() {
-
-            ConstantJump(m_minRandomJump, m_maxRandomJump);
-            }
-		
-        //Funciones publicas.
 		
         //Funciones privadas.
+		
+        //Funciones publicas.
+        public string GetName() => m_name;
+        public Rarity GetRarity() => m_rarity;
+        public Sprite GetIcon() => m_UIIcon;
 
         //Funciones heredadas.
 		
         //Funciones ha heredar.
 		
         //Corotinas.
+		
         }

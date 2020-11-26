@@ -21,6 +21,7 @@ public class DataSystem : MonoBehaviour {
         [SerializeField] private GameObject[] m_chestRooms = null;
         [SerializeField] private GameObject[] m_enemies = null;
         [SerializeField] private Weapon[] m_weapons = null;
+        
         [SerializeField] private Seed[] m_seedTypes = null;
 
     //Funciones de MonoBehaviour.
@@ -108,19 +109,90 @@ public class DataSystem : MonoBehaviour {
                 public Seed[] GetAllSeeds() => m_seedTypes;    
 
         //Functions
-        public Weapon AddRandomWeapon() {
+        private struct ItemData {
             
-            int m_weaponIndex = Random.Range(0, m_weapons.Length);
-            Weapon m_weapon = m_weapons[m_weaponIndex];
+            private int m_index;
+            private Item m_item;
 
-            m_gameData.GetInventoryData().AddWeapon(m_weaponIndex, m_weapon.GetUses());
+            public ItemData(int index, Item item) {
 
-            return m_weapon;
+                m_index = index;
+                m_item = item;
+                }
+            
+            public int GetIndex() => m_index; 
+            public Item GetItem() => m_item; 
+
+            public Rarity GetRarity() => m_item.GetRarity();
+            } 
+
+        public int GetRandomWeaponIndex(int probabilityIncrement) {
+            
+            List<ItemData> m_itemDatas = new List<ItemData>();
+
+            for(int i = 0; i < m_weapons.Length; i ++) {
+
+                m_itemDatas.Add(new ItemData(i, m_weapons[i]));
+                }
+
+            return GetRandomItemsIndex(probabilityIncrement, m_itemDatas);
             }
+        public int GetRandomSeedIndex(int probabilityIncrement, Seed.SeedType seedType) {
+            
+            List<ItemData> m_itemDatas = new List<ItemData>();
 
-        public Seed AddRandomSeed() {
+            for(int i = 0; i < m_seedTypes.Length; i ++) {
 
-            return null;
+                if (m_seedTypes[i].GetSeedType() == seedType) m_itemDatas.Add(new ItemData(i, m_seedTypes[i]));
+                }
+
+            return GetRandomItemsIndex(probabilityIncrement, m_itemDatas);
+            }
+        private int GetRandomItemsIndex(int probabilityIncrement, List<ItemData> items) {
+
+            probabilityIncrement = Mathf.Clamp(probabilityIncrement, 0, 16);
+
+            List<ItemData> m_rarityList = new List<ItemData>();
+            int m_probability = Mathf.Clamp(Random.Range(0, 100) + probabilityIncrement, 0, 100);
+
+            if (m_probability < 50) {
+
+                for(int i = 0; i < items.Count; i ++) {
+                    
+                    if (items[i].GetRarity() == Rarity.Common) m_rarityList.Add(items[i]); 
+                    }
+                }
+
+            else if (m_probability < 80) {
+
+                for(int i = 0; i < items.Count; i ++) {
+                    
+                    if (items[i].GetRarity() == Rarity.Rare) m_rarityList.Add(items[i]); 
+                    }
+                }
+                
+            else if (m_probability < 95) {
+                
+                for(int i = 0; i < items.Count; i ++) {
+                    
+                    if (items[i].GetRarity() == Rarity.Epic) m_rarityList.Add(items[i]); 
+                    }
+                }
+
+            else {
+                
+                for(int i = 0; i < items.Count; i ++) {
+
+                    if (items[i].GetRarity() == Rarity.Legendary) m_rarityList.Add(items[i]); 
+                    }
+                }
+            
+            if (m_rarityList.Count > 0) return m_rarityList[Random.Range(0, m_rarityList.Count)].GetIndex();
+            else {
+                
+                Debug.Log("No existe un item dentro de esta categoria.");
+                return -1;
+                }
             }
         }
 
@@ -384,15 +456,19 @@ public class SeedData {
 
 public class DungeonData {
 
-    [SerializeField] private PlayerData m_playerData; 
-    [SerializeField] private List<RoomData> m_rooms;
-    [SerializeField] private Vector2Int m_actualRoom;
+    private PlayerData m_playerData; 
+    private List<RoomData> m_rooms;
+    private Vector2Int m_actualRoom;
+
+    private List<int> m_recolectedSeedsIndex;
 
     public DungeonData(PlayerData playerData) {
 
         m_playerData = playerData;
         m_rooms = null;
         m_actualRoom = Vector2Int.zero;
+
+        m_recolectedSeedsIndex = new List<int>();
         }   
         
     public PlayerData GetPlayer() => m_playerData;
@@ -413,6 +489,25 @@ public class DungeonData {
 
     public void SetActualRoom(Vector2Int position) => m_actualRoom = position;
     public Vector2Int GetActualRoom() => m_actualRoom;
+
+    public void AddSeed(int index) => m_recolectedSeedsIndex.Add(index);
+
+    public void LoseInventoryPart(int percent) {
+
+        Debug.Log("Inventario antes de morir: " + m_recolectedSeedsIndex.Count);
+
+        List<int> m_newSeeds = m_recolectedSeedsIndex;
+        int m_actualPercentIndex = 0;
+        int m_maxPercentIndex = Mathf.FloorToInt(m_recolectedSeedsIndex.Count * (percent/100f));
+
+        while(m_actualPercentIndex < m_maxPercentIndex) {
+
+            m_newSeeds.RemoveAt(Random.Range(0, m_newSeeds.Count));
+            m_actualPercentIndex ++;
+            }
+
+        Debug.Log("Inventario despues de morir: " + m_newSeeds.Count);
+        }
     }
 public class RoomData {
     
@@ -422,24 +517,49 @@ public class RoomData {
         Chest,
         }
 
-    [SerializeField] private Vector2Int m_roomPosition;
-    [SerializeField] private int m_roomPrefabIndex;
-    [SerializeField] private RoomType m_roomType;
+    private Vector2Int m_roomPosition;
+    private int m_roomPrefabIndex;
+    private RoomType m_roomType;
+
+    private List<RoomPropData> m_roomProps;
     
-    public RoomData(Vector2Int roomPosition, int prefabIndex, RoomType roomType) {
+    public RoomData(Vector2Int roomPosition, int prefabIndex, RoomType roomType, List<RoomPropData> roomProps) {
         
         m_roomPosition = roomPosition;
         m_roomPrefabIndex = prefabIndex;
         m_roomType = roomType;
+        m_roomProps = roomProps;
         }
 
     public Vector2Int GetRoomPosition() => m_roomPosition;
     public int GetRoomPrefabIndex() => m_roomPrefabIndex;
     public RoomType GetRoomType() => m_roomType;
+    public List<RoomPropData> GetPropDatas() => m_roomProps;
+    public void DestroyProp(int index) {
+        
+        m_roomProps[index].SetIfIsDestroyed(true);
+        }
     }
+public class RoomPropData {
+
+    private int m_index;
+    private bool m_destroyed;
+
+    public RoomPropData(int index, bool destroyed) {
+
+        m_index = index;
+        m_destroyed = destroyed;
+        }
+
+    public int GetIndex() => m_index;
+    public bool GetIfIsDestroyed() => m_destroyed;
+
+    public void SetIfIsDestroyed(bool destroyed) => m_destroyed = destroyed; 
+    }
+
 public class PlayerData {
 
-    [SerializeField] private int m_playerHealth;
+    private int m_playerHealth;
 
     public PlayerData(int playerHealth) {
 

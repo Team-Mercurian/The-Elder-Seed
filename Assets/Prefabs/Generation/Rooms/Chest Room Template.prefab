@@ -50,6 +50,8 @@ MonoBehaviour:
   m_passageLeft: {fileID: 5343145360390283866}
   m_passageDown: {fileID: 5890908733867383439}
   m_passageRight: {fileID: 2952487638706044689}
+  m_props:
+  - {fileID: 2343488623937736954}
 --- !u!1 &6699916712296556335
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,6 +511,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75d398e0ff1d3164ea82c577166ab71d, type: 3}
+--- !u!1 &2343488623937736954 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8065057107519070823, guid: 75d398e0ff1d3164ea82c577166ab71d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5722220017371820701}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5531486799331673117 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 264200713272227456, guid: 75d398e0ff1d3164ea82c577166ab71d,

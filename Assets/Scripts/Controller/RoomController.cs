@@ -13,6 +13,7 @@ public class RoomController : GameBehaviour {
         //Establecer variables estaticas.
 		
             //Publicas.
+            private static RoomController m_instance;
             private static Direction m_appearDirection = Direction.Up;
 			
             //Privadas
@@ -26,7 +27,9 @@ public class RoomController : GameBehaviour {
             [SerializeField] private RuinsPassageController m_passageDown = null;
             [SerializeField] private RuinsPassageController m_passageRight = null;
 
-			
+            [Header("References")]
+            [SerializeField] private List<GameObject> m_props = null;
+
             //Privadas.
             private PlayerBrain m_player;
             private Vector2Int m_roomPosition;
@@ -36,6 +39,19 @@ public class RoomController : GameBehaviour {
     //Funciones
 		
         //Funciones de MonoBehaviour
+        private void Awake() {
+
+            m_instance = this;
+            }
+        private void Start() {
+
+            List<RoomPropData> m_propDatas = DataSystem.GetSingleton().GetDungeonData().GetRoomData(m_roomPosition).GetPropDatas();
+
+            for(int i = 0; i < m_propDatas.Count; i ++) {
+                
+                if (m_propDatas[i].GetIfIsDestroyed()) Destroy(m_props[i]);
+                }
+            }
 		
         //Funciones privadas.
 		private void GeneratePassages() {
@@ -82,8 +98,7 @@ public class RoomController : GameBehaviour {
                     break;
                 }
 
-            m_player.GetMovement().SetPosition(m_playerPos);
-            m_player.transform.rotation = Quaternion.Euler(0, m_playerRot, 0);
+            m_player.GetMovement().SetPositionAndDirection(m_playerPos, m_playerRot);
             }
         private void SetPassageData(RuinsPassageController passage, bool opened, Vector2Int teleportPosition, Vector2Int direction) {
             
@@ -119,15 +134,25 @@ public class RoomController : GameBehaviour {
             GeneratePassages();
             SetPlayerPosition();
             }
+        public List<GameObject> GetProps() => m_props;
+        public void DestroyProp(GameObject prop) {
+            
+            for(int i = 0; i < m_props.Count; i ++) {
 
-        public static Direction GetAppearDirection() {
+                if (prop == m_props[i]) {
+                    
+                    DataSystem.GetSingleton().GetDungeonData().GetRoomData(m_roomPosition).DestroyProp(i);
+                    return;
+                    }
+                }
 
-            return m_appearDirection;
+            Debug.LogError("Prop no encontrado al destruir.");
             }
-        public static void SetAppearDirection(Direction direction) {
 
-            m_appearDirection = direction;
-            }
+        public static Direction GetAppearDirection() => m_appearDirection;
+        public static void SetAppearDirection(Direction direction) => m_appearDirection = direction;
+        public static RoomController GetSingleton() => m_instance;
+
         //Funciones heredadas.
 		
         //Funciones ha heredar.
@@ -135,3 +160,7 @@ public class RoomController : GameBehaviour {
         //Corotinas.
 		
         }
+public interface IHasPropData {
+
+    void RemovePropFromData();
+    }
