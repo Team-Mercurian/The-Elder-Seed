@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeBrain : EntityBrain {
+public class SlimeBrain : EnemyBrain {
 	
     //Establecer variables.
 		
@@ -37,23 +37,10 @@ public class SlimeBrain : EntityBrain {
         //Funciones publicas.
 		
         //Funciones privadas.
-        private void ConstantJump(float minRandomJump, float maxRandomJump) {
-
-            StartCoroutine(ConstantJumpCoroutine(minRandomJump, maxRandomJump));
-            }   
 
         //Funciones heredadas.
 		
         //Funciones ha heredar.
 		
         //Corotinas.
-        private IEnumerator ConstantJumpCoroutine(float minSecs, float maxSecs) {
-            
-            while(true) {
-
-                GetMovement().Jump();
-                GetAttack().Attack();
-                yield return new WaitForSeconds(Random.Range(minSecs, maxSecs));
-                }
-            }
         }

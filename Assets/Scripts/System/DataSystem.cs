@@ -456,11 +456,11 @@ public class SeedData {
 
 public class DungeonData {
 
-    [SerializeField] private PlayerData m_playerData; 
-    [SerializeField] private List<RoomData> m_rooms;
-    [SerializeField] private Vector2Int m_actualRoom;
+    private PlayerData m_playerData; 
+    private List<RoomData> m_rooms;
+    private Vector2Int m_actualRoom;
 
-    [SerializeField] private List<int> m_recolectedSeedsIndex;
+    private List<int> m_recolectedSeedsIndex;
 
     public DungeonData(PlayerData playerData) {
 
@@ -517,24 +517,49 @@ public class RoomData {
         Chest,
         }
 
-    [SerializeField] private Vector2Int m_roomPosition;
-    [SerializeField] private int m_roomPrefabIndex;
-    [SerializeField] private RoomType m_roomType;
+    private Vector2Int m_roomPosition;
+    private int m_roomPrefabIndex;
+    private RoomType m_roomType;
+
+    private List<RoomPropData> m_roomProps;
     
-    public RoomData(Vector2Int roomPosition, int prefabIndex, RoomType roomType) {
+    public RoomData(Vector2Int roomPosition, int prefabIndex, RoomType roomType, List<RoomPropData> roomProps) {
         
         m_roomPosition = roomPosition;
         m_roomPrefabIndex = prefabIndex;
         m_roomType = roomType;
+        m_roomProps = roomProps;
         }
 
     public Vector2Int GetRoomPosition() => m_roomPosition;
     public int GetRoomPrefabIndex() => m_roomPrefabIndex;
     public RoomType GetRoomType() => m_roomType;
+    public List<RoomPropData> GetPropDatas() => m_roomProps;
+    public void DestroyProp(int index) {
+        
+        m_roomProps[index].SetIfIsDestroyed(true);
+        }
     }
+public class RoomPropData {
+
+    private int m_index;
+    private bool m_destroyed;
+
+    public RoomPropData(int index, bool destroyed) {
+
+        m_index = index;
+        m_destroyed = destroyed;
+        }
+
+    public int GetIndex() => m_index;
+    public bool GetIfIsDestroyed() => m_destroyed;
+
+    public void SetIfIsDestroyed(bool destroyed) => m_destroyed = destroyed; 
+    }
+
 public class PlayerData {
 
-    [SerializeField] private int m_playerHealth;
+    private int m_playerHealth;
 
     public PlayerData(int playerHealth) {
 

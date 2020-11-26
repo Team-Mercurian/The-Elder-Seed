@@ -53,6 +53,8 @@ public class GenerateRuinsRooms : GameBehaviour {
                 m_d.SetHarvest(true);
                 }
 
+            RoomController.SetAppearDirection(Direction.Up);
+
             DataSystem.GetSingleton().SetDungeonData(null);
             DataSystem.Save();
             SceneController.GetSingleton().LoadScene(Scenes.House);
@@ -84,7 +86,16 @@ public class GenerateRuinsRooms : GameBehaviour {
                             int m_roomPrefabIndex = m_dataSystem.GetRandomChestRoomPrefabIndex();
                             
                             m_roomsPositions.Add(m_pos);
-                            m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex, RoomData.RoomType.Chest));
+
+                            List<RoomPropData> m_roomProps = new List<RoomPropData>();
+                            List<GameObject> m_props = m_dataSystem.GetChestRoomPrefab(m_roomPrefabIndex).GetComponent<RoomController>().GetProps();
+
+                            for(int i = 0; i < m_props.Count; i ++) {
+                                
+                                m_roomProps.Add(new RoomPropData(i, false));
+                                }
+
+                            m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex, RoomData.RoomType.Chest, m_roomProps));
                             m_generatedRooms++;
                             }
 
@@ -93,7 +104,16 @@ public class GenerateRuinsRooms : GameBehaviour {
                             int m_roomPrefabIndex = m_dataSystem.GetRandomRoomPrefabIndex();
                             
                             m_roomsPositions.Add(m_pos);
-                            m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex, RoomData.RoomType.Room));
+
+                            List<RoomPropData> m_roomProps = new List<RoomPropData>();
+                            List<GameObject> m_props = m_dataSystem.GetRoomPrefab(m_roomPrefabIndex).GetComponent<RoomController>().GetProps();
+
+                            for(int i = 0; i < m_props.Count; i ++) {
+                                
+                                m_roomProps.Add(new RoomPropData(i, false));
+                                }
+
+                            m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex, RoomData.RoomType.Room, m_roomProps));
                             m_generatedRooms ++;
                             }
                         }
