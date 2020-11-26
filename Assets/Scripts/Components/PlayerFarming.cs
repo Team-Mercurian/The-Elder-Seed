@@ -63,12 +63,10 @@ public class PlayerFarming : MonoBehaviour {
         //Funciones publicas.
         public void Interact(InputAction.CallbackContext context) {
             
-            if (m_seedIndex < 0 || m_actualGrid == null || context.phase != InputActionPhase.Canceled) return;
+            if (m_actualGrid == null || context.phase != InputActionPhase.Canceled) return;
 
             Vector3Int m_pos = new Vector3Int(m_actualGrid.Value.x, m_actualGrid.Value.y, m_actualGrid.Value.z);
             int m_cellSize = FarmingEnviromentController.GetCellSize();
-
-            Seed m_seed = DataSystem.GetSingleton().GetSeed(m_seedIndex);
 
             if (m_data.GetIfGridIsUsed(m_pos / m_cellSize)) {
 
@@ -77,6 +75,9 @@ public class PlayerFarming : MonoBehaviour {
             
             else {
 
+                if (m_seedIndex < 0) return;
+                Seed m_seed = DataSystem.GetSingleton().GetSeed(m_seedIndex);
+                
                 if (m_data.GetSeedCount(m_seed.GetSeedType(), m_seed.GetRarity()) > 0) {
                         
                     FarmingEnviromentController.GetSingleton().CreatePlant(m_pos, m_seedIndex, false);
