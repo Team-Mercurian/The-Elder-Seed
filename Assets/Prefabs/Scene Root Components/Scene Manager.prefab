@@ -43,3 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bec255a25146d047b5096f6555af2fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_fastFade: {fileID: 830098127705029866, guid: 63f39f2350eedad4787a4a60fd67dde5,
+    type: 3}
+  m_transitionFade: {fileID: 7576928528403799282, guid: c691e92ceff299e41a3ffff04eb0f63b,
+    type: 3}

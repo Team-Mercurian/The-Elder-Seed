@@ -57,7 +57,7 @@ public class GenerateRuinsRooms : GameBehaviour {
 
             DataSystem.GetSingleton().SetDungeonData(null);
             DataSystem.Save();
-            SceneController.GetSingleton().LoadScene(Scenes.House);
+            SceneController.GetSingleton().LoadScene(Scenes.House, false);
             }
 
         //Funciones privadas.

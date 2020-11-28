@@ -89,7 +89,7 @@ public class RuinsPassageController : InteractableBehaviour {
                 RoomController.SetAppearDirection(m_direction);
 
                 DataSystem.GetSingleton().GetDungeonData().SetActualRoom(m_pos);
-                SceneController.GetSingleton().LoadScene(Scenes.Ruins);
+                SceneController.GetSingleton().LoadScene(Scenes.Ruins, true);
                 }
             }
 		

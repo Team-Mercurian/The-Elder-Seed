@@ -33,7 +33,7 @@ public class RuinsEntryController : InteractableBehaviour {
         public override void Interact() {
 
             DataSystem.Save();
-            SceneController.GetSingleton().LoadScene(Scenes.Ruins);
+            SceneController.GetSingleton().LoadScene(Scenes.Ruins, false);
             }
 		
         //Funciones heredadas.
