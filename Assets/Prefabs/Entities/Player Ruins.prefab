@@ -15,6 +15,7 @@ MonoBehaviour:
   m_health: 1200
   m_damageText: {fileID: 7533356923139126215, guid: ce7c225c2553d60488b69cb5bc4c8a21,
     type: 3}
+  m_damageTextOffset: 2
   m_meshToDeactive: {fileID: 7587067380948943169}
   m_damageCooldown: 3
 --- !u!1001 &9156634318592066023
