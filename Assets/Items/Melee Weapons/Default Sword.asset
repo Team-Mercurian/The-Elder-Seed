@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Default Sword
   m_EditorClassIdentifier: 
   m_name: Default Sword
-  m_type: 0
   m_rarity: 0
+  m_UIIcon: {fileID: 0}
+  m_type: 0
   m_minDamage: 65
   m_maxDamage: 140
-  m_uses: 200
+  m_criticalProbability: 20
