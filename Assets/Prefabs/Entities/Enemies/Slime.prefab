@@ -98,6 +98,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_health: 400
+  m_damageText: {fileID: 7533356923139126215, guid: ce7c225c2553d60488b69cb5bc4c8a21,
+    type: 3}
   m_meshToDeactive: {fileID: 5215380406721348892}
   m_damageCooldown: 0
   m_drop: {fileID: 0}

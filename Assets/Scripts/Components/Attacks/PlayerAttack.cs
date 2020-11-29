@@ -58,8 +58,6 @@ public class PlayerAttack : EntityAttack {
 
             if (collider.CompareTag(m_otherTag)) {
 
-                collider.GetComponent<EntityHealth>().GetDamage(m_damage);
-
                 InventoryData m_data = DataSystem.GetSingleton().GetGameData().GetInventoryData();
 
                 m_data.UseActualWeapon();
@@ -68,6 +66,8 @@ public class PlayerAttack : EntityAttack {
                 int m_uses = m_data.GetActualWeapon().GetUses();
 
                 m_damage = m_weapon.GetCalculatedDamage(m_uses);
+
+                collider.GetComponent<EntityHealth>().GetDamage(m_damage);
 
                 Debug.Log("Weapon used. Actual durability: " + m_uses + ". Actual Damage: " + m_damage + "/" + m_weapon.GetMaxDamage() + ".");
                 }
