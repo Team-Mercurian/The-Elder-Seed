@@ -21,6 +21,7 @@ public abstract class EntityHealth : MonoBehaviour {
             //Publicas.
             [Header("Health")]
 			[SerializeField] protected int m_health = 8;
+            [SerializeField] protected GameObject m_damageText = null;
 
             [Header("Damage Cooldown")]
             [SerializeField] protected GameObject m_meshToDeactive = null;
@@ -50,8 +51,8 @@ public abstract class EntityHealth : MonoBehaviour {
 
             //Reducir la vida.
             m_actualHealth = Mathf.Clamp(m_actualHealth - damage, 0, m_health);
-            
-            Debug.Log(gameObject.name + " has received " + damage + " damage points, actual health: " + m_actualHealth + ".");
+            DamageTextController m_dt = Instantiate(m_damageText, transform.position + (Vector3.up * 1) , Quaternion.identity).GetComponent<DamageTextController>();
+            m_dt.SetData(damage.ToString());
 
             //Detectar si este perdio toda su vida.
             if (m_actualHealth == 0) {
