@@ -137,6 +137,7 @@ public class InputController : MonoBehaviour {
             if (context.phase != InputActionPhase.Started) return;
             
             m_playerAttack.Attack();
+            m_playerMovement.OnAttack();
             }
         public void QuitDungeon(InputAction.CallbackContext context) {
 

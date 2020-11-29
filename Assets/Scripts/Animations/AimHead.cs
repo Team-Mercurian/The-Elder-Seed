@@ -52,6 +52,15 @@ public class AimHead:MonoBehaviour
         m_aimTarget.position = Vector3.SmoothDamp(m_aimTarget.position, m_lookPosition, ref m_velocity, m_smoothness);
     }
 
+    public Transform GetEnemyTarget() {
+
+        Transform m_t = null;
+
+        if (m_targets.Count > 0 && m_targets[0] != null && m_targets[0].CompareTag("Enemy")) m_t = m_targets[0];
+
+        return m_t;
+        }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Enemy"))

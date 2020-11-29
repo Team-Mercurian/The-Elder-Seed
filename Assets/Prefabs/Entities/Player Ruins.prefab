@@ -25,6 +25,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 606783867811322470, guid: 05292389237196c4680b1412a93c9752,
+        type: 3}
+      propertyPath: m_attackTime
+      value: 0.275
+      objectReference: {fileID: 0}
+    - target: {fileID: 606783867811322470, guid: 05292389237196c4680b1412a93c9752,
+        type: 3}
+      propertyPath: m_rotationSmoothness
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 606783867811322470, guid: 05292389237196c4680b1412a93c9752,
+        type: 3}
+      propertyPath: m_attackForce
+      value: 0.45
+      objectReference: {fileID: 0}
     - target: {fileID: 1014431049316560161, guid: 05292389237196c4680b1412a93c9752,
         type: 3}
       propertyPath: m_LocalScale.x

@@ -24,6 +24,7 @@ public class PlayerAttack : EntityAttack {
 
             //Privadas.
             private float m_delay;
+            private Vector3 m_savedPosition;
 			
     //Funciones
 		
@@ -31,6 +32,7 @@ public class PlayerAttack : EntityAttack {
 		protected override void Start() {
 
             base.Start();
+            m_savedPosition = transform.localPosition;
             m_delay = 0;
             }
 
@@ -43,6 +45,10 @@ public class PlayerAttack : EntityAttack {
 
             base.Attack();
             }
+        public void MoveColliderTo(Transform target) {
+
+            StartCoroutine(SetCollisionTarget(target));
+            }
 
         //Funciones heredadas.
         protected override string SetOtherTag() {
@@ -51,7 +57,7 @@ public class PlayerAttack : EntityAttack {
             }
         protected override void SetDamage() {
 
-            m_damage = DataSystem.GetSingleton().GetActualWeapon().GetMaxDamage();
+            m_damage = DataSystem.GetSingleton().GetActualWeapon().GetCalculatedDamage(DataSystem.GetSingleton().GetActualWeapon().GetUses());
             }
 
         protected override void OnTriggerEnter(Collider collider) {
@@ -68,8 +74,6 @@ public class PlayerAttack : EntityAttack {
                 m_damage = m_weapon.GetCalculatedDamage(m_uses);
 
                 collider.GetComponent<EntityHealth>().GetDamage(m_damage);
-
-                Debug.Log("Weapon used. Actual durability: " + m_uses + ". Actual Damage: " + m_damage + "/" + m_weapon.GetMaxDamage() + ".");
                 }
             }
 
@@ -90,4 +94,11 @@ public class PlayerAttack : EntityAttack {
 
         m_delay = 0;
         }
+    private IEnumerator SetCollisionTarget(Transform target) {
+
+        transform.position = target.position;
+        yield return new WaitForSeconds(m_attackDelay);
+
+        transform.localPosition = m_savedPosition;
         }
+    }

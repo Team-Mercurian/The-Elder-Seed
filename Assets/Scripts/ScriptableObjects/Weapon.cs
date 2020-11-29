@@ -27,8 +27,7 @@ public class Weapon : Item {
             //Publicas.
             [Header("Weapon Values")]
             [SerializeField] private WeaponType m_type = WeaponType.Melee;
-            [SerializeField] private int m_minDamage = 4;
-            [SerializeField] private int m_maxDamage = 10;
+            [SerializeField] private int m_baseDamage = 120;
             [SerializeField] [Range(0, 100)] private int m_criticalProbability = 20;
 			
             //Privadas.
@@ -42,14 +41,15 @@ public class Weapon : Item {
 
         //Funciones publicas.
         public WeaponType GetWeaponType() => m_type;
-        public int GetMinDamage() => m_minDamage;
-        public int GetMaxDamage() => m_maxDamage;
+        public int GetMinDamage() => m_baseDamage;
         public int GetUses() => 300 + (200 * (int) GetRarity());
         public int GetCriticalProbability() => m_criticalProbability;
 		
         public int GetCalculatedDamage(int uses) {
             
-            int m_damage = Mathf.RoundToInt(Mathf.Lerp(m_minDamage, m_maxDamage, (float) uses/ GetUses()));
+            //(Daño base + (Daño base * (desgaste actual / desgaste máximo))) * multiplicador de daño crítico. 
+
+            int m_damage = Mathf.RoundToInt(m_baseDamage + (m_baseDamage * (float) uses/ GetUses()));
 
             if (Random.Range(0, 100) < m_criticalProbability) m_damage = Mathf.RoundToInt(m_damage * 1.5f); 
 

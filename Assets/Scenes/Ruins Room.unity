@@ -388,6 +388,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
         type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
@@ -475,6 +480,121 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ActionEvents.Array.data[8].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: InputController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionId
+      value: eba00e53-a9c1-44fa-8624-a492d60c1472
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[9].m_ActionName
+      value: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[10].m_ActionId
+      value: 17a8c2ba-e9a4-4159-bb80-b286c31a86be
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[10].m_ActionName
+      value: UI/Submit[/Keyboard/enter]
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[11].m_ActionId
+      value: ee511444-61c2-4a0d-a8da-fe2a02d8aefb
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[11].m_ActionName
+      value: UI/Cancel[/Keyboard/escape]
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_ActionId
+      value: 40ed3a31-b0a5-467c-b72e-cce79cb4dc79
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[12].m_ActionName
+      value: UI/Point[/Mouse/position]
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionId
+      value: 614794b5-ff8b-4603-a64f-e923a32d6510
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[13].m_ActionName
+      value: UI/Click[/Mouse/leftButton]
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_ActionId
+      value: e13a5179-d889-442c-adc3-ac169494a3aa
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[14].m_ActionName
+      value: UI/ScrollWheel[/Mouse/scroll]
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_ActionId
+      value: a1578272-2a00-4024-9a10-fd246717716b
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[15].m_ActionName
+      value: UI/MiddleClick[/Mouse/middleButton]
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_ActionId
+      value: ce7cb1fc-51db-4925-b859-5031cf699311
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[16].m_ActionName
+      value: UI/RightClick[/Mouse/rightButton]
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_ActionId
+      value: 6b6bb991-4979-4fed-b978-193a185c50fe
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[17].m_ActionName
+      value: UI/TrackedDevicePosition
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[18].m_ActionId
+      value: 502f8c26-7913-4d38-bed5-9029c25a1231
+      objectReference: {fileID: 0}
+    - target: {fileID: 7766282513433130520, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[18].m_ActionName
+      value: UI/TrackedDeviceOrientation
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4293021547780509909, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec, type: 3}
