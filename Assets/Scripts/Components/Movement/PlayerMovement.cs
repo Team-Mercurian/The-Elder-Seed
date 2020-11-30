@@ -39,6 +39,7 @@ public class PlayerMovement : JumpingCharacter {
             [SerializeField] private PlayerAttack m_playerAttack = null;
             [SerializeField] private float m_attackForce = 1f;
             [SerializeField] private float m_attackTime = 0.25f;
+            [SerializeField] private float m_autoTargetAttackDistance = 1f;
 
             
             //Privadas.
@@ -110,10 +111,14 @@ public class PlayerMovement : JumpingCharacter {
             }
         public void OnAttack() {
 
-            Transform m_target = m_aimHead.GetEnemyTarget();
-            float m_dir = (CameraController.GetDirection().eulerAngles.y + 90) * Mathf.Deg2Rad;
+            if (m_playerAttack.IsAttacking()) return;
 
-            m_moveDirection = m_target == null ? new Vector3(-Mathf.Cos(m_dir), 0, Mathf.Sin(m_dir)) : m_target.position - transform.position;
+            Transform m_target = m_aimHead.GetEnemyTarget();
+            float m_dir = (transform.eulerAngles.y) * Mathf.Deg2Rad;
+
+            if (m_target != null && Vector2.Distance(m_target.position, transform.position) > m_autoTargetAttackDistance) m_target = null; 
+
+            m_moveDirection = m_target == null ? new Vector3(Mathf.Cos(m_dir), 0, Mathf.Sin(m_dir)) : m_target.position - transform.position;
 
             if (m_target != null) m_playerAttack.MoveColliderTo(m_target);
 

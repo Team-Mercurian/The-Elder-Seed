@@ -131,6 +131,7 @@ MonoBehaviour:
   m_playerAttack: {fileID: 2875069773144259461}
   m_attackForce: 1
   m_attackTime: 0.3
+  m_autoTargetAttackDistance: 2
 --- !u!114 &6333725622104679913
 MonoBehaviour:
   m_ObjectHideFlags: 0

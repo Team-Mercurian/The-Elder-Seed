@@ -27,6 +27,7 @@ public class PlayerAttack : EntityAttack {
 
             //Privadas.
             private float m_delay;
+            private bool m_isAttacking;
             private Vector3 m_savedPosition;
 			
     //Funciones
@@ -52,7 +53,8 @@ public class PlayerAttack : EntityAttack {
 
             StartCoroutine(SetCollisionTarget(target));
             }
-
+        public bool IsAttacking() => m_isAttacking;
+            
         //Funciones heredadas.
         protected override string SetOtherTag() {
 
@@ -85,6 +87,7 @@ public class PlayerAttack : EntityAttack {
     //Corotinas.
     protected override IEnumerator AttackCoroutine() {
 
+        m_isAttacking = true;
         yield return StartCoroutine(base.AttackCoroutine());
 
         m_delay = m_attackDelay;
@@ -95,6 +98,7 @@ public class PlayerAttack : EntityAttack {
             yield return null;
             }
 
+        m_isAttacking = false;
         m_delay = 0;
         }
     private IEnumerator SetCollisionTarget(Transform target) {
