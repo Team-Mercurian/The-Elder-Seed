@@ -33,22 +33,15 @@ public class PlayerMovement : JumpingCharacter {
 
             [Header("Player References")]
             [SerializeField] private Animator m_animator = null;
-            [SerializeField] private AimHead m_aimHead = null;
-
-            [Header("Player Attack Movement")]
-            [SerializeField] private PlayerAttack m_playerAttack = null;
-            [SerializeField] private float m_attackForce = 1f;
-            [SerializeField] private float m_attackTime = 0.25f;
-            [SerializeField] private float m_autoTargetAttackDistance = 1f;
-
             
             //Privadas.
             private float m_stamina;
 			private bool m_run = false;
             private bool m_tired = false;
 
-            private Vector3 m_moveDirection = Vector3.zero;
-            private bool m_isAttacking;
+            private bool m_isAttacking = false;
+
+            private Vector2 m_lookDirection = Vector2.zero;
 
     //Funciones
 		
@@ -66,10 +59,7 @@ public class PlayerMovement : JumpingCharacter {
             DetectGround();
             SetGravityVelocity();
             SetVerticalVelocity(-m_fallVelocity);
-
-            if (m_velocity.magnitude > 0.05f && !m_isAttacking) m_moveDirection = m_velocity;
-
-            RotateSmooth(m_moveDirection);
+            RotateSmooth(m_lookDirection);
 
             bool m_isRunning;
             float m_finalSpeed = 0;
@@ -109,36 +99,21 @@ public class PlayerMovement : JumpingCharacter {
 
             m_run = active;
             }
-        public void OnAttack() {
+        public void LookAt(Vector2 direction) {
 
-            if (m_playerAttack.IsAttacking()) return;
-
-            Transform m_target = m_aimHead.GetEnemyTarget();
-            float m_dir = (transform.eulerAngles.y) * Mathf.Deg2Rad;
-
-            if (m_target != null && Vector2.Distance(m_target.position, transform.position) > m_autoTargetAttackDistance) m_target = null; 
-
-            m_moveDirection = m_target == null ? new Vector3(Mathf.Cos(m_dir), 0, Mathf.Sin(m_dir)) : m_target.position - transform.position;
-
-            if (m_target != null) m_playerAttack.MoveColliderTo(m_target);
-
-            StartCoroutine(AttackDelay());
+            m_lookDirection = direction;
             }
+        public void IsAttacking(bool isAttacking) => m_isAttacking = isAttacking;
 
         //Funciones heredadas.
         public override void SetHorizontalVelocity(Vector2 velocity) {
             
-            if (m_isAttacking) {
+            if (m_isAttacking) velocity = new Vector2();
 
-                Vector3 m_vel = m_moveDirection.normalized * m_attackForce;
-                velocity = new Vector2(m_vel.x, m_vel.z);
-                }
-
-            else {
-
-                Vector3 m_calculatedVelocity = CameraController.GetDirection() * new Vector3(velocity.x, 0, velocity.y);
-                velocity = new Vector2(m_calculatedVelocity.x, m_calculatedVelocity.z);
-                }
+            Vector3 m_calculatedVelocity = CameraController.GetDirection() * new Vector3(velocity.x, 0, velocity.y);
+            velocity = new Vector2(m_calculatedVelocity.x, m_calculatedVelocity.z);
+            
+            m_lookDirection = velocity;
 
             m_animator.SetFloat("velocity", velocity.magnitude);
             base.SetHorizontalVelocity(velocity);
@@ -147,12 +122,4 @@ public class PlayerMovement : JumpingCharacter {
         //Funciones ha heredar.
 
     //Corotinas.  
-    private IEnumerator AttackDelay() {
-
-        m_isAttacking = true;
-
-        yield return new WaitForSeconds(m_attackTime);
-
-        m_isAttacking = false;
-        }
     }

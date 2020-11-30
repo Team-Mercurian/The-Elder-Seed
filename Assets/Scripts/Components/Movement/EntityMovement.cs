@@ -39,8 +39,6 @@ public abstract class EntityMovement : GravityValues {
             [SerializeField] protected Vector3 m_groundCheckOffset = new Vector3();
 
             [Header("Knockback")]
-            [SerializeField] protected float m_knockbackForce = 1f;
-            [SerializeField] protected float m_knockbackDuration = 0.5f;
             [SerializeField] protected AnimationCurve m_knockbackCurve = null;
 
 //            [Header("Slide")]
@@ -61,6 +59,7 @@ public abstract class EntityMovement : GravityValues {
                 protected bool m_isGrounded;
 
                 protected Vector2 m_knockbackValue = new Vector2();
+                private Coroutine m_knockbackCoroutine;
 
 //                protected bool m_isInSlope = false;
 //                protected Vector3 m_slopeHitPlace;
@@ -117,11 +116,11 @@ public abstract class EntityMovement : GravityValues {
 
 //            Debug.Log(m_angle);
 //            }
-        protected void RotateSmooth(Vector3 lookAtPoint) {
+        protected void RotateSmooth(Vector2 lookAtPoint) {
             
-            if (lookAtPoint.x != 0 || lookAtPoint.z != 0) {
+            if (lookAtPoint.x != 0 || lookAtPoint.y != 0) {
 
-                float m_rotationValue = (Mathf.Atan2(lookAtPoint.z, -lookAtPoint.x) * Mathf.Rad2Deg) - 90;
+                float m_rotationValue = (Mathf.Atan2(lookAtPoint.y, -lookAtPoint.x) * Mathf.Rad2Deg) - 90;
                 transform.eulerAngles = new Vector3(0, Mathf.SmoothDampAngle(transform.eulerAngles.y, m_rotationValue, ref m_rotationVelocity, m_rotationSmoothness), 0);
                 }
             }
@@ -147,9 +146,10 @@ public abstract class EntityMovement : GravityValues {
 
             return m_velocity;
             }
-        public void GetKnockback(Vector2 directionVelocity) {
+        public void SetKnockback(Knockback knockback) {
 
-            StartCoroutine(KnockbackAnimation(directionVelocity));
+            if (m_knockbackCoroutine != null) StopCoroutine(m_knockbackCoroutine); 
+            m_knockbackCoroutine = StartCoroutine(KnockbackAnimation(knockback));
             }
         public void SetPositionAndDirection(Vector3 position, float angle) {
 
@@ -163,6 +163,14 @@ public abstract class EntityMovement : GravityValues {
 
             SetReachVelocity(velocity);
             }
+        public Vector2 GetMovementDirection() {
+            
+            Vector3 m_rawDir = transform.forward;
+            Vector2 m_direction = new Vector2(m_rawDir.x, m_rawDir.z);
+
+            return m_direction;
+            }
+
         //Funciones ha heredar.
 
             //Protegidas.
@@ -204,11 +212,14 @@ public abstract class EntityMovement : GravityValues {
             m_smoothVelocity = Vector2.zero;
             m_movementCoroutine = null;
             }       
-        private IEnumerator KnockbackAnimation(Vector2 directionVelocity) {
+        private IEnumerator KnockbackAnimation(Knockback knockback) {
             
-            for(float i = 0; i < m_knockbackDuration; i += Time.deltaTime) {
+            m_knockbackValue += knockback.GetDirection() * knockback.GetForce();
+            Vector2 m_defPos = m_knockbackValue;
 
-                m_knockbackValue = Vector2.Lerp(directionVelocity * m_knockbackForce, Vector2.zero, m_knockbackCurve.Evaluate(i / m_knockbackDuration));
+            for(float i = 0; i < knockback.GetTime(); i += Time.deltaTime) {
+
+                m_knockbackValue = Vector2.Lerp(m_defPos, Vector2.zero, m_knockbackCurve.Evaluate(i / knockback.GetTime()));
                 yield return null;
                 }
 
@@ -296,3 +307,21 @@ public abstract class JumpingCharacter : EntityMovement {
             m_isJumping = false;
             }
         }
+
+public struct Knockback {
+
+    private Vector2 m_direction;
+    private float m_force;
+    private float m_time;
+
+    public Knockback(Vector2 direction, float force, float time) {
+
+        m_direction = direction;
+        m_force = force;
+        m_time = time;
+        }
+
+    public Vector2 GetDirection() => m_direction;
+    public float GetForce() => m_force;
+    public float GetTime() => m_time;
+    }

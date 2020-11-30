@@ -21,6 +21,10 @@ public class EnemyAttack : EntityAttack {
             //Publicas.
             [Header("Damage")]
             [SerializeField] protected int m_attackDamage = 2;
+
+            [Header("Knockback")]
+            [SerializeField] private float m_knockbackForce = 1;
+            [SerializeField] private float m_knockbackTime = 0.5f;
 			
             //Privadas.
 			
@@ -34,13 +38,18 @@ public class EnemyAttack : EntityAttack {
         //Funciones publicas.
 		
         //Funciones heredadas.
-        protected override string SetOtherTag() {
+        public override void DoDamage(Collider collider) {
 
-            return "Player";
-            }
-        protected override void SetDamage() {
+            if (!collider.CompareTag("Player")) return;
 
-            m_damage = m_attackDamage;
+            Vector3 m_selfPos = GetParentTransform().position;
+            Vector3 m_otherPos = collider.transform.position;
+
+            Vector2 m_direction = (new Vector2(m_otherPos.x, m_otherPos.z) - new Vector2(m_selfPos.x, m_selfPos.z)).normalized;
+
+            Knockback m_knockback = new Knockback(m_direction, m_knockbackForce, m_knockbackTime);
+
+            collider.GetComponent<EntityHealth>().GetDamage(m_attackDamage, m_knockback);   
             }
 		
         //Funciones ha heredar.

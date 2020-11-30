@@ -49,7 +49,7 @@ public abstract class EntityHealth : MonoBehaviour {
         //Funciones privadas.
 		
         //Funciones publicas.
-        public void GetDamage(int damage, Vector2 damageVelocity) {
+        public void GetDamage(int damage, Knockback knockback) {
             
             if (!m_canReceiveDamage) return;
 
@@ -58,7 +58,7 @@ public abstract class EntityHealth : MonoBehaviour {
             DamageTextController m_dt = Instantiate(m_damageText, transform.position + (Vector3.up * m_damageTextOffset) , Quaternion.identity).GetComponent<DamageTextController>();
             m_dt.SetData(damage.ToString());
 
-            m_entityMovement.GetKnockback(damageVelocity);
+            m_entityMovement.SetKnockback(knockback);
 
             //Detectar si este perdio toda su vida.
             if (m_actualHealth == 0) {
@@ -82,7 +82,7 @@ public abstract class EntityHealth : MonoBehaviour {
         [ContextMenu("Get Debug Damage")]
         private void DebugReceiveDamage() {
 
-            GetDamage(1, Vector2.zero);
+            GetDamage(1, new Knockback());
             }
             
         [ContextMenu("Debug Dead")]

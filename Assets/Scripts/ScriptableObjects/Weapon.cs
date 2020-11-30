@@ -29,7 +29,11 @@ public class Weapon : Item {
             [SerializeField] private WeaponType m_type = WeaponType.Melee;
             [SerializeField] private int m_baseDamage = 120;
             [SerializeField] [Range(0, 100)] private int m_criticalProbability = 20;
-			
+
+            [Header("Weapon Knockback")]
+            [SerializeField] private float m_knockbackForce = 1f;
+            [SerializeField] private float m_knockbackTime = 0.5f;
+
             //Privadas.
 			
 			
@@ -44,6 +48,9 @@ public class Weapon : Item {
         public int GetMinDamage() => m_baseDamage;
         public int GetUses() => 300 + (200 * (int) GetRarity());
         public int GetCriticalProbability() => m_criticalProbability;
+
+        public float GetKnockbackForce() => m_knockbackForce;
+        public float GetKnockbackTime() => m_knockbackTime;
 		
         public int GetCalculatedDamage(int uses) {
             

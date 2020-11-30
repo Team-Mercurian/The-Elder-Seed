@@ -16,6 +16,7 @@ MonoBehaviour:
   m_rarity: 0
   m_UIIcon: {fileID: 0}
   m_type: 0
-  m_minDamage: 65
-  m_maxDamage: 140
+  m_baseDamage: 120
   m_criticalProbability: 20
+  m_knockbackForce: 8
+  m_knockbackTime: 0.5
