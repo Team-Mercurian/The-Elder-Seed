@@ -114,7 +114,7 @@ public class InputController : MonoBehaviour {
 
             m_cameraBrain.Zoom(-context.ReadValue<float>());
             }
-        public void Run(InputAction.CallbackContext context) {
+        /*public void Run(InputAction.CallbackContext context) {
 
             if (m_playerMovement == null) return;
 
@@ -125,7 +125,7 @@ public class InputController : MonoBehaviour {
             else return; 
 
             m_playerMovement.SetRun(m_run);
-            }
+            }*/
         public void Jump(InputAction.CallbackContext context) {
             
             if (context.phase != InputActionPhase.Started) return;

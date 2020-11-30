@@ -46,14 +46,6 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Run",
-                    "type": "Button",
-                    "id": "5ccd54b8-87c7-4bd8-bb79-df93e826f76a",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "93cd456a-1c41-42ec-aa40-9a653e2c6658",
@@ -73,6 +65,14 @@
                     "name": "Select Seed",
                     "type": "Button",
                     "id": "2ec42e6f-5d89-4b12-b732-c09f47c47679",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "ab8645d1-f3df-42f4-a738-0368aa3f4e7e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -301,39 +301,6 @@
                 },
                 {
                     "name": "",
-                    "id": "d5e01884-03a8-4531-a586-878ddc3079d6",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bf627b16-60c4-4dd8-8ab5-ad5b2fb7bf8a",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "244ed515-7bab-4323-8d2c-f1867fd2c543",
-                    "path": "<Gamepad>/rightShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "d381a572-1aad-4a74-a1e1-8e27d2e94178",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
@@ -395,6 +362,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Select Seed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ba9c9ee1-d442-4e8e-ba9b-1be59ce3d746",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

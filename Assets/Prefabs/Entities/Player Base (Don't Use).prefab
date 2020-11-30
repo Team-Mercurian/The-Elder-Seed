@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9eb2eadab9cc3446bb07524c9a916d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementSpeed: 4
+  m_movementSpeed: 5
   m_movementSmoothness: 0.05
   m_rotationSmoothness: 0.025
   m_characterController: {fileID: 4252489991149073973}
@@ -116,13 +116,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   m_jumpForce: 6
   m_jumpFrontForce: 0.5
-  m_staminaMaxSecs: 4
-  m_staminaFillVelocity: 1.5
-  m_staminaFillTiredVelocity: 1
-  m_tiredSpeed: 3.5
-  m_runSpeed: 6
-  m_defaultSlopeLimit: 45
-  m_runSlopeLimit: 60
   m_animator: {fileID: 8692214353551430533}
 --- !u!114 &6333725622104679913
 MonoBehaviour:
