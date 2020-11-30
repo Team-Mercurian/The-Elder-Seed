@@ -28,6 +28,9 @@ public abstract class EntityHealth : MonoBehaviour {
             [SerializeField] protected GameObject m_meshToDeactive = null;
             [SerializeField] protected float m_damageCooldown = 1;
 
+            [Header("References")]
+            [SerializeField] protected EntityMovement m_entityMovement = null;
+
             //Privadas.
             private Coroutine m_damageCoroutine;
 
@@ -46,7 +49,7 @@ public abstract class EntityHealth : MonoBehaviour {
         //Funciones privadas.
 		
         //Funciones publicas.
-        public void GetDamage(int damage) {
+        public void GetDamage(int damage, Vector2 damageVelocity) {
             
             if (!m_canReceiveDamage) return;
 
@@ -54,6 +57,8 @@ public abstract class EntityHealth : MonoBehaviour {
             m_actualHealth = Mathf.Clamp(m_actualHealth - damage, 0, m_health);
             DamageTextController m_dt = Instantiate(m_damageText, transform.position + (Vector3.up * m_damageTextOffset) , Quaternion.identity).GetComponent<DamageTextController>();
             m_dt.SetData(damage.ToString());
+
+            m_entityMovement.GetKnockback(damageVelocity);
 
             //Detectar si este perdio toda su vida.
             if (m_actualHealth == 0) {
@@ -77,7 +82,7 @@ public abstract class EntityHealth : MonoBehaviour {
         [ContextMenu("Get Debug Damage")]
         private void DebugReceiveDamage() {
 
-            GetDamage(1);
+            GetDamage(1, Vector2.zero);
             }
             
         [ContextMenu("Debug Dead")]

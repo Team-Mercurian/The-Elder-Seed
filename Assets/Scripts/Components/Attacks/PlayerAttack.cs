@@ -19,6 +19,9 @@ public class PlayerAttack : EntityAttack {
         //Establecer variables.
 		
             //Publicas.
+            [Header("Child References")]
+            [SerializeField] protected Transform m_parentTransform = null;
+
             [Header("Delay")]
             [SerializeField] protected float m_attackDelay = 1;
 
@@ -73,7 +76,7 @@ public class PlayerAttack : EntityAttack {
 
                 m_damage = m_weapon.GetCalculatedDamage(m_uses);
 
-                collider.GetComponent<EntityHealth>().GetDamage(m_damage);
+                collider.GetComponent<EntityHealth>().GetDamage(m_damage, (new Vector2(collider.transform.position.x, collider.transform.position.z) - new Vector2(m_parentTransform.position.x, m_parentTransform.position.z)).normalized);
                 }
             }
 

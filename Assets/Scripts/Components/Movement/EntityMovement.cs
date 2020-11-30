@@ -38,6 +38,11 @@ public abstract class EntityMovement : GravityValues {
             [SerializeField] protected float m_groundCheckDistance = 0.3f;
             [SerializeField] protected Vector3 m_groundCheckOffset = new Vector3();
 
+            [Header("Knockback")]
+            [SerializeField] protected float m_knockbackForce = 1f;
+            [SerializeField] protected float m_knockbackDuration = 0.5f;
+            [SerializeField] protected AnimationCurve m_knockbackCurve = null;
+
 //            [Header("Slide")]
 //            [SerializeField] protected Vector2 m_slideForce = Vector2.zero;
 
@@ -54,6 +59,8 @@ public abstract class EntityMovement : GravityValues {
                 
                 protected float m_fallVelocity = 0;
                 protected bool m_isGrounded;
+
+                protected Vector2 m_knockbackValue = new Vector2();
 
 //                protected bool m_isInSlope = false;
 //                protected Vector3 m_slopeHitPlace;
@@ -79,7 +86,7 @@ public abstract class EntityMovement : GravityValues {
         protected void FixedUpdate() {
 
             //Mover al jugador de manera suave en el rigidbody.
-            m_velocity = SetFinalVelocity(new Vector3(m_smoothVelocity.x, m_velocity.y, m_smoothVelocity.y));
+            m_velocity = SetFinalVelocity(new Vector3(m_smoothVelocity.x + m_knockbackValue.x, m_velocity.y, m_smoothVelocity.y + m_knockbackValue.y));
             m_characterController.Move(m_velocity * Time.deltaTime); 
             }
         protected void OnDrawGizmosSelected() {
@@ -140,6 +147,10 @@ public abstract class EntityMovement : GravityValues {
 
             return m_velocity;
             }
+        public void GetKnockback(Vector2 directionVelocity) {
+
+            StartCoroutine(KnockbackAnimation(directionVelocity));
+            }
         public void SetPositionAndDirection(Vector3 position, float angle) {
 
             m_characterController.enabled = false;
@@ -158,7 +169,7 @@ public abstract class EntityMovement : GravityValues {
             protected void SetReachVelocity(Vector2 velocity) {
 
                 m_reachVelocity = velocity;
-                m_smoothVelocity = m_reachVelocity * m_speed; //if (m_movementCoroutine == null) m_movementCoroutine = StartCoroutine(HorizontalSmoothMove());
+                m_smoothVelocity = (m_reachVelocity * m_speed); //if (m_movementCoroutine == null) m_movementCoroutine = StartCoroutine(HorizontalSmoothMove());
                 }
             protected virtual void SetSpeed(float speed) {
 
@@ -193,6 +204,16 @@ public abstract class EntityMovement : GravityValues {
             m_smoothVelocity = Vector2.zero;
             m_movementCoroutine = null;
             }       
+        private IEnumerator KnockbackAnimation(Vector2 directionVelocity) {
+            
+            for(float i = 0; i < m_knockbackDuration; i += Time.deltaTime) {
+
+                m_knockbackValue = Vector2.Lerp(directionVelocity * m_knockbackForce, Vector2.zero, m_knockbackCurve.Evaluate(i / m_knockbackDuration));
+                yield return null;
+                }
+
+            m_knockbackValue = Vector2.zero;
+            }
         }
 
 public abstract class JumpingCharacter : EntityMovement {

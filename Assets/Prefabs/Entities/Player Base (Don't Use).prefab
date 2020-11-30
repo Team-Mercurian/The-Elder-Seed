@@ -91,6 +91,32 @@ MonoBehaviour:
   m_downGravityMultiplier: 1
   m_groundCheckDistance: 0.1
   m_groundCheckOffset: {x: 0, y: 0, z: 0}
+  m_knockbackForce: 1
+  m_knockbackDuration: 0.5
+  m_knockbackCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_jumpForce: 6
   m_jumpFrontForce: 0.5
   m_staminaMaxSecs: 4
@@ -192,6 +218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_attackCollider: {fileID: 5812580558403113970}
+  m_parentTransform: {fileID: 3022526979373369159}
   m_attackDelay: 0.3
 --- !u!65 &5812580558403113970
 BoxCollider:

@@ -48,7 +48,7 @@ public abstract class EntityAttack : MonoBehaviour {
 
             if (collider.CompareTag(m_otherTag)) {
 
-                collider.GetComponent<EntityHealth>().GetDamage(m_damage);
+                collider.GetComponent<EntityHealth>().GetDamage(m_damage, (new Vector2(collider.transform.position.x, collider.transform.position.z) - new Vector2(transform.position.x, transform.position.z)).normalized);
                 }
             }
 		

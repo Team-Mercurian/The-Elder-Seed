@@ -100,8 +100,10 @@ MonoBehaviour:
   m_health: 400
   m_damageText: {fileID: 7533356923139126215, guid: ce7c225c2553d60488b69cb5bc4c8a21,
     type: 3}
+  m_damageTextOffset: 1
   m_meshToDeactive: {fileID: 5215380406721348892}
   m_damageCooldown: 0
+  m_entityMovement: {fileID: 5215380405671523417}
   m_drop: {fileID: 0}
 --- !u!114 &5215380405671523413
 MonoBehaviour:
@@ -137,6 +139,32 @@ MonoBehaviour:
   m_downGravityMultiplier: 1
   m_groundCheckDistance: 0.1
   m_groundCheckOffset: {x: 0, y: 0, z: 0}
+  m_knockbackForce: 8
+  m_knockbackDuration: 0.5
+  m_knockbackCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   m_jumpForce: 6
   m_jumpFrontForce: 1
 --- !u!1 &5215380406721348892
