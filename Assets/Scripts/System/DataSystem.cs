@@ -478,7 +478,7 @@ public class DungeonData {
 
         m_recolectedSeedsIndex = new List<int>();
 
-        m_floor = 1;
+        m_floor = 0;
         }   
         
     public PlayerData GetPlayer() => m_playerData;
@@ -496,6 +496,7 @@ public class DungeonData {
     public List<RoomData> GetRoomsDatas() => m_rooms;
 
     public void SetRoomDatas(List<RoomData> rooms) => m_rooms = rooms;
+    public int GetFloor() => m_floor;
 
     public void SetActualRoom(Vector2Int position) => m_actualRoom = position;
     public Vector2Int GetActualRoom() => m_actualRoom;

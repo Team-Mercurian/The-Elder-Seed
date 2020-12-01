@@ -53,7 +53,7 @@ public class RuinsPassageController : InteractableBehaviour {
         //Funciones publicas.
         public void SetData(bool opened, Vector2Int teleportPosition, Vector2Int direction) {
             
-            if (teleportPosition + direction == new Vector2Int(0, -1)) opened = true;
+            if (teleportPosition + direction == new Vector2Int(0, -1) && DataSystem.GetSingleton().GetDungeonData().GetFloor() == 0) opened = true;
             m_teleportTrigger.enabled = opened;
 
             GameObject m_passage = opened ? m_passageOpenPrefab : m_passageClosedPrefab;

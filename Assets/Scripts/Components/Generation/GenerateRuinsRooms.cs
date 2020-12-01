@@ -94,7 +94,6 @@ public class GenerateRuinsRooms : GameBehaviour {
                             int m_roomPrefabIndex = m_dataSystem.GetRandomStairsRoomPrefabIndex();
                             
                             m_roomsPositions.Add(m_pos);
-                            Debug.Log("Generated Stairs, " + m_pos.x + " " + m_pos.y);
 
                             List<RoomPropData> m_roomProps = new List<RoomPropData>();
                             List<GameObject> m_props = m_dataSystem.GetStairsRoomPrefab(m_roomPrefabIndex).GetComponent<RoomController>().GetProps();
