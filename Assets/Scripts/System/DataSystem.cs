@@ -19,9 +19,11 @@ public class DataSystem : MonoBehaviour {
         [Header("Persistent Room Holder")]
         [SerializeField] private GameObject[] m_rooms = null;
         [SerializeField] private GameObject[] m_chestRooms = null;
+        [SerializeField] private GameObject[] m_stairsRooms = null;
+
+        [Header("Persistent Props Holder")]
         [SerializeField] private GameObject[] m_enemies = null;
         [SerializeField] private Weapon[] m_weapons = null;
-        
         [SerializeField] private Seed[] m_seedTypes = null;
 
     //Funciones de MonoBehaviour.
@@ -92,7 +94,11 @@ public class DataSystem : MonoBehaviour {
 
                 //Chest Rooms Prefabs
                 public GameObject GetChestRoomPrefab(int index) => m_chestRooms[index];
-                public int GetRandomChestRoomPrefabIndex() => Random.Range(0, m_rooms.Length);
+                public int GetRandomChestRoomPrefabIndex() => Random.Range(0, m_chestRooms.Length);
+
+                //Stairs Rooms Prefabs
+                public GameObject GetStairsRoomPrefab(int index) => m_stairsRooms[index];
+                public int GetRandomStairsRoomPrefabIndex() => Random.Range(0, m_stairsRooms.Length);
 
                 //Enemies Prefabs
                 public GameObject GetEnemyPrefab(int index) => m_enemies[index];
@@ -460,6 +466,8 @@ public class DungeonData {
     private List<RoomData> m_rooms;
     private Vector2Int m_actualRoom;
 
+    private int m_floor;
+
     private List<int> m_recolectedSeedsIndex;
 
     public DungeonData(PlayerData playerData) {
@@ -469,6 +477,8 @@ public class DungeonData {
         m_actualRoom = Vector2Int.zero;
 
         m_recolectedSeedsIndex = new List<int>();
+
+        m_floor = 1;
         }   
         
     public PlayerData GetPlayer() => m_playerData;
@@ -489,6 +499,13 @@ public class DungeonData {
 
     public void SetActualRoom(Vector2Int position) => m_actualRoom = position;
     public Vector2Int GetActualRoom() => m_actualRoom;
+
+    public void NextFloor() {
+
+        m_floor ++;
+        m_rooms = null;
+        m_actualRoom = Vector2Int.zero;
+        }
 
     public void AddSeed(int index) => m_recolectedSeedsIndex.Add(index);
 
@@ -515,6 +532,7 @@ public class RoomData {
 
         Room,
         Chest,
+        Stairs,
         }
 
     private Vector2Int m_roomPosition;

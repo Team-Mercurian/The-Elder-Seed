@@ -84,7 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_movementSpeed: 5
   m_movementSmoothness: 0.05
-  m_rotationSmoothness: 0.025
+  m_rotationSmoothness: 0.1
   m_characterController: {fileID: 4252489991149073973}
   m_upGravityMultiplier: 1
   m_downGravityMultiplier: 1
