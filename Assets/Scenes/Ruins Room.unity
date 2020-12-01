@@ -366,6 +366,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Default Scene Root
       objectReference: {fileID: 0}
+    - target: {fileID: 7240076251166687866, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
+        type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: e1eb8357176f33e4f9ce0bfed5ab4712,
+        type: 2}
     - target: {fileID: 7643073095026524292, guid: 9f5d5f42c0ebc0140a7739a2be8bfbec,
         type: 3}
       propertyPath: m_Enabled
