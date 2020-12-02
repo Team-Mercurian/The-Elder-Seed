@@ -131,7 +131,6 @@ public class DataSystem : MonoBehaviour {
 
             public Rarity GetRarity() => m_item.GetRarity();
             } 
-
         public int GetRandomWeaponIndex(int probabilityIncrement) {
             
             List<ItemData> m_itemDatas = new List<ItemData>();
@@ -161,7 +160,7 @@ public class DataSystem : MonoBehaviour {
             List<ItemData> m_rarityList = new List<ItemData>();
             int m_probability = Mathf.Clamp(Random.Range(0, 100) + probabilityIncrement, 0, 100);
 
-            if (m_probability < 50) {
+            if (m_probability < 70) {
 
                 for(int i = 0; i < items.Count; i ++) {
                     
@@ -169,7 +168,7 @@ public class DataSystem : MonoBehaviour {
                     }
                 }
 
-            else if (m_probability < 80) {
+            else if (m_probability < 85) {
 
                 for(int i = 0; i < items.Count; i ++) {
                     
@@ -509,7 +508,6 @@ public class DungeonData {
         }
 
     public void AddSeed(int index) => m_recolectedSeedsIndex.Add(index);
-
     public void LoseInventoryPart(int percent) {
 
         Debug.Log("Inventario antes de morir: " + m_recolectedSeedsIndex.Count);

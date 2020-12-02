@@ -90,7 +90,8 @@ MonoBehaviour:
   m_meshToDeactive: {fileID: 5215380406721348892}
   m_damageCooldown: 0
   m_entityMovement: {fileID: 5215380405671523417}
-  m_drop: {fileID: 0}
+  m_seedEntity: {fileID: 7458109963534761173, guid: 688d08a986446d549ac84a83ffce4d4a,
+    type: 3}
 --- !u!114 &5215380405671523417
 MonoBehaviour:
   m_ObjectHideFlags: 0

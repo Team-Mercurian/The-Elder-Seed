@@ -20,7 +20,7 @@ public class EnemyHealth : EntityHealth {
 		
             //Publicas.
             [Header("Drops")]
-            [SerializeField] private GameObject m_drop = null;
+            [SerializeField] private GameObject m_seedEntity = null;
 
             //Privadas.
 			
@@ -33,12 +33,15 @@ public class EnemyHealth : EntityHealth {
 		private void DropObject() {
             
             if (Random.Range(0f, 100f) > 75f) return;
+            if (m_seedEntity == null) return;
+            
+            DataSystem m_ds = DataSystem.GetSingleton();
 
             Seed.SeedType m_type = Random.Range(0, 2) < 1 ? Seed.SeedType.Durability : Seed.SeedType.Potion;
-            DataSystem.GetSingleton().GetGameData().GetFarmData().AddSeed(m_type, Rarity.Common);
+            int m_index = m_ds.GetRandomSeedIndex(4 * GenerateRuinsRooms.GetActualFloor(), m_type);
 
-            if (m_drop == null) return;
-            Instantiate(m_drop, transform.position, Quaternion.identity);
+            SeedEntityController m_s = Instantiate(m_seedEntity, transform.position, Quaternion.identity).GetComponent<SeedEntityController>();
+            m_s.SetData(m_index);
             }
 
         //Funciones publicas.

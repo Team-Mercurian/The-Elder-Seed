@@ -15,7 +15,8 @@ public class GenerateRuinsRooms : GameBehaviour {
             //Publicas.
 			
             //Privadas
-            
+            private static int m_actualFloor = 0;
+
         //Establecer variables.
 		
             //Publicas.
@@ -67,11 +68,13 @@ public class GenerateRuinsRooms : GameBehaviour {
             DataSystem.Save();
             SceneController.GetSingleton().LoadScene(Scenes.House, false);
             }
+        public static int GetActualFloor() => m_actualFloor;
 
         //Funciones privadas.
         private void GenerateAllRooms() {
 
             if (m_dataSystem.GetDungeonData() == null) m_dataSystem.SetDungeonData(new DungeonData(new PlayerData(PlayerBrain.GetSingleton().GetHealth().GetMaxHealth())));
+            m_actualFloor = m_dataSystem.GetDungeonData().GetFloor();
 
             List<RoomData> m_roomsDatas = m_dataSystem.GetDungeonData().GetRoomsDatas();
 
