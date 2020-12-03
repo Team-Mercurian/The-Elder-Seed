@@ -56,6 +56,7 @@ public class PlayerFarming : MonoBehaviour {
                 m_data.RemoveGridData(pos / cellSize);
 
                 FarmingEnviromentController.GetSingleton().RemovePlant(m_plant);
+                DataSystem.Save();
                 Destroy(m_plant.gameObject);
                 }
             }
@@ -84,6 +85,7 @@ public class PlayerFarming : MonoBehaviour {
 
                     m_data.AddGridData(new GridData(m_seedIndex, m_pos / m_cellSize));
                     m_data.RemoveSeed(m_seed.GetSeedType(), m_seed.GetRarity());
+                    DataSystem.Save();
                     }
                 
                 else {
