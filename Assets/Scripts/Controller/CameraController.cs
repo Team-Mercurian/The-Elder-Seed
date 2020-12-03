@@ -1,8 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour {
+public class CameraController : MonoBehaviour, IHasLookInput {
 	
     //Establecer variables.
 		
@@ -13,7 +12,8 @@ public class CameraController : MonoBehaviour {
         //Establecer variables estaticas.
 		
             //Privadas
-            private static CameraController m_instance;                                                              //Singleton.
+            private static CameraController m_instance;        
+            private static Vector3 m_direction = new Vector3();                                                        //Direccion de la camara (X y Z).                                                      //Singleton.
             private static Vector2 m_reachAngle;
             private static float m_reachDistance;
 
@@ -52,9 +52,11 @@ public class CameraController : MonoBehaviour {
             [SerializeField] private Transform m_cameraHolder = null;                                           //Referencia del sostenedor de la camara (Hijo).
             [SerializeField] private Transform m_target = null;                                                 //Referencia al objetivo a seguir de la camara.
 
+            [Header("Gamepad References")]
+            [SerializeField] private float m_gamepadLookMultiplier = 20;
+
             //Privadas.
             private Vector3 m_positionVelocity = new Vector3();                                                 //Velocidad de la posicion.
-            private Vector3 m_direction = new Vector3();                                                        //Direccion de la camara (X y Z).
             private Vector3 m_targetPosition = new Vector3();                                                   //Posicion a guardar del objetivo.
             private Vector2 m_rotationVelocity = new Vector2();
 
@@ -313,8 +315,11 @@ public class CameraController : MonoBehaviour {
             }
 
         //Funciones publicas.
-        public void SetRotationVelocity(Vector2 velocity) {
+        public void Look(Vector2 velocity) {
             
+            if (Cursor.visible) return;
+            if (InputController.GetInputType() == InputType.Gamepad) velocity *= m_gamepadLookMultiplier;
+
             Vector2 m_savedAngle = new Vector2(-velocity.x, -velocity.y) * m_cameraRotationSensitivity;
             m_reachAngle = new Vector2(m_reachAngle.x + m_savedAngle.x, Mathf.Clamp(m_reachAngle.y + m_savedAngle.y, m_minVerticalAngle, m_maxVerticalAngle));
 
@@ -333,7 +338,7 @@ public class CameraController : MonoBehaviour {
 
             return m_angles;
             }
-        public Quaternion GetDirection() {
+        public static Quaternion GetDirection() {
 
             return Quaternion.Euler(0, Mathf.Atan2(m_direction.x, m_direction.z) * Mathf.Rad2Deg, 0);
             }

@@ -15,7 +15,8 @@ public class GenerateRuinsRooms : GameBehaviour {
             //Publicas.
 			
             //Privadas
-            
+            private static int m_actualFloor = 0;
+
         //Establecer variables.
 		
             //Publicas.
@@ -35,14 +36,47 @@ public class GenerateRuinsRooms : GameBehaviour {
         private void Start() {
 
             m_dataSystem = DataSystem.GetSingleton();
-            DataSystem.GetSingleton().SetTemporalData(new TemporalData(new PlayerData(PlayerBrain.GetSingleton().GetHealth().GetMaxHealth())));
             GenerateAllRooms();
             }
 		
+        //Funciones publicas.
+        public static void NextFloor() {
+            
+            RoomController.SetAppearDirection(Direction.Up);
+            DataSystem.GetSingleton().GetDungeonData().NextFloor();
+            DataSystem.Save();
+
+            SceneController.GetSingleton().LoadScene(Scenes.Ruins, false);
+            }
+        public static void ExitRuins(bool dead) {
+            
+            FarmSpawnController.SetSpawn(dead ? FarmSpawnController.SpawnType.Altar : FarmSpawnController.SpawnType.Ruins);
+
+            if (dead) {
+
+                DataSystem.GetSingleton().GetDungeonData().LoseInventoryPart(Random.Range(40, 61));
+                }
+
+            foreach(GridData m_d in DataSystem.GetSingleton().GetGameData().GetFarmData().GetGridDatas()) {
+
+                m_d.SetHarvest(true);
+                }
+
+            RoomController.SetAppearDirection(Direction.Up);
+
+            DataSystem.GetSingleton().SetDungeonData(null);
+            DataSystem.Save();
+            SceneController.GetSingleton().LoadScene(Scenes.House, false);
+            }
+        public static int GetActualFloor() => m_actualFloor;
+
         //Funciones privadas.
         private void GenerateAllRooms() {
 
-            List<RoomData> m_roomsDatas = m_dataSystem.GetRoomsData();
+            if (m_dataSystem.GetDungeonData() == null) m_dataSystem.SetDungeonData(new DungeonData(new PlayerData(PlayerBrain.GetSingleton().GetHealth().GetMaxHealth())));
+            m_actualFloor = m_dataSystem.GetDungeonData().GetFloor();
+
+            List<RoomData> m_roomsDatas = m_dataSystem.GetDungeonData().GetRoomsDatas();
 
             if (m_roomsDatas == null) {
 
@@ -51,29 +85,72 @@ public class GenerateRuinsRooms : GameBehaviour {
                 Vector2Int m_pos = new Vector2Int();
 
                 List<Vector2Int> m_roomsPositions = new List<Vector2Int>();
+                int m_maxRooms = (m_roomsCount + m_chestsRooms);
 
-                while(m_generatedRooms < (m_roomsCount + m_chestsRooms)) {
+                while(m_generatedRooms <= m_maxRooms) {
 
                     if (!GetValueInList(m_pos, m_roomsPositions)) {
 
-                        bool m_generateChest = GetIfIsGenerateChest(m_generatedRooms);
+                        //Generar habitacion de escalera.
+                        if (m_generatedRooms == m_maxRooms) {
 
-                        if (m_generateChest) {
-
-                            int m_roomPrefabIndex = m_dataSystem.GetRandomChestRoomPrefabIndex();
+                            int m_roomPrefabIndex = m_dataSystem.GetRandomStairsRoomPrefabIndex();
                             
                             m_roomsPositions.Add(m_pos);
-                            m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex, RoomData.RoomType.Chest));
-                            m_generatedRooms++;
-                            }
 
-                        else {
-
-                            int m_roomPrefabIndex = m_dataSystem.GetRandomRoomPrefabIndex();
+                            List<RoomPropData> m_roomProps = new List<RoomPropData>();
+                            List<GameObject> m_props = m_dataSystem.GetStairsRoomPrefab(m_roomPrefabIndex).GetComponent<RoomController>().GetProps();
                             
-                            m_roomsPositions.Add(m_pos);
-                            m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex, RoomData.RoomType.Room));
+                            for(int i = 0; i < m_props.Count; i ++) {
+                                
+                                m_roomProps.Add(new RoomPropData(i, false));
+                                }
+                                
+                            m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex, RoomData.RoomType.Stairs, m_roomProps));
                             m_generatedRooms ++;
+                            }
+                        
+                        else {
+                                
+                            bool m_generateChest = GetIfIsGenerateChest(m_generatedRooms);
+
+                            //Generar habitacion de cofre.
+                            if (m_generateChest) {
+
+                                int m_roomPrefabIndex = m_dataSystem.GetRandomChestRoomPrefabIndex();
+                                
+                                m_roomsPositions.Add(m_pos);
+
+                                List<RoomPropData> m_roomProps = new List<RoomPropData>();
+                                List<GameObject> m_props = m_dataSystem.GetChestRoomPrefab(m_roomPrefabIndex).GetComponent<RoomController>().GetProps();
+
+                                for(int i = 0; i < m_props.Count; i ++) {
+                                    
+                                    m_roomProps.Add(new RoomPropData(i, false));
+                                    }
+
+                                m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex, RoomData.RoomType.Chest, m_roomProps));
+                                m_generatedRooms++;
+                                }
+                            
+                            //Generar habitacion normal.
+                            else {
+
+                                int m_roomPrefabIndex = m_dataSystem.GetRandomRoomPrefabIndex();
+                                
+                                m_roomsPositions.Add(m_pos);
+
+                                List<RoomPropData> m_roomProps = new List<RoomPropData>();
+                                List<GameObject> m_props = m_dataSystem.GetRoomPrefab(m_roomPrefabIndex).GetComponent<RoomController>().GetProps();
+
+                                for(int i = 0; i < m_props.Count; i ++) {
+                                    
+                                    m_roomProps.Add(new RoomPropData(i, false));
+                                    }
+
+                                m_roomsDatas.Add(new RoomData(m_pos, m_roomPrefabIndex, RoomData.RoomType.Room, m_roomProps));
+                                m_generatedRooms ++;
+                                }
                             }
                         }
 
@@ -91,11 +168,11 @@ public class GenerateRuinsRooms : GameBehaviour {
                     m_pos = new Vector2Int(m_pos.x + m_direction.x, Mathf.Clamp(m_pos.y + m_direction.y, 0, 100));
                     }
 
-                m_dataSystem.SetRoomsData(m_roomsDatas);
-                m_dataSystem.SetActualRoom(new Vector2Int(0, 0));
+                m_dataSystem.GetDungeonData().SetRoomDatas(m_roomsDatas);
+                m_dataSystem.GetDungeonData().SetActualRoom(new Vector2Int(0, 0));
                 }
                 
-            GenerateRoom(m_dataSystem.GetRoomData(m_dataSystem.GetActualRoom()));
+            GenerateRoom(m_dataSystem.GetDungeonData().GetRoomData(m_dataSystem.GetDungeonData().GetActualRoom()));
             }
         private void GenerateRoom(RoomData roomData) {
 
@@ -110,6 +187,11 @@ public class GenerateRuinsRooms : GameBehaviour {
             else if (roomData.GetRoomType() == RoomData.RoomType.Chest) {
 
                 m_roomPrefab = m_dataSystem.GetChestRoomPrefab(roomData.GetRoomPrefabIndex());
+                }
+                
+            else if (roomData.GetRoomType() == RoomData.RoomType.Stairs) {
+
+                m_roomPrefab = m_dataSystem.GetStairsRoomPrefab(roomData.GetRoomPrefabIndex());
                 }
 
             RoomController m_roomController = Instantiate(m_roomPrefab, transform).GetComponent<RoomController>();

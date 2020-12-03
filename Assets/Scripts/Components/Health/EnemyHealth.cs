@@ -20,9 +20,7 @@ public class EnemyHealth : EntityHealth {
 		
             //Publicas.
             [Header("Drops")]
-            [SerializeField] private GameObject m_drop = null;
-            [SerializeField] private int m_dropCount = 0;
-			[SerializeField] [Range(0, 100)] private float m_probability = 100;
+            [SerializeField] private GameObject m_seedEntity = null;
 
             //Privadas.
 			
@@ -34,13 +32,16 @@ public class EnemyHealth : EntityHealth {
         //Funciones privadas.
 		private void DropObject() {
             
-            for(int i = 0; i < m_dropCount; i ++) {
-                
-                if (Random.Range(0, 100) <= m_probability) {
-                    
-                    Instantiate(m_drop, transform.position, Quaternion.identity);
-                    }
-                }
+            if (Random.Range(0f, 100f) > 75f) return;
+            if (m_seedEntity == null) return;
+            
+            DataSystem m_ds = DataSystem.GetSingleton();
+
+            Seed.SeedType m_type = Random.Range(0, 2) < 1 ? Seed.SeedType.Durability : Seed.SeedType.Potion;
+            int m_index = m_ds.GetRandomSeedIndex(4 * GenerateRuinsRooms.GetActualFloor(), m_type);
+
+            SeedEntityController m_s = Instantiate(m_seedEntity, transform.position, Quaternion.identity).GetComponent<SeedEntityController>();
+            m_s.SetData(m_index);
             }
 
         //Funciones publicas.
@@ -51,8 +52,7 @@ public class EnemyHealth : EntityHealth {
 		protected override void Dead() {
             
             DropObject();
-            DataSystem.GetSingleton().GetGameData().AddSeeds(1);
-            Debug.Log("Added a seed, actual seeds: " + DataSystem.GetSingleton().GetGameData().GetSeedCount());
+            RoomController.GetSingleton().DestroyProp(gameObject);
             Destroy(gameObject);
             }
 		

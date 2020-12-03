@@ -59,29 +59,17 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5782245782921134665}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: Attack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 3bb4cf5d-a56d-4872-a3f7-76f80d1aad99
-    m_ActionName: Player/Fire[/XInputControllerWindows/rightTrigger,/Mouse/leftButton]
+    m_ActionName: Player/Attack[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 6a3eed9b-5eff-4be2-9fbf-ed35dc463e4f
-    m_ActionName: Player/Look[/XInputControllerWindows/rightStick,/Mouse/delta,/Pen/delta]
+    m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 803d9eb4-ee54-4e79-be06-ef533310d9f7
-    m_ActionName: Player/Move[/XInputControllerWindows/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5782245782921134665}
@@ -113,23 +101,11 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 4e2d288d-2673-4bab-b78c-a4738fad305e
-    m_ActionName: Player/Zoom[/Mouse/scroll/y,/XInputControllerWindows/leftTrigger,/XInputControllerWindows/rightTrigger]
+    m_ActionName: Player/Zoom[/Mouse/scroll/y]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5782245782921134665}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: Run
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 5ccd54b8-87c7-4bd8-bb79-df93e826f76a
-    m_ActionName: Player/Run[/Keyboard/leftShift,/XInputControllerWindows/rightShoulder]
+    m_ActionName: Player/Run[/Keyboard/leftShift]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5782245782921134665}
@@ -145,63 +121,55 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 93cd456a-1c41-42ec-aa40-9a653e2c6658
-    m_ActionName: Player/Jump[/XInputControllerWindows/buttonSouth,/Keyboard/space]
+    m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 2e3aa763-9ce8-4153-bd89-a86ebc6d57cf
-    m_ActionName: UI/TrackedDeviceOrientation
+    m_ActionId: 5743e228-d244-48b5-b5e6-93db04025d80
+    m_ActionName: Player/Quit Dungeon[/Keyboard/x]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 70b42165-a4ff-44b6-96a9-a9b2aaa2f7e5
-    m_ActionName: UI/TrackedDevicePosition
+    m_ActionId: 2ec42e6f-5d89-4b12-b732-c09f47c47679
+    m_ActionName: Player/Select Seed[/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 047e3df7-ad25-4a45-a59a-00d424709e41
-    m_ActionName: UI/RightClick[/Mouse/rightButton]
+    m_ActionId: eba00e53-a9c1-44fa-8624-a492d60c1472
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 68523166-1e8b-4ccf-8d6b-bbe57729c3c0
-    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+    m_ActionId: 17a8c2ba-e9a4-4159-bb80-b286c31a86be
+    m_ActionName: UI/Submit[/Keyboard/enter]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 082eb281-1e23-43f1-994a-67b6f4df2fbd
+    m_ActionId: ee511444-61c2-4a0d-a8da-fe2a02d8aefb
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 40ed3a31-b0a5-467c-b72e-cce79cb4dc79
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 614794b5-ff8b-4603-a64f-e923a32d6510
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e13a5179-d889-442c-adc3-ac169494a3aa
     m_ActionName: UI/ScrollWheel[/Mouse/scroll]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: c5125c74-cb6a-4787-aa6c-51db90f313c1
-    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip]
+    m_ActionId: a1578272-2a00-4024-9a10-fd246717716b
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: f7604dbe-125b-4996-be9e-0633cdc41b41
-    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
+    m_ActionId: ce7cb1fc-51db-4925-b859-5031cf699311
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: c4c6d2e7-e2ba-48c6-bcee-ac610313d9b6
-    m_ActionName: UI/Cancel[/Keyboard/escape,/XInputControllerWindows/buttonEast]
+    m_ActionId: 6b6bb991-4979-4fed-b978-193a185c50fe
+    m_ActionName: UI/TrackedDevicePosition
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: ed4373fe-9e9e-40bb-9260-5ca4815887a7
-    m_ActionName: UI/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b7173b0b-2474-45c9-9987-c6286f937150
-    m_ActionName: UI/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5782245782921134665}
-        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
-        m_MethodName: QuitDungeon
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 5743e228-d244-48b5-b5e6-93db04025d80
-    m_ActionName: Player/Quit Dungeon[/Keyboard/x]
+    m_ActionId: 502f8c26-7913-4d38-bed5-9029c25a1231
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

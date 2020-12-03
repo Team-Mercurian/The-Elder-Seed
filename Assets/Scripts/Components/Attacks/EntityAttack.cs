@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public abstract class EntityAttack : MonoBehaviour {
 	
     //Establecer variables.
@@ -21,37 +20,26 @@ public abstract class EntityAttack : MonoBehaviour {
 		
             //Publicas.
             [Header("References")]
-            [SerializeField] protected BoxCollider m_attackCollider = null;
+            [SerializeField] private BoxCollider m_attackCollider = null;
+            [SerializeField] private Transform m_parent = null;
 			
             //Privadas.
-            protected string m_otherTag;
-            protected int m_damage;
 			
 			
     //Funciones
 		
         //Funciones de MonoBehaviour.
-        private void Awake() {
-
-            m_otherTag = SetOtherTag();
-            }
         protected virtual void Start() {
 
             m_attackCollider.enabled = false;
-            SetDamage();
             }
 		
         //Funciones privadas.
 		
         //Funciones publicas.
-        protected virtual void OnTriggerEnter(Collider collider) {
+        protected BoxCollider GetCollider() => m_attackCollider;
+		protected Transform GetParentTransform() => m_parent;
 
-            if (collider.CompareTag(m_otherTag)) {
-
-                collider.GetComponent<EntityHealth>().GetDamage(m_damage);
-                }
-            }
-		
         //Funciones heredadas.
 		
         //Funciones ha heredar.
@@ -59,8 +47,7 @@ public abstract class EntityAttack : MonoBehaviour {
 
             StartCoroutine(AttackCoroutine());
             }
-        protected abstract string SetOtherTag();
-        protected abstract void SetDamage();
+        public abstract void DoDamage(Collider collider);
 
         //Corotinas.
 		protected virtual IEnumerator AttackCoroutine() {
