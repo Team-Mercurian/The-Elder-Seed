@@ -32,7 +32,7 @@ public class SeedTerrainEditorController : MonoBehaviour {
 
             if (FarmingEnviromentController.GetCellSize() == 0) return; 
 
-            transform.position = new Vector3(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z));
+            transform.position = new Vector3(Mathf.RoundToInt(transform.position.x / m_gridSize) * m_gridSize, Mathf.RoundToInt(transform.position.y), Mathf.RoundToInt(transform.position.z / m_gridSize) * m_gridSize);
             transform.localScale = new Vector3(Mathf.Clamp(transform.localScale.x, 1, Mathf.Infinity), 1, Mathf.Clamp(transform.localScale.z, 1, Mathf.Infinity));
             m_gridSize = FarmingEnviromentController.GetCellSize();
             }
