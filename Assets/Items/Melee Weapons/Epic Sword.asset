@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28881f1d49f82e846b76596dcbae4457, type: 3}
+  m_Name: Epic Sword
+  m_EditorClassIdentifier: 
+  m_name: Default Sword
+  m_rarity: 0
+  m_UIIcon: {fileID: 0}
+  m_type: 0
+  m_baseDamage: 120
+  m_criticalProbability: 20
+  m_knockbackForce: 8
+  m_knockbackTime: 0.5
