@@ -30,6 +30,7 @@ public abstract class EntityHealth : MonoBehaviour {
 
             [Header("References")]
             [SerializeField] protected EntityMovement m_entityMovement = null;
+            [SerializeField] protected HealthBar m_healthBar = null;
 
             //Privadas.
             private Coroutine m_damageCoroutine;
@@ -44,6 +45,7 @@ public abstract class EntityHealth : MonoBehaviour {
         private void Start() {
 			
             m_actualHealth = SetActualHealth();
+            if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health);
             }
 		
         //Funciones privadas.
@@ -64,10 +66,12 @@ public abstract class EntityHealth : MonoBehaviour {
             if (m_actualHealth == 0) {
 
                 Dead();
+                if (m_healthBar != null) HealthBarDeadAction();
                 }
 
             else {
-
+                
+                if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health);
                 if (m_damageCooldown > 0) m_damageCoroutine = StartCoroutine(CooldownAnimation());
                 }
             }
@@ -82,7 +86,7 @@ public abstract class EntityHealth : MonoBehaviour {
         [ContextMenu("Get Debug Damage")]
         private void DebugReceiveDamage() {
 
-            GetDamage(1, new Knockback());
+            GetDamage(150, new Knockback());
             }
             
         [ContextMenu("Debug Dead")]
@@ -95,6 +99,7 @@ public abstract class EntityHealth : MonoBehaviour {
         //Funciones ha heredar.
         protected abstract int SetActualHealth();
         protected abstract void Dead();
+        protected abstract void HealthBarDeadAction();
 		
         //Corotinas.
         private IEnumerator CooldownAnimation() {

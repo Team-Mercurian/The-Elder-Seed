@@ -55,6 +55,10 @@ public class EnemyHealth : EntityHealth {
             RoomController.GetSingleton().DestroyProp(gameObject);
             Destroy(gameObject);
             }
+        protected override void HealthBarDeadAction() {
+
+            Destroy(m_healthBar.gameObject);
+            }
 		
         //Funciones heredadas.
 		
