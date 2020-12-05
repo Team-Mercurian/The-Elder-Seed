@@ -45,7 +45,11 @@ public class EnemyHealth : EntityHealth {
             }
 
         //Funciones publicas.
-		protected override int SetActualHealth() {
+        protected override void SetHealth(int value) {
+            
+            SetActualHealth(value);
+            }
+		protected override int GetSavedHealth() {
 
             return m_health;
             }

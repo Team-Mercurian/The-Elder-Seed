@@ -43,7 +43,7 @@ public abstract class EntityHealth : MonoBehaviour {
         //Funciones de MonoBehaviour
         private void Start() {
 			
-            m_actualHealth = SetActualHealth();
+            m_actualHealth = GetSavedHealth();
             }
 		
         //Funciones privadas.
@@ -54,7 +54,7 @@ public abstract class EntityHealth : MonoBehaviour {
             if (!m_canReceiveDamage) return;
 
             //Reducir la vida.
-            m_actualHealth = Mathf.Clamp(m_actualHealth - damage, 0, m_health);
+            SetHealth(Mathf.Clamp(m_actualHealth - damage, 0, m_health));
             DamageTextController m_dt = Instantiate(m_damageText, transform.position + (Vector3.up * m_damageTextOffset) , Quaternion.identity).GetComponent<DamageTextController>();
             m_dt.SetData(damage.ToString());
 
@@ -90,10 +90,12 @@ public abstract class EntityHealth : MonoBehaviour {
 
             Dead();
             }
+        protected void SetActualHealth(int health) => m_actualHealth = health; 
         //Funciones heredadas.
 		
         //Funciones ha heredar.
-        protected abstract int SetActualHealth();
+        protected abstract void SetHealth(int health);
+        protected abstract int GetSavedHealth();
         protected abstract void Dead();
 		
         //Corotinas.

@@ -32,14 +32,19 @@ public class PlayerHealth : EntityHealth {
         //Funciones publicas.
 		
         //Funciones heredadas.
-		protected override int SetActualHealth() {
+		protected override int GetSavedHealth() {
 
             int m_h = m_health;
 
             DungeonData m_p = DataSystem.GetSingleton().GetDungeonData();
             if (m_p != null) m_h = m_p.GetPlayer().GetHealth();
 
-            return m_health;
+            return m_h;
+            }
+        protected override void SetHealth(int value) {
+            
+            SetActualHealth(value);
+            DataSystem.GetSingleton().GetDungeonData().GetPlayer().SetHealth(value); // SetActualHealth(value);
             }
 		protected override void Dead() {
             
