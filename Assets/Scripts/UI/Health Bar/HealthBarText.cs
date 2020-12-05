@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class HealthBarTextUI : HealthBar {
+public class HealthBarText : HealthBar {
 	
 	//Enumerators
 	
@@ -16,7 +16,7 @@ public class HealthBarTextUI : HealthBar {
         
 		//No Static
 		[Header("UI Text")]
-		[SerializeField] private TextMeshProUGUI m_healthText = null;
+		[SerializeField] private TMP_Text m_healthText = null;
 		[SerializeField] private string m_hpText = "HP:";
 
         
@@ -26,9 +26,9 @@ public class HealthBarTextUI : HealthBar {
         
         
 		//Public Functions
-        public override void SetValue(float health, float maxHealth) {
+        public override void SetValue(float health, float maxHealth, bool instant) {
 
-			base.SetValue(health, maxHealth);
+			base.SetValue(health, maxHealth, instant);
 			m_healthText.text = m_hpText + " " + health.ToString() + " / " + maxHealth.ToString();
 			}
         

@@ -41,15 +41,30 @@ public class HealthBar : MonoBehaviour {
 		        
         
 		//Public Functions.
-        public virtual void SetValue(float health, float maxHealth) {
+        public virtual void SetValue(float health, float maxHealth, bool instant) {
 
 			float m_value = Mathf.Clamp(health / maxHealth, 0, 1);
 			if (m_value == m_actualValue) return;
 
-			if (m_damageEffectRoutine != null) StopCoroutine(m_damageEffectRoutine);
-			m_damageEffectRoutine = StartCoroutine(DamageEffect(m_value));
+			if (instant) {
+
+				float m_x = m_direction == HealthBarMode.Horizontal ? m_value : 1;
+				float m_y = m_direction == HealthBarMode.Vertical ? m_value : 1;
+
+				m_fill.localScale = new Vector3(m_x, m_y, 1);
+				m_damageEffectFill.localScale = new Vector3(m_x, m_y, 1);
+				}
+			else {
+
+				if (m_damageEffectRoutine != null) StopCoroutine(m_damageEffectRoutine);
+				m_damageEffectRoutine = StartCoroutine(DamageEffect(m_value));
+				}
 			}
-        
+        public void RotateToCamera(Transform cameraTransform) {
+
+			transform.LookAt(cameraTransform.position);
+			}
+
 		//Private Functions.
         
         

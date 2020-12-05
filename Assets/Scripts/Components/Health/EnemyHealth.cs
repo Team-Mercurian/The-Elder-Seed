@@ -28,6 +28,10 @@ public class EnemyHealth : EntityHealth {
     //Funciones
 		
         //Funciones de MonoBehaviour
+        private void Update() {
+
+            if (m_healthBar != null) m_healthBar.RotateToCamera(CameraController.GetSingleton().GetCameraTransform());
+            }
 		
         //Funciones privadas.
 		private void DropObject() {

@@ -45,7 +45,7 @@ public abstract class EntityHealth : MonoBehaviour {
         private void Start() {
 			
             m_actualHealth = SetActualHealth();
-            if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health);
+            if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health, true);
             }
 		
         //Funciones privadas.
@@ -71,7 +71,7 @@ public abstract class EntityHealth : MonoBehaviour {
 
             else {
                 
-                if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health);
+                if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health, false);
                 if (m_damageCooldown > 0) m_damageCoroutine = StartCoroutine(CooldownAnimation());
                 }
             }
