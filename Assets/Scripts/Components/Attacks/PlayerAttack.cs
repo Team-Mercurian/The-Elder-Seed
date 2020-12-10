@@ -35,15 +35,12 @@ public class PlayerAttack : EntityAttack {
 
             //Privadas.
             private float m_delay;
-            private Vector3 m_savedPosition;
 			
     //Funciones
 		
         //Funciones de MonoBehaviour.
-		protected override void Start() {
+		protected void Start() {
 
-            base.Start();
-            m_savedPosition = GetCollider().transform.localPosition;
             m_delay = 0;
             }
 
@@ -64,7 +61,6 @@ public class PlayerAttack : EntityAttack {
                 Vector3 m_rawDir = (m_target.position - transform.position).normalized;
 
                 m_dir = new Vector2(m_rawDir.x, m_rawDir.z);
-                StartCoroutine(SetCollisionTarget(m_target));
                 }
 
             else {
@@ -80,7 +76,7 @@ public class PlayerAttack : EntityAttack {
             }
             
         //Funciones heredadas.
-        public override void DoDamage(Collider collider) {
+/*        public override void DoDamage(Collider collider) {
 
             if (!collider.CompareTag("Enemy")) return;
 
@@ -102,15 +98,14 @@ public class PlayerAttack : EntityAttack {
 
             //Do Damage
             collider.GetComponent<EntityHealth>().GetDamage(m_damage, m_knockback);   
-            }
+            } */
 
         //Funciones ha heredar.
 
     //Corotinas.
-    protected override IEnumerator AttackCoroutine() {
+    private IEnumerator AttackCoroutine() {
 
         m_playerMovement.IsAttacking(true);
-        yield return StartCoroutine(base.AttackCoroutine());
 
         m_delay = m_attackDelay;
 
@@ -123,11 +118,5 @@ public class PlayerAttack : EntityAttack {
         m_playerMovement.IsAttacking(false);
         m_delay = 0;
         }
-    private IEnumerator SetCollisionTarget(Transform target) {
 
-        GetCollider().transform.position = target.position;
-
-        yield return new WaitForSeconds(0.05f);
-        GetCollider().transform.localPosition = m_savedPosition;
-        }
     }

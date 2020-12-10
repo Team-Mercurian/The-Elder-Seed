@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28881f1d49f82e846b76596dcbae4457, type: 3}
-  m_Name: Common Sword
+  m_Name: SlimeHand
   m_EditorClassIdentifier: 
-  m_name: Default Sword
+  m_name: SlimeHand
   m_rarity: 0
   m_UIIcon: {fileID: 0}
   m_type: 0
-  m_baseDamage: 120
+  m_baseDamage: 20
   m_criticalProbability: 20
   m_range: 0
-  m_knockbackForce: 8
+  m_knockbackForce: 4
   m_knockbackTime: 0.5

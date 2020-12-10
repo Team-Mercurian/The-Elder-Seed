@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28881f1d49f82e846b76596dcbae4457, type: 3}
-  m_Name: Rare Sword
+  m_Name: Legendary Sword
   m_EditorClassIdentifier: 
   m_name: Default Sword
   m_rarity: 0
@@ -18,5 +18,6 @@ MonoBehaviour:
   m_type: 0
   m_baseDamage: 120
   m_criticalProbability: 20
+  m_range: 20
   m_knockbackForce: 8
   m_knockbackTime: 0.5
