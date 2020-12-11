@@ -23,8 +23,13 @@ public class DataSystem : MonoBehaviour {
 
         [Header("Persistent Props Holder")]
         [SerializeField] private GameObject[] m_enemies = null;
+        [Space]
+        [SerializeField] private Weapon m_defaultWeapon = null;
         [SerializeField] private Weapon[] m_weapons = null;
+        [Space]
         [SerializeField] private Seed[] m_seedTypes = null;
+        [Space]
+        [SerializeField] private Potion[] m_potionTypes = null;
 
     //Funciones de MonoBehaviour.
     private void Awake() {
@@ -47,6 +52,8 @@ public class DataSystem : MonoBehaviour {
 
         m_masterData = Load();
         m_gameData = m_masterData.GetGameData(0);
+
+        SetItemsDatas();
         }
 
     //Funciones estaticas.
@@ -61,7 +68,7 @@ public class DataSystem : MonoBehaviour {
     //Funciones privadas.
     private MasterData Load() {
 
-        MasterData m_data = new MasterData(m_seedTypes);
+        MasterData m_data = new MasterData(m_seedTypes, m_potionTypes);
 
         if (File.Exists(Application.persistentDataPath + "/save.json")) {
 
@@ -113,6 +120,9 @@ public class DataSystem : MonoBehaviour {
                 //Seeds
                 public Seed GetSeed(int index) => m_seedTypes[index];   
                 public Seed[] GetAllSeeds() => m_seedTypes;    
+
+                //Potions 
+                public Potion GetPotion(int index) => m_potionTypes[index];
 
         //Functions
         private struct ItemData {
@@ -199,6 +209,27 @@ public class DataSystem : MonoBehaviour {
                 return -1;
                 }
             }
+        
+        private void SetItemsDatas() {
+
+            //Weapon Datas.
+            List<WeaponBaseData> m_weaponBaseData = m_gameData.GetWeaponBaseData();
+
+            if (m_weaponBaseData.Count == 0) m_gameData.GetWeaponBaseData().Add(new WeaponBaseData(m_defaultWeapon.GetID(), m_defaultWeapon.GetUnlocked())); 
+            if (m_weaponBaseData.Count < m_weapons.Length + 1) {
+
+                foreach(Weapon m_w in m_weapons) {
+                    
+                    if (!m_gameData.GetIfIDExists(m_w.GetID())) {
+
+                        WeaponBaseData m_bd = new WeaponBaseData(m_w.GetID(), m_w.GetUnlocked());
+                        m_gameData.AddWeaponBaseData(m_bd);
+                        }
+                    }
+                }
+
+            Save();
+            }
         }
 
 [System.Serializable]
@@ -206,10 +237,10 @@ public class MasterData {
 
     [SerializeField] private List<GameData> m_gameDatas;
 
-    public MasterData(Seed[] seeds) {
+    public MasterData(Seed[] seeds, Potion[] potions) {
 
         m_gameDatas = new List<GameData>();
-        m_gameDatas.Add(new GameData(seeds));
+        m_gameDatas.Add(new GameData(seeds, potions));
         }
 
     public GameData GetGameData(int file) {
@@ -223,15 +254,29 @@ public class GameData {
 
     [SerializeField] private FarmData m_farmData;
     [SerializeField] private InventoryData m_inventoryData;
+    [SerializeField] private List<WeaponBaseData> m_weaponData;
 
-    public GameData(Seed[] seeds) { 
+    public GameData(Seed[] seeds, Potion[] potions) { 
 
         m_farmData = new FarmData(seeds);
-        m_inventoryData = new InventoryData();
+        m_inventoryData = new InventoryData(seeds, potions);
+        m_weaponData = new List<WeaponBaseData>();
         }
 
     public FarmData GetFarmData() => m_farmData;
     public InventoryData GetInventoryData() => m_inventoryData;
+
+    public List<WeaponBaseData> GetWeaponBaseData() => m_weaponData;
+    public void AddWeaponBaseData(WeaponBaseData m_data) => m_weaponData.Add(m_data);          
+    public bool GetIfIDExists(int id) {
+
+            foreach(WeaponBaseData m_eD in m_weaponData) {
+
+                if (id == m_eD.GetID()) return true;
+                }
+
+            return false;
+            }
     }
 
 [System.Serializable] 
@@ -240,14 +285,11 @@ public class FarmData {
     [SerializeField] private List<GridData> m_gridDatas;
     [SerializeField] private List<SeedData> m_seedDatas;
 
-    [SerializeField] private List<int> m_harvestedSeeds;
-
     public FarmData(Seed[] seeds) {
 
         //Establecer listas.
         m_gridDatas = new List<GridData>();
         m_seedDatas = new List<SeedData>();
-        m_harvestedSeeds = new List<int>();
         
         //Añadir semillas por defecto.
         for(int i = 0; i < seeds.Length; i ++) {
@@ -306,9 +348,6 @@ public class FarmData {
             m_seedData.AddCount(count);
             m_seedData.SetUnlocked(true);
             }    
-            
-        //Harvested Seeds.
-        public void AddHarvestedSeed(int index) => m_harvestedSeeds.Add(index);
 
         //Grid Data.
         public void AddGridData(GridData data) => m_gridDatas.Add(data);
@@ -346,59 +385,174 @@ public class FarmData {
 public class InventoryData {
 
     [SerializeField] private int m_actualWeaponInventoryIndex;
-    [SerializeField] private List<WeaponData> m_inventoryWeapons;
+    [SerializeField] private List<WeaponEntityData> m_inventoryWeapons;
+    [SerializeField] private List<ItemData> m_plants;
+    [SerializeField] private List<ItemData> m_potions;
 
-    public InventoryData() {
+    public InventoryData(Seed[] seeds, Potion[] potions) {
 
-        m_inventoryWeapons = new List<WeaponData>();
-        m_inventoryWeapons.Add(new WeaponData(0, DataSystem.GetSingleton().GetWeapon(0).GetUses()));
+        m_inventoryWeapons = new List<WeaponEntityData>();
+        m_inventoryWeapons.Add(new WeaponEntityData(0, DataSystem.GetSingleton().GetWeapon(0).GetUses()));
 
         m_actualWeaponInventoryIndex = 0;
+
+        //Añadir plantas por defecto.
+        m_plants = new List<ItemData>();
+
+        for(int i = 0; i < seeds.Length; i ++) {
+
+            m_plants.Add(new ItemData(i, 0));
+            }
+
+        AddPlant(Seed.SeedType.Durability, Rarity.Common, 5);
+        AddPlant(Seed.SeedType.Unlock, Rarity.Common, 5);
+        AddPlant(Seed.SeedType.Potion, Rarity.Common, 5);
+
+        //Añadir Pociones
+        m_potions = new List<ItemData>();
+
+        for(int i = 0; i < potions.Length; i ++) {
+
+            m_potions.Add(new ItemData(i, 0));
+            }
         }
         
     //Getters and Setters
 
         //Weapons
         public void SetActualWeapon(int index) => m_actualWeaponInventoryIndex = index;
-        public WeaponData GetActualWeapon() => SearchInWeaponInventory(m_actualWeaponInventoryIndex);
+        public WeaponEntityData GetActualWeapon() => SearchInWeaponInventory(m_actualWeaponInventoryIndex);
+
+        public WeaponEntityData GetWeaponData(int index) => SearchInWeaponInventory(index);
 
         public void UseWeapon(int index) => m_inventoryWeapons[index].UseWeapon();
-        public void AddWeapon(int index, int uses) => m_inventoryWeapons.Add(new WeaponData(index, uses));
+        public void AddWeapon(int index, int uses) => m_inventoryWeapons.Add(new WeaponEntityData(index, uses));
 
         public void UseActualWeapon() => UseWeapon(m_actualWeaponInventoryIndex);
 
-        public WeaponData SearchInWeaponInventory(int index) {
+        public List<WeaponEntityData> GetAllWeapons() => m_inventoryWeapons;
 
-            foreach(WeaponData m_w in m_inventoryWeapons) {
+        public WeaponEntityData SearchInWeaponInventory(int index) {
+
+            foreach(WeaponEntityData m_w in m_inventoryWeapons) {
 
                 if (m_w.GetIndex() == index) return m_w;
                 }
 
-            return new WeaponData(-1, 0);
+            return new WeaponEntityData(-1, 0);
             }
+        
+        //Seeds
+        public void AddPlant(int index) {
+            
+            foreach(ItemData m_pd in m_plants) {
+                
+                if (m_pd.GetIndex() == index) {
+                    
+                    m_pd.AddCount(1);
+                    }
+                }
+            }
+        public void AddPlant(Seed.SeedType seedType, Rarity rarity) => FindPlantData(seedType, rarity).AddCount(1);
+        public void AddPlant(Seed.SeedType seedType, Rarity rarity, int count) => FindPlantData(seedType, rarity).AddCount(count);
+        
+        public void SubtractPlant(Seed.SeedType seedType, Rarity rarity) => FindPlantData(seedType, rarity).SubtractCount(1);
+        public void SubtractPlant(Seed.SeedType seedType, Rarity rarity, int count) => FindPlantData(seedType, rarity).SubtractCount(count);
+
+        //Plants
+        public List<ItemData> GetPlants() => m_plants;
+
+        //Potions
+        public void AddPotion(int index) {
+
+            foreach(ItemData m_pd in m_potions) {
+                
+                if (m_pd.GetIndex() == index) {
+                    
+                    m_pd.AddCount(1);
+                    }
+                }
+            }
+        
+        public void AddPotion(Rarity rarity) => FindPotionData(rarity).AddCount(1);
+        public void AddPotion(Rarity rarity, int count) => FindPotionData(rarity).AddCount(count);
+        
+        public void SubtractPotion(Rarity rarity) => FindPotionData(rarity).SubtractCount(1);
+        public void SubtractPotion(Rarity rarity, int count) => FindPotionData(rarity).SubtractCount(count);
+
+        //Find Data
+        private int FindSeedIndex(Seed.SeedType seedType, Rarity rarity) {
+
+            Seed[] m_seeds = DataSystem.GetSingleton().GetAllSeeds();
+            int m_index = -1;
+
+            for(int i = 0; i < m_seeds.Length; i ++) {
+
+                if (m_seeds[i].GetSeedType() == seedType && m_seeds[i].GetRarity() == rarity) {
+
+                    m_index = i;
+                    break;
+                    }    
+                }
+            
+            return m_index;
+            }
+        private int FindSeedIndex(Rarity rarity) {
+
+            Seed[] m_seeds = DataSystem.GetSingleton().GetAllSeeds();
+            int m_index = -1;
+
+            for(int i = 0; i < m_seeds.Length; i ++) {
+
+                if (m_seeds[i].GetRarity() == rarity) {
+
+                    m_index = i;
+                    break;
+                    }    
+                }
+            
+            return m_index;
+            }
+        private ItemData FindPotionData(Rarity rarity) {
+
+            int m_index = FindSeedIndex(rarity);
+
+            foreach(ItemData m_pd in m_potions) {
+
+                if (m_index == m_pd.GetIndex()) return m_pd;
+                }    
+
+            return null;
+            }    
+        private ItemData FindPlantData(Seed.SeedType seedType, Rarity rarity) {
+
+            int m_index = FindSeedIndex(seedType, rarity);
+
+            foreach(ItemData m_pd in m_plants) {
+
+                if (m_index == m_pd.GetIndex()) return m_pd;
+                }    
+
+            return null;
+            }    
         }
 
 [System.Serializable]
-public class WeaponData {
+public class WeaponBaseData {
     
-    [SerializeField] private int m_weaponIndex;
-    [SerializeField] private int m_uses;
-
-    public WeaponData() {
-
-        m_weaponIndex = -1;
-        m_uses = 0;
-        }
-    public WeaponData(int weaponIndex, int uses) {
-
-        m_weaponIndex = weaponIndex;
-        m_uses = uses;
+    [SerializeField] private int m_weaponID = -1;
+    [SerializeField] private bool m_isUnlocked = false;
+    
+    public WeaponBaseData(int id, bool unlocked) {
+        
+        m_weaponID = id;
+        m_isUnlocked = unlocked;
         }
 
-    public int GetIndex() => m_weaponIndex;
-    public void UseWeapon() => m_uses --;
-    public void SetUses(int count) => m_uses = count;
-    public int GetUses() => m_uses;
+    public bool GetUnlocked() => m_isUnlocked;
+    public int GetID() => m_weaponID;
+
+    public void Unlock() => m_isUnlocked = true;
     }
 
 [System.Serializable] 
@@ -457,6 +611,48 @@ public class SeedData {
 
     public int GetIndex() => m_index;
     public Seed GetSeed() => DataSystem.GetSingleton().GetSeed(m_index);
+    }
+
+[System.Serializable] 
+public class ItemData {
+
+    [SerializeField] private int m_index;
+    [SerializeField] private int m_count;
+
+    public ItemData(int index, int defaultCount) {
+
+        m_index = index;
+        m_count = defaultCount;
+        }
+
+    public int GetIndex() => m_index;
+
+    public void AddCount(int value) => m_count += value;
+    public void SubtractCount(int value) => m_count -= value; 
+    public int GetCount() => m_count;
+    }
+
+[System.Serializable]
+public class WeaponEntityData {
+    
+    [SerializeField] private int m_weaponIndex;
+    [SerializeField] private int m_uses;
+
+    public WeaponEntityData() {
+
+        m_weaponIndex = -1;
+        m_uses = 0;
+        }
+    public WeaponEntityData(int weaponIndex, int uses) {
+
+        m_weaponIndex = weaponIndex;
+        m_uses = uses;
+        }
+
+    public int GetIndex() => m_weaponIndex;
+    public void UseWeapon() => m_uses --;
+    public void SetUses(int count) => m_uses = count;
+    public int GetUses() => m_uses;
     }
 
 public class DungeonData {

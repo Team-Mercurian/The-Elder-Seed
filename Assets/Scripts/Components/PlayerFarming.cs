@@ -45,7 +45,7 @@ public class PlayerFarming : MonoBehaviour {
             
             if (m_plant != null && m_plant.GetIfCanHarvest()) {
                 
-                m_data.AddHarvestedSeed(m_plant.GetSeedIndex());
+                DataSystem.GetSingleton().GetGameData().GetInventoryData().AddPlant(m_plant.GetSeedIndex());
                 Seed m_seed = DataSystem.GetSingleton().GetSeed(m_plant.GetSeedIndex());
 
                 if (Random.Range(0f, 100f) < (20 - (4 * (int) m_seed.GetRarity()))) {

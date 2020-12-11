@@ -51,6 +51,7 @@ MonoBehaviour:
   - {fileID: 719703697605135045, guid: 391471a3522ac68499faf063ca4b7427, type: 3}
   m_enemies:
   - {fileID: 5215380405671523419, guid: bb46ab08b2ff42a4c90306a5cb23c2b3, type: 3}
+  m_defaultWeapon: {fileID: 11400000, guid: 602a6d90d8ce13749a6a2be39817e5e2, type: 2}
   m_weapons:
   - {fileID: 11400000, guid: 602a6d90d8ce13749a6a2be39817e5e2, type: 2}
   - {fileID: 11400000, guid: 5d63c581ab9064a4ca559d7e1922798c, type: 2}

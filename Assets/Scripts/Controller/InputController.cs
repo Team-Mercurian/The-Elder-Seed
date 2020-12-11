@@ -25,6 +25,7 @@ public class InputController : MonoBehaviour {
             //Privadas.
             private static IHasLookInput m_lookInput;
             private static InputType m_currentInput = InputType.Keyboard;
+            private static InputController m_instance;
 			
         //Establecer variables.
 		
@@ -54,6 +55,10 @@ public class InputController : MonoBehaviour {
     //Funciones
 		
         //Funciones de MonoBehaviour
+        private void Awake() {
+
+            m_instance = this;
+            }
         private void Start() {
 			
             //Establecer referencias a componentes.
@@ -151,10 +156,15 @@ public class InputController : MonoBehaviour {
 
             m_lookInput = lookInput;
             }
+        public static InputController GetSingleton() => m_instance;
 
         public static InputType GetInputType() {
 
             return m_currentInput;
+            }
+        public void SetUIMode(bool active) {
+
+            m_playerInput.SwitchCurrentActionMap(active ? "UI" : "Player");
             }
 
         //Funciones heredadas.

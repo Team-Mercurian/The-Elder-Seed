@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28881f1d49f82e846b76596dcbae4457, type: 3}
   m_Name: Common Sword
   m_EditorClassIdentifier: 
-  m_name: Default Sword
+  m_name: Common Sword
   m_rarity: 0
   m_UIIcon: {fileID: 0}
   m_type: 0
   m_baseDamage: 120
-  m_criticalProbability: 20
-  m_knockbackForce: 8
+  m_criticalProbability: 25
+  m_defaultUnlocked: 1
+  m_id: 0
+  m_knockbackForce: 6
   m_knockbackTime: 0.5

@@ -21,7 +21,6 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             //Publicas.
             [Header("References")]
             [SerializeField] private Transform m_seedHolder = null;
-            [SerializeField] private CanvasGroup m_canvasGroup = null;
 
             [Space]
             [SerializeField] private RectTransform m_selector = null;
@@ -32,7 +31,6 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             [SerializeField] private GameObject m_lineSeparator = null;
 
             [Header("Values")]
-            [SerializeField] private AnimationCurve m_animationCurve = null;
             [SerializeField] private float m_distance = 64;
 
             //Privadas.
@@ -45,13 +43,6 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
     //Funciones
 		
         //Funciones de MonoBehaviour
-        protected override void Start() {
-
-            m_canvasGroup.alpha = 0;
-            m_canvasGroup.interactable = false;
-
-            base.Start();
-            }  
 		
         //Funciones privadas.
         private void CreateSeeds() {
@@ -179,16 +170,16 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
         private IEnumerator PanelIOCoroutine(bool active) {
 
             float m_time = 0.25f;
-            float m_a = m_canvasGroup.alpha;
+            float m_a = GetCanvasGroup().alpha;
             float m_b = active ? 1 : 0;
 
             for(float i = 0; i < m_time; i += Time.deltaTime) {
 
-                m_canvasGroup.alpha = Mathf.Lerp(m_a, m_b, m_animationCurve.Evaluate(i / m_time));
+                GetCanvasGroup().alpha = Mathf.Lerp(m_a, m_b, GetAnimationCurveEvaluation(i / m_time));
                 yield return null;
                 }
             
-            m_canvasGroup.alpha = m_b;
+            GetCanvasGroup().alpha = m_b;
             
             if (!active) gameObject.SetActive(false);
             }
