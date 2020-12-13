@@ -29,6 +29,21 @@ PrefabInstance:
       propertyPath: m_itemController
       value: 
       objectReference: {fileID: 3051605646876284679}
+    - target: {fileID: 2994463256369895457, guid: af77e1b1c8bbf1a4280820c1d259add0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -56
+      objectReference: {fileID: 0}
+    - target: {fileID: 4565313751877672106, guid: af77e1b1c8bbf1a4280820c1d259add0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5340714022357786710, guid: af77e1b1c8bbf1a4280820c1d259add0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5589089190994162883, guid: af77e1b1c8bbf1a4280820c1d259add0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -138,6 +153,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Potion Item
+      objectReference: {fileID: 0}
+    - target: {fileID: 8230098770779271462, guid: af77e1b1c8bbf1a4280820c1d259add0,
+        type: 3}
+      propertyPath: m_text
+      value: '[Potion Name]'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af77e1b1c8bbf1a4280820c1d259add0, type: 3}

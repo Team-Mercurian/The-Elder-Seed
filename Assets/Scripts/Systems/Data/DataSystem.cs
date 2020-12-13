@@ -32,6 +32,7 @@ public class DataSystem : MonoBehaviour {
         [SerializeField] private List<Seed> m_seeds = null;
         [SerializeField] private List<Plant> m_plants = null;
         [SerializeField] private List<Potion> m_potions = null;
+        [SerializeField] private List<Item> m_miscellaneous = null;
 
     //Funciones de MonoBehaviour.
     private void Awake() {
@@ -114,6 +115,10 @@ public class DataSystem : MonoBehaviour {
                 //Potions 
                 public Potion GetPotion(int id) => m_potions.Find(c => c.GetID() == id);   
                 public List<Potion> GetPotions() => m_potions;   
+
+                //Miscelaneous 
+                public Item GetMiscellaneous(int id) => m_miscellaneous.Find(c => c.GetID() == id);   
+                public List<Item> GetMiscellaneous() => m_miscellaneous;  
 
         //Functions
         public int GetRandomWeaponIndex(int probabilityIncrement) => GetRandomItemsIndex(probabilityIncrement, m_weapons.Cast<Item>().ToList());
@@ -233,6 +238,10 @@ public class DataSystem : MonoBehaviour {
                 //Plants
                 m_dataList = SetItemData(m_iData.GetPlantList(), m_plants.Cast<Item>().ToList());
                 m_iData.SetPlantList(m_dataList);
+
+                //Miscelaneous
+                m_dataList = SetItemData(m_iData.GetMiscellaneousList(), m_miscellaneous);
+                m_iData.SetMiscellaneousList(m_dataList);
             
             #endregion
             

@@ -38,7 +38,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             private List<SeedSelector_SeedUI> m_seedsController;
             private Coroutine m_IORoutine = null;
 			
-            private int m_selectedSeed;
+            private int m_selectedSeedID;
             private List<ItemData> m_unlockedSeeds;
 
     //Funciones
@@ -87,7 +87,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
                 if (selectedSeedIndex == i) {
 
                     m_seedsController[i].Select();
-                    m_selectedSeed = selectedSeedIndex == -1 ? -1 : m_unlockedSeeds[i].GetID();
+                    m_selectedSeedID = selectedSeedIndex == -1 ? -1 : m_unlockedSeeds[i].GetID();
                     m_selectedText.text = DataSystem.GetSingleton().GetSeed(m_unlockedSeeds[i].GetID()).GetName();
                     }
                 
@@ -113,7 +113,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             InputController.SetLookObject(this);
 
             m_selector.anchoredPosition = Vector2.zero;
-            m_selectedSeed = -1;
+            m_selectedSeedID = -1;
             }
             
         [ContextMenu("Debug Close")]
@@ -125,7 +125,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             m_IORoutine = StartCoroutine(PanelIOCoroutine(false));
             
             InputController.SetLookObject(CameraController.GetSingleton());
-            PlayerFarming.SetSeed(m_selectedSeed);
+            PlayerFarming.SetSeedID(m_selectedSeedID);
             } 
 		
         public void Look(Vector2 velocity) {

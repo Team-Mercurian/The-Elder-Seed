@@ -13,3 +13,9 @@ public interface IHasTwoOptionsUI {
     void LeftEvent();
     void RightEvent();
     }
+
+public interface IHasOpenAndClose {
+
+    void Open();
+    void Close();
+    }

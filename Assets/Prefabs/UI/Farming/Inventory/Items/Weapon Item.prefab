@@ -15,6 +15,7 @@ MonoBehaviour:
   m_itemBackground: {fileID: 2743439906032148049}
   m_icon: {fileID: 2450335635332302645}
   m_nameHolder: {fileID: 2042154114800465275}
+  m_equipText: {fileID: 6174337912490169867}
   m_usesCount: {fileID: 902249411736410717}
 --- !u!1001 &7953391451459929181
 PrefabInstance:
@@ -40,8 +41,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2994463256369895457, guid: af77e1b1c8bbf1a4280820c1d259add0,
         type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -80
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5589089190994162883, guid: af77e1b1c8bbf1a4280820c1d259add0,
         type: 3}
@@ -158,6 +159,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weapon Item
       objectReference: {fileID: 0}
+    - target: {fileID: 8230098770779271462, guid: af77e1b1c8bbf1a4280820c1d259add0,
+        type: 3}
+      propertyPath: m_text
+      value: '[Weapon Name]'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af77e1b1c8bbf1a4280820c1d259add0, type: 3}
 --- !u!1 &358325633225858962 stripped
@@ -193,6 +199,18 @@ MonoBehaviour:
 --- !u!114 &2042154114800465275 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8230098770779271462, guid: af77e1b1c8bbf1a4280820c1d259add0,
+    type: 3}
+  m_PrefabInstance: {fileID: 7953391451459929181}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6174337912490169867 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4309866763351347798, guid: af77e1b1c8bbf1a4280820c1d259add0,
     type: 3}
   m_PrefabInstance: {fileID: 7953391451459929181}
   m_PrefabAsset: {fileID: 0}

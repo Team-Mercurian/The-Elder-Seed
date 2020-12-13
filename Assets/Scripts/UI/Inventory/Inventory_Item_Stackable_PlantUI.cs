@@ -51,45 +51,14 @@ public class Inventory_Item_Stackable_PlantUI : Inventory_Item_StackableUI {
 
 		private bool UseDurabilityPlant() {
 
-			Debug.Log("El uso de la planta de durabilidad actualmente repara el arma que menos durabilidad tenga por falta de UI.");
-			
 			Rarity m_rarity = GetItem().GetRarity();
+			GetInventory().GetRepairWeapon().Open(m_rarity);
 
-			InventoryData m_iD = DataSystem.GetSingleton().GetGameData().GetInventoryData();
-			List<WeaponEntityData> m_weapons = m_iD.GetWeaponList();
-
-			WeaponEntityData m_mostUsedWeapon = null;
-			int m_maxUses = 100000;
-
-			foreach(WeaponEntityData m_w in m_weapons) {
-
-				if (m_w.GetUses() < m_maxUses) {
-					
-					m_mostUsedWeapon = m_w;
-					m_maxUses = m_w.GetUses();
-					}
-				}
-
-			if (m_mostUsedWeapon == null) {
-				
-				Debug.Log("No tienes ninguna arma");
-				return false;
-				}
-			else {
-				
-				int m_lastUses = m_mostUsedWeapon.GetUses(); 
-
-				m_iD.GetWeaponData(m_mostUsedWeapon.GetIndex()).SetUses(DataSystem.GetSingleton().GetWeapon(m_mostUsedWeapon.GetIndex()).GetUses());
-				Debug.Log("Reparada el arma en el indice " + m_mostUsedWeapon.GetIndex() + " de la base de datos " + "(" + m_lastUses + "/" + DataSystem.GetSingleton().GetWeapon(m_mostUsedWeapon.GetIndex()).GetUses() + ").");
-				return true;
-				}
+			return false;
 			}
 		private bool UsePotionPlant() {
 
-			Debug.Log("Añadida en el sistema de datos una pocion de rareza: " + GetItem().GetRarity());
-
 			int m_potionID = DataSystem.GetSingleton().GetPotions().Find(c => c.GetRarity() == GetItem().GetRarity()).GetID();
-
 			DataSystem.GetSingleton().GetGameData().GetInventoryData().AddPotion(m_potionID, 1);
 			return true;
 			}

@@ -104,14 +104,13 @@ public class InventoryData {
 
 	[SerializeField] private int m_actualWeaponIndex;
     [SerializeField] private int m_lastWeaponID = 0;
-    
-    [SerializeField] private int m_magicalFragments = 0;
 
     [SerializeField] private List<WeaponEntityData> m_weapons;
 
     [SerializeField] private List<ItemData> m_plants;
     [SerializeField] private List<ItemData> m_potions;
     [SerializeField] private List<ItemData> m_seeds;
+    [SerializeField] private List<ItemData> m_miscellaneous;
 
     public InventoryData() {
 
@@ -121,21 +120,27 @@ public class InventoryData {
         m_seeds = new List<ItemData>();
         m_plants = new List<ItemData>();
 		m_potions = new List<ItemData>();
+        m_miscellaneous = new List<ItemData>();
         }
         
     //Getters and Setters
 		public List<ItemData> GetSeedList() => m_seeds;  
 		public List<ItemData> GetPlantList() => m_plants;  
 		public List<ItemData> GetPotionList() => m_potions;  
+        public List<ItemData> GetMiscellaneousList() => m_miscellaneous;
+
 		public List<WeaponEntityData> GetWeaponList() => m_weapons;  
 
 		public void SetSeedList(List<ItemData> seedList) => m_seeds = seedList;
 		public void SetPlantList(List<ItemData> plantList) => m_plants = plantList;
 		public void SetPotionList(List<ItemData> potionList) => m_potions = potionList;
+        public void SetMiscellaneousList(List<ItemData> miscellaneousList) => m_miscellaneous = miscellaneousList;
 
 		public WeaponEntityData GetActualWeapon() => SearchInWeaponInventory(m_actualWeaponIndex);
         public WeaponEntityData GetWeaponData(int index) => SearchInWeaponInventory(index);
         public WeaponEntityData SearchInWeaponInventory(int index) => m_weapons.Find(c => c.GetIndex() == index);
+
+        public int GetActualWeaponIndex() => m_actualWeaponIndex;
 
         public void SetActualWeapon(int index) => m_actualWeaponIndex = index; 
 
@@ -167,14 +172,16 @@ public class InventoryData {
         public void RemoveWeapon(int index, int magicalFragments) {
 
             m_weapons.Remove(SearchInWeaponInventory(index));
-            m_magicalFragments += magicalFragments;
+            AddMagicalFragments(magicalFragments);
             }    
 
-        public void UseWeapon() => m_weapons[m_actualWeaponIndex].UseWeapon();
-        public void UseWeapon(int index) => m_weapons[index].UseWeapon();
+        public void UseWeapon() => SearchInWeaponInventory(m_actualWeaponIndex).UseWeapon();
+        public void UseWeapon(int index) => SearchInWeaponInventory(index).UseWeapon();
 
-        public void AddMagicalFragments(int count) => m_magicalFragments += count;
-        public int GetMagicalFragments() => m_magicalFragments;
+        public void AddMagicalFragments(int count) => SearchMagicalFragments().AddCount(count);
+        public int GetMagicalFragments() => SearchMagicalFragments().GetCount();
+
+        private ItemData SearchMagicalFragments() => m_miscellaneous.Find(c => c.GetID() == 0);
         }
 
 [System.Serializable]

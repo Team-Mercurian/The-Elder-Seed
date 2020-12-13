@@ -28,9 +28,9 @@ public abstract class Inventory_Item_StackableUI : Inventory_ItemUI {
         
         
 		//Public Functions
-        public virtual void SetValues(Item item, int count, bool isOdd) {
+        public virtual void SetValues(Item item, int count, bool isOdd, InventoryUI inventory) {
 			
-			SetBaseValues(item, isOdd);
+			SetBaseValues(item, isOdd, inventory);
 			SetCount(count);
 			}
 
@@ -48,6 +48,7 @@ public abstract class Inventory_Item_StackableUI : Inventory_ItemUI {
 		public int GetCount() => m_count;
         
 		//Private Functions
+		protected void SetInteractable(bool interactable) => m_button.interactable = interactable;
         
         
 	//Coroutines

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory_Item_Stackable_PotionUI : Inventory_Item_StackableUI {
+public class Inventory_Item_Stackable_MiscellaneousUI : Inventory_Item_StackableUI {
 	
 	//Enumerators
 	
@@ -22,10 +22,15 @@ public class Inventory_Item_Stackable_PotionUI : Inventory_Item_StackableUI {
         
         
 		//Public Functions
+        public override void SetValues(Item item, int count, bool isOdd, InventoryUI inventory) {
+			
+			base.SetValues(item, count, isOdd, inventory);
+			SetInteractable(false);
+			}
 		public override void Use() {
 
 			if (GetCount() <= 0) return;
-			Debug.Log("No es posible usar las pociones fuera de las ruinas.");
+			Debug.Log("Fragmentos magicos aun no implementados");
 			}
         
         

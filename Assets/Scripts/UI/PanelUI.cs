@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CanvasGroup), typeof(RectTransform))]
-public abstract class PanelUI : MonoBehaviour {
+public abstract class PanelUI : MonoBehaviour, IHasOpenAndClose {
 	
     //Establecer variables.
 		

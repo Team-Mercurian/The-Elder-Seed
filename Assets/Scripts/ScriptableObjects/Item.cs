@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
     
+[CreateAssetMenu(fileName = "Miscellaneous", menuName = "Game/Items/Miscellaneous")]
 public class Item : ScriptableObject {
 	
     //Establecer variables.

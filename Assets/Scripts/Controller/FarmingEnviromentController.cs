@@ -86,10 +86,10 @@ public class FarmingEnviromentController : MonoBehaviour {
 
         public void AddPlant(PlantController plant) => m_plants.Add(plant);
         public void RemovePlant(PlantController plant) => m_plants.Remove(plant);
-        public void CreatePlant(Vector3Int position, int seedIndex, bool canHarvest) {
+        public void CreatePlant(Vector3Int position, int seedID, bool canHarvest) {
         
             GameObject m_entity = Instantiate(m_plant, position, Quaternion.identity); 
-            m_entity.GetComponent<PlantController>().SetData(seedIndex, position, canHarvest);
+            m_entity.GetComponent<PlantController>().SetData(seedID, position, canHarvest);
 
             FarmingEnviromentController.GetSingleton().AddPlant(m_entity.GetComponent<PlantController>());
             }

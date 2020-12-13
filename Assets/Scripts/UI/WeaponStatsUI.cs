@@ -26,9 +26,6 @@ public class WeaponStatsUI : PanelUI, IHasTwoOptionsUI {
 		[SerializeField] private TextMeshProUGUI m_criticalProbability = null;
 		[SerializeField] private TextMeshProUGUI m_knockbackForce = null;
 
-		[Header("References")]
-		[SerializeField] private ConfirmationUI m_confirmationUI = null;
-
 		[Header("Buttons")]
 		[SerializeField] private Button m_buttonDestroy = null;
         
@@ -71,13 +68,14 @@ public class WeaponStatsUI : PanelUI, IHasTwoOptionsUI {
 			ButtonEvent m_leftButtonEvent = new ButtonEvent("No", null);
 			ButtonEvent m_rightButtonEvent = new ButtonEvent("Si", m_rightEvent);
 
-			m_confirmationUI.SetData(m_t, m_leftButtonEvent, m_rightButtonEvent);
-			m_confirmationUI.Open();
+			m_inventory.GetConfirmationUI().SetData(m_t, m_leftButtonEvent, m_rightButtonEvent);
+			m_inventory.GetConfirmationUI().Open();
 			}
 		public void RightEvent() {
 			
 			//Equip
 			DataSystem.GetSingleton().GetGameData().GetInventoryData().SetActualWeapon(m_weaponEntity.GetIndex());
+			m_inventory.Reset(InventoryUI.Sections.Weapons);
 			Close();
 			}
         

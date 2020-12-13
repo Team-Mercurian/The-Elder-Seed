@@ -21,6 +21,7 @@ public abstract class Inventory_ItemUI : MonoBehaviour {
 		[SerializeField] private Image m_icon = null;
 		[SerializeField] private TextMeshProUGUI m_nameHolder = null;
         
+		private InventoryUI m_inventory = null;
 		private Item m_item;
 
     //Functions
@@ -31,13 +32,15 @@ public abstract class Inventory_ItemUI : MonoBehaviour {
 		public abstract void Use();
 
 		//Private Functions
-		protected void SetBaseValues(Item item, bool isOdd) {
+		protected void SetBaseValues(Item item, bool isOdd, InventoryUI inventory) {
 
 			SetItem(item);
 
 			SetIcon(item.GetIcon());
 			SetName(item.GetName());
 						
+			SetInventory(inventory);
+
 			float m_alpha = isOdd ? 0.1f : 0.25f;
 			SetBackgroundAlpha(m_alpha);
 			}
@@ -49,6 +52,8 @@ public abstract class Inventory_ItemUI : MonoBehaviour {
 		protected void SetItem(Item item) => m_item = item;
 		protected Item GetItem() => m_item;
         
+		protected void SetInventory(InventoryUI inventory) => m_inventory = inventory;
+		protected InventoryUI GetInventory() => m_inventory; 
         
 	//Coroutines
 	

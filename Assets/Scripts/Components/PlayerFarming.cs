@@ -16,7 +16,7 @@ public class PlayerFarming : MonoBehaviour {
             //Publicas.
 			
             //Privadas.
-            private static int m_seedIndex = -1;
+            private static int m_seedID = -1;
 			
         //Establecer variables.
 		
@@ -45,8 +45,8 @@ public class PlayerFarming : MonoBehaviour {
             
             if (m_plant != null && m_plant.GetIfCanHarvest()) {
                 
-                m_data.GetInventoryData().AddPlant(m_plant.GetSeedIndex(), 1);
-                Seed m_seed = DataSystem.GetSingleton().GetSeed(m_plant.GetSeedIndex());
+                m_data.GetInventoryData().AddPlant(m_plant.GetSeedID(), 1);
+                Seed m_seed = DataSystem.GetSingleton().GetSeed(m_plant.GetSeedID());
 
                 if (Random.Range(0f, 100f) < (20 - (4 * (int) m_seed.GetRarity()))) {
                     
@@ -76,14 +76,14 @@ public class PlayerFarming : MonoBehaviour {
             
             else {
 
-                if (m_seedIndex < 0) return;
-                Seed m_seed = DataSystem.GetSingleton().GetSeed(m_seedIndex);
+                if (m_seedID < 0) return;
+                Seed m_seed = DataSystem.GetSingleton().GetSeed(m_seedID);
                 
                 if (m_data.GetInventoryData().GetSeedData(m_seed.GetID()).GetCount() > 0) {
                         
-                    FarmingEnviromentController.GetSingleton().CreatePlant(m_pos, m_seedIndex, false);
+                    FarmingEnviromentController.GetSingleton().CreatePlant(m_pos, m_seedID, false);
 
-                    m_data.GetFarmData().AddGridData(new GridData(m_seedIndex, m_pos / m_cellSize));
+                    m_data.GetFarmData().AddGridData(new GridData(m_seedID, m_pos / m_cellSize));
                     m_data.GetInventoryData().AddSeed(m_seed.GetID(), -1);
                     SaveSystem.Save();
                     }
@@ -95,10 +95,9 @@ public class PlayerFarming : MonoBehaviour {
                 }
             }
 
-        public static void SetSeed(int seedIndex) {
-
-            m_seedIndex = seedIndex;
-            }
+        public static void SetSeedID(int seedID) => m_seedID = seedID;
+        public static int GetSeedID() => m_seedID;
+            
 		
         //Funciones heredadas.
 		

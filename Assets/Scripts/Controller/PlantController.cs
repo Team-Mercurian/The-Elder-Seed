@@ -26,7 +26,7 @@ public class PlantController : MonoBehaviour {
             private bool m_canHarvest = false;
             private Vector3Int m_position;
 
-            private int m_seedIndex;
+            private int m_seedID;
 			
 			
     //Funciones
@@ -36,10 +36,10 @@ public class PlantController : MonoBehaviour {
         //Funciones privadas.
 		
         //Funciones publicas.
-        public void SetData(int seedIndex, Vector3Int position, bool canHarvest) {
+        public void SetData(int seedID, Vector3Int position, bool canHarvest) {
 
-            m_seedIndex = seedIndex;
-            Seed m_seed = DataSystem.GetSingleton().GetSeed(seedIndex);
+            m_seedID = seedID;
+            Seed m_seed = DataSystem.GetSingleton().GetSeed(seedID);
 
             m_meshFilter.mesh = m_seed.GetSeedMesh();
             m_position = position;
@@ -50,7 +50,7 @@ public class PlantController : MonoBehaviour {
             }
         public bool GetIfCanHarvest() => m_canHarvest;
 		public Vector3Int GetPosition() => m_position;
-        public int GetSeedIndex() => m_seedIndex;
+        public int GetSeedID() => m_seedID;
 
         //Funciones heredadas.
 		
