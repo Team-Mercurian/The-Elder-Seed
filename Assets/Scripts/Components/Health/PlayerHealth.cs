@@ -51,6 +51,10 @@ public class PlayerHealth : EntityHealth {
             CameraController.ResetCameraInStart();
             GenerateRuinsRooms.ExitRuins(true);
             }
+        protected override void HealthBarDeadAction() {
+
+            
+            }
 
         //Funciones ha heredar.
 		

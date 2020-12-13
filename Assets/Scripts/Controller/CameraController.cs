@@ -363,6 +363,11 @@ public class CameraController : MonoBehaviour, IHasLookInput {
 
             m_resetCamera = true;
             }
+
+        public Transform GetTransform() => transform;
+        public Transform GetCameraTransform() => m_cameraHolder;
+        public Camera GetCamera() => m_cameraHolder.GetComponent<Camera>();
+
         //Funciones heredadas.
 		
         //Funciones ha heredar.
