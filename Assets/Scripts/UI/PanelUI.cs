@@ -25,6 +25,7 @@ public abstract class PanelUI : MonoBehaviour {
 
             [Header("Base Animation")]
             [SerializeField] private AnimationCurve m_animationCurve = null;
+            [SerializeField] private float m_time = 0.25f;
 
             [Header("Base References")]
 			[SerializeField] private RectTransform m_rectTransform = null;
@@ -81,15 +82,12 @@ public abstract class PanelUI : MonoBehaviour {
             if (m_inOutAnimation) return;
             gameObject.SetActive(true);
             StartCoroutine(PanelIOAnimation(true));
-            InputController.SetLookObject(null);
-            CursorController.GetSingleton().SetVisibility(true);
             }
         public virtual void Close() {
             
             if (m_inOutAnimation) return;
             StartCoroutine(PanelIOAnimation(false));
-            InputController.SetLookObject(CameraController.GetSingleton());
-            CursorController.GetSingleton().SetVisibility(false);
+            m_canvasGroup.interactable = false;
             }
 
         protected CanvasGroup GetCanvasGroup() => m_canvasGroup;
@@ -99,7 +97,6 @@ public abstract class PanelUI : MonoBehaviour {
         private IEnumerator PanelIOAnimation(bool entry) {
             
             m_inOutAnimation = true;
-            float m_time = 0.5f;        
 
             Vector2 m_value = m_defValue + new Vector2(0, -32);
             
@@ -124,7 +121,7 @@ public abstract class PanelUI : MonoBehaviour {
             m_isOpen = entry;
             m_inOutAnimation = false;
 
-            if (!entry) gameObject.SetActive(true);
+            if (!entry) gameObject.SetActive(false);
             m_canvasGroup.interactable = entry;
             }
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class SeedSelectorUI : PanelUI, IHasLookInput {
 	
@@ -38,7 +39,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             private Coroutine m_IORoutine = null;
 			
             private int m_selectedSeed;
-            List<SeedData> m_seeds;
+            private List<ItemData> m_unlockedSeeds;
 
     //Funciones
 		
@@ -49,15 +50,9 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
 
             m_seedsController = new List<SeedSelector_SeedUI>();
 
-            List<SeedData> m_allSeeds = DataSystem.GetSingleton().GetGameData().GetFarmData().GetSeedDatas();
-            m_seeds = new List<SeedData>();
-
-            for(int i = 0; i < m_allSeeds.Count; i ++) {
-
-                if (m_allSeeds[i].GetUnlocked()) m_seeds.Add(m_allSeeds[i]);
-                }
-
-            int m_count = m_seeds.Count;
+            m_unlockedSeeds = DataSystem.GetSingleton().GetGameData().GetInventoryData().GetSeedList().FindAll(c => c.GetUnlocked() == true);
+            
+            int m_count = m_unlockedSeeds.Count;
 
             for(int i = 0; i < m_count * 2; i ++) {
 
@@ -78,7 +73,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
 
                     SeedSelector_SeedUI m_seedController = m_object.GetComponent<SeedSelector_SeedUI>();
 
-                    m_seedController.SetData(m_seeds[i/2].GetSeed().GetIcon(), m_seeds[i/2].GetCount());
+                    m_seedController.SetData(DataSystem.GetSingleton().GetSeed(m_unlockedSeeds[i/2].GetID()).GetIcon(), m_unlockedSeeds[i/2].GetCount());
                     m_seedsController.Add(m_seedController);
                     }
 
@@ -92,8 +87,8 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
                 if (selectedSeedIndex == i) {
 
                     m_seedsController[i].Select();
-                    m_selectedSeed = selectedSeedIndex == -1 ? -1 : m_seeds[i].GetIndex();
-                    m_selectedText.text = DataSystem.GetSingleton().GetSeed(m_seeds[i].GetIndex()).GetName();
+                    m_selectedSeed = selectedSeedIndex == -1 ? -1 : m_unlockedSeeds[i].GetID();
+                    m_selectedText.text = DataSystem.GetSingleton().GetSeed(m_unlockedSeeds[i].GetID()).GetName();
                     }
                 
                 else m_seedsController[i].UnSelect();

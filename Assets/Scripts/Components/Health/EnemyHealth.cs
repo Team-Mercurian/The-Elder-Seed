@@ -38,7 +38,7 @@ public class EnemyHealth : EntityHealth {
             DataSystem m_ds = DataSystem.GetSingleton();
 
             Seed.SeedType m_type = Random.Range(0, 2) < 1 ? Seed.SeedType.Durability : Seed.SeedType.Potion;
-            int m_index = m_ds.GetRandomSeedIndex(4 * GenerateRuinsRooms.GetActualFloor(), m_type);
+            int m_index = m_ds.GetRandomSeedID(4 * GenerateRuinsRooms.GetActualFloor(), m_type);
 
             SeedEntityController m_s = Instantiate(m_seedEntity, transform.position, Quaternion.identity).GetComponent<SeedEntityController>();
             m_s.SetData(m_index);

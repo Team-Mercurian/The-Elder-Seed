@@ -152,16 +152,11 @@ public class InputController : MonoBehaviour {
                 }
             }
 		
-        public static void SetLookObject(IHasLookInput lookInput) {
-
-            m_lookInput = lookInput;
-            }
+        public static void SetLookObject(IHasLookInput lookInput) => m_lookInput = lookInput;
+            
         public static InputController GetSingleton() => m_instance;
-
-        public static InputType GetInputType() {
-
-            return m_currentInput;
-            }
+        public static InputType GetInputType() => m_currentInput;
+            
         public void SetUIMode(bool active) {
 
             m_playerInput.SwitchCurrentActionMap(active ? "UI" : "Player");

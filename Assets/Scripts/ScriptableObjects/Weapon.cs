@@ -29,8 +29,6 @@ public class Weapon : Item {
             [SerializeField] private WeaponType m_type = WeaponType.Melee;
             [SerializeField] private int m_baseDamage = 120;
             [SerializeField] [Range(0, 100)] private int m_criticalProbability = 20;
-            [SerializeField] private bool m_defaultUnlocked = false;
-            [SerializeField] private int m_id = 0;
 
             [Header("Weapon Knockback")]
             [SerializeField] private float m_knockbackForce = 1f;
@@ -53,9 +51,6 @@ public class Weapon : Item {
 
         public float GetKnockbackForce() => m_knockbackForce;
         public float GetKnockbackTime() => m_knockbackTime;
-
-        public bool GetUnlocked() => m_defaultUnlocked;
-        public int GetID() => m_id;
 		
         public int GetCalculatedDamage(int uses) {
             
@@ -67,6 +62,8 @@ public class Weapon : Item {
 
             return m_damage;
             }
+        
+        public int GetBaseDamage() => m_baseDamage * 2;
 
         //Funciones heredadas.
 		

@@ -32,7 +32,7 @@ public class RuinsEntryController : InteractableBehaviour {
         //Funciones publicas.
         public override void Interact() {
 
-            DataSystem.Save();
+            SaveSystem.Save();
             SceneController.GetSingleton().LoadScene(Scenes.Ruins, false);
             }
 		

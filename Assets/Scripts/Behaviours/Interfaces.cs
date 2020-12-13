@@ -7,3 +7,9 @@ public interface IHasLookInput {
 
     void Look(Vector2 velocity);
     }
+
+public interface IHasTwoOptionsUI {
+
+    void LeftEvent();
+    void RightEvent();
+    }

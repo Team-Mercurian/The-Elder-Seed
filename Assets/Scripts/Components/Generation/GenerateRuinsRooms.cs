@@ -44,7 +44,7 @@ public class GenerateRuinsRooms : GameBehaviour {
             
             RoomController.SetAppearDirection(Direction.Up);
             DataSystem.GetSingleton().GetDungeonData().NextFloor();
-            DataSystem.Save();
+            SaveSystem.Save();
 
             SceneController.GetSingleton().LoadScene(Scenes.Ruins, false);
             }
@@ -65,7 +65,7 @@ public class GenerateRuinsRooms : GameBehaviour {
             RoomController.SetAppearDirection(Direction.Up);
 
             DataSystem.GetSingleton().SetDungeonData(null);
-            DataSystem.Save();
+            SaveSystem.Save();
             SceneController.GetSingleton().LoadScene(Scenes.House, false);
             }
         public static int GetActualFloor() => m_actualFloor;

@@ -30,6 +30,9 @@ public class Seed : Item {
             [SerializeField] private SeedType m_type = SeedType.Durability;
             [SerializeField] private Mesh m_seedMesh = null;
             [SerializeField] private Mesh m_plantMesh = null;			
+
+            [SerializeField] private Plant m_plant = null;
+
             //Privadas.
 			
 			
@@ -43,6 +46,7 @@ public class Seed : Item {
         public SeedType GetSeedType() => m_type;
         public Mesh GetSeedMesh() => m_seedMesh;
         public Mesh GetPlantMesh() => m_plantMesh;
+        public Plant GetPlant() => m_plant;
 
         //Funciones heredadas.
 		

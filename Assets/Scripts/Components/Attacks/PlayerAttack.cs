@@ -95,7 +95,7 @@ public class PlayerAttack : EntityAttack {
             Knockback m_knockback = new Knockback(m_direction, m_weapon.GetKnockbackForce(), m_weapon.GetKnockbackTime());
 
             //Damage
-            m_data.UseActualWeapon();
+            m_data.UseWeapon();
 
             int m_uses = m_data.GetActualWeapon().GetUses();
             int m_damage = m_weapon.GetCalculatedDamage(m_uses);

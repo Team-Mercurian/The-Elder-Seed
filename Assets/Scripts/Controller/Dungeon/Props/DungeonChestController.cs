@@ -39,7 +39,7 @@ public class DungeonChestController : InteractableBehaviour {
             //Dar semillas de desbloqueo aleatorias dependiendo de una probabilidad.
             if (Random.Range(0f, 100f) < 20f) { 
 
-                m_dataSystem.GetDungeonData().AddSeed(m_dataSystem.GetRandomSeedIndex(m_probabilityIncrement, Seed.SeedType.Unlock));
+                m_dataSystem.GetDungeonData().AddSeed(m_dataSystem.GetRandomSeedID(m_probabilityIncrement, Seed.SeedType.Unlock));
                 }
             
             //Añadir semillas.
@@ -51,7 +51,7 @@ public class DungeonChestController : InteractableBehaviour {
                 for(int i = 0; i < m_count; i ++) {
 
                     Seed.SeedType m_type = Random.Range(0, 2) < 1 ? Seed.SeedType.Durability : Seed.SeedType.Potion;
-                    int m_index = m_dataSystem.GetRandomSeedIndex(m_probabilityIncrement, m_type);
+                    int m_index = m_dataSystem.GetRandomSeedID(m_probabilityIncrement, m_type);
 
                     if (m_index != -1) m_dataSystem.GetDungeonData().AddSeed(m_index);
                     }

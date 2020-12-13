@@ -57,7 +57,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5d63c581ab9064a4ca559d7e1922798c, type: 2}
   - {fileID: 11400000, guid: 6b3a19d1f44258b4080f43330964d3e3, type: 2}
   - {fileID: 11400000, guid: b2f69abc0d91be54f8d0f7de9148442f, type: 2}
-  m_seedTypes:
+  m_seeds:
   - {fileID: 11400000, guid: 2a45833b72af5eb47b290c84c48db5c1, type: 2}
   - {fileID: 11400000, guid: f1e68ea86e9033d4f92750772cdae95e, type: 2}
   - {fileID: 11400000, guid: 61aa973bc3abb104aad67a71c0d0664e, type: 2}
@@ -70,3 +70,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 09e9eb41cd6e8f84bb8faadff7d3a38c, type: 2}
   - {fileID: 11400000, guid: 0d9261812969d5348b4c1b89a4d17dbb, type: 2}
   - {fileID: 11400000, guid: b4fa7e3ff3ecc3449867b841ed3f5b19, type: 2}
+  m_plants:
+  - {fileID: 11400000, guid: f195c1b1a8491bf48bd3e46f4096c786, type: 2}
+  - {fileID: 11400000, guid: ccdcf04a58efcf0408e1cfcd9bd4ebbd, type: 2}
+  - {fileID: 11400000, guid: 2266ba8290c3e1b4aae2bffa86c50a28, type: 2}
+  - {fileID: 11400000, guid: b3b842861eafa0848bfe49f1d6675b9e, type: 2}
+  - {fileID: 11400000, guid: 20d11816162c1e8459a92acba01875e8, type: 2}
+  - {fileID: 11400000, guid: 5c57869d767c26146b102a01577ddafa, type: 2}
+  - {fileID: 11400000, guid: 15ff78d484237154ab331d41b6623e1d, type: 2}
+  - {fileID: 11400000, guid: 8455cb1c183a95947abfbb9143cf5c15, type: 2}
+  - {fileID: 11400000, guid: a43583e573e4eac42ba6ac31c1cea1e5, type: 2}
+  - {fileID: 11400000, guid: 5849a78ec9cc6d34aa95cce2697def16, type: 2}
+  - {fileID: 11400000, guid: 8fd1227cf23555e469a57c14ad71a9d3, type: 2}
+  - {fileID: 11400000, guid: fa58f8b1e205382419b0124ad66c94a7, type: 2}
+  m_potions:
+  - {fileID: 11400000, guid: cff1fa5564cb2d74689e9ba2c0c20a79, type: 2}
+  - {fileID: 11400000, guid: dd6a690e133a24b4db086a4559d12e5b, type: 2}
+  - {fileID: 11400000, guid: b7596be5295c15743a02108681a62f67, type: 2}
+  - {fileID: 11400000, guid: 439772983fadad64dbb79fe4315ac905, type: 2}
