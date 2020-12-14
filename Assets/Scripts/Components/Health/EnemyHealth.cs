@@ -49,13 +49,9 @@ public class EnemyHealth : EntityHealth {
             }
 
         //Funciones publicas.
-        protected override void SetHealth(int value) {
+        protected override int SetActualHealth() {
             
-            SetActualHealth(value);
-            }
-		protected override int GetSavedHealth() {
-
-            return m_health;
+           return m_health;
             }
 		protected override void Dead() {
             
@@ -66,6 +62,10 @@ public class EnemyHealth : EntityHealth {
         protected override void HealthBarDeadAction() {
 
             Destroy(m_healthBar.gameObject);
+            }
+        protected override void SaveHealth(int health) {
+
+
             }
 		
         //Funciones heredadas.

@@ -495,7 +495,7 @@ PrefabInstance:
     - target: {fileID: 2672546749685463149, guid: 2a7b002d859ff2b469f3337a5b3e224d,
         type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 2672546749685463149, guid: 2a7b002d859ff2b469f3337a5b3e224d,
         type: 3}
@@ -731,6 +731,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ActionEvents.Array.data[19].m_ActionName
       value: UI/TrackedDeviceOrientation
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672546749685463149, guid: 2a7b002d859ff2b469f3337a5b3e224d,
+        type: 3}
+      propertyPath: m_UIInputModule
+      value: 
+      objectReference: {fileID: 1433845939261043196}
+    - target: {fileID: 2672546749685463149, guid: 2a7b002d859ff2b469f3337a5b3e224d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_ActionId
+      value: ffb28401-2219-41b1-ac42-2716ae21437c
+      objectReference: {fileID: 0}
+    - target: {fileID: 2672546749685463149, guid: 2a7b002d859ff2b469f3337a5b3e224d,
+        type: 3}
+      propertyPath: m_ActionEvents.Array.data[20].m_ActionName
+      value: UI/CloseInventory[/Keyboard/tab]
       objectReference: {fileID: 0}
     - target: {fileID: 2830435517145371764, guid: 2a7b002d859ff2b469f3337a5b3e224d,
         type: 3}

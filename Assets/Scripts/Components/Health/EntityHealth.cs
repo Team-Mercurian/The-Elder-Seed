@@ -57,7 +57,7 @@ public abstract class EntityHealth : MonoBehaviour {
 
             //Reducir la vida.
             m_actualHealth = Mathf.Clamp(m_actualHealth - damage, 0, m_health);
-            DamageTextController m_dt = Instantiate(m_damageText, transform.position + (Vector3.up * m_damageTextOffset) , Quaternion.identity).GetComponent<DamageTextController>();
+            DamageTextController m_dt = Instantiate(m_damageText, transform.position + (Vector3.up * m_damageTextOffset), Quaternion.identity).GetComponent<DamageTextController>();
             m_dt.SetData(damage.ToString());
 
             m_entityMovement.SetKnockback(knockback);
@@ -71,6 +71,7 @@ public abstract class EntityHealth : MonoBehaviour {
 
             else {
                 
+                SaveHealth(m_actualHealth);
                 if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health, false);
                 if (m_damageCooldown > 0) m_damageCoroutine = StartCoroutine(CooldownAnimation());
                 }
@@ -80,7 +81,8 @@ public abstract class EntityHealth : MonoBehaviour {
             //Añadir vida.
             m_actualHealth = Mathf.Clamp(m_actualHealth + health, 0, m_health);
             }
-		
+
+        protected abstract void SaveHealth(int health);
         public int GetMaxHealth() => m_health;
 
         [ContextMenu("Get Debug Damage")]
