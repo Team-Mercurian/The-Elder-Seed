@@ -2384,6 +2384,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5886347324776080560, guid: f5d97afa331def343882d42b57309f0a,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 6436143678100319355, guid: f3da331b06591b447aa66a5f90e06bdc,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5d97afa331def343882d42b57309f0a, type: 3}
 --- !u!224 &5303766926041110147 stripped
@@ -2544,6 +2550,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5886347324776080560, guid: f5d97afa331def343882d42b57309f0a,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1666068875700510706, guid: f3da331b06591b447aa66a5f90e06bdc,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5d97afa331def343882d42b57309f0a, type: 3}
 --- !u!224 &7095826955990170601 stripped
@@ -2704,6 +2716,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5886347324776080560, guid: f5d97afa331def343882d42b57309f0a,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -5038403060668103442, guid: f3da331b06591b447aa66a5f90e06bdc,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5d97afa331def343882d42b57309f0a, type: 3}
 --- !u!224 &7913434901494126495 stripped
@@ -3239,6 +3257,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5886347324776080560, guid: f5d97afa331def343882d42b57309f0a,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 6866944693739802424, guid: f3da331b06591b447aa66a5f90e06bdc,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5d97afa331def343882d42b57309f0a, type: 3}
 --- !u!224 &3875066771579028764 stripped

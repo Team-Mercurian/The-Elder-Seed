@@ -16,7 +16,7 @@ MonoBehaviour:
   m_name: Common Sword
   m_rarity: 0
   m_UIIcon: {fileID: 0}
-  m_defaultCount: 10
+  m_defaultCount: 1
   m_defaultUnlocked: 1
   m_type: 0
   m_baseDamage: 100

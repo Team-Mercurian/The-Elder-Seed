@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public enum Scenes {
 
+    Menu,
     House,
     Ruins,
     }
@@ -66,6 +67,7 @@ public class SceneController : MonoBehaviour {
         public static SceneController GetSingleton() => m_instance;
         public static Scenes GetActualScene() => m_actualScene;
             
+        public void GoToHouse() => LoadScene(Scenes.House, false);
 		
         //Funciones heredadas.
 		
