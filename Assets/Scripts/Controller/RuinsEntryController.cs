@@ -19,6 +19,8 @@ public class RuinsEntryController : InteractableBehaviour {
         //Establecer variables.
 		
             //Publicas.
+            [Header("References")]
+            [SerializeField] private Inventory_DungeonItemSelectionUI m_dungeonInventory = null;
 			
             //Privadas.
 			
@@ -32,8 +34,15 @@ public class RuinsEntryController : InteractableBehaviour {
         //Funciones publicas.
         public override void Interact() {
 
-            SaveSystem.Save();
-            SceneController.GetSingleton().LoadScene(Scenes.Ruins, false);
+            DungeonData m_dD = new DungeonData();
+            m_dD.GetPlayer().SetHealth(DataSystem.GetSingleton().GetPlayerHealth());
+
+            InventoryData m_iD = DataSystem.GetSingleton().GetNewDungeonInventoryData(false);
+            m_dD.SetInventoryData(m_iD);
+
+            DataSystem.GetSingleton().SetDungeonData(m_dD);
+
+            m_dungeonInventory.Open();
             }
 		
         //Funciones heredadas.

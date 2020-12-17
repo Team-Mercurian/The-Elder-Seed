@@ -34,6 +34,9 @@ public class DataSystem : MonoBehaviour {
         [SerializeField] private List<Potion> m_potions = null;
         [SerializeField] private List<Item> m_miscellaneous = null;
 
+        [Header("Values")]
+        [SerializeField] private int m_playerHealth = 1200;
+
     //Funciones de MonoBehaviour.
     private void Awake() {
 
@@ -102,7 +105,7 @@ public class DataSystem : MonoBehaviour {
                 public Weapon GetWeapon(int id) => m_weapons.Find(c => c.GetID() == id);   
                 public List<Weapon> GetWeapons() => m_weapons;
 
-                public Weapon GetActualWeapon() => m_weapons.Find(c => c.GetID() == m_gameData.GetInventoryData().GetActualWeapon().GetID());   
+                public Weapon GetActualWeapon() => m_weapons.Find(c => c.GetID() == m_dungeonData.GetActualWeapon().GetID());   
 
                 //Seeds
                 public Seed GetSeed(int id) => m_seeds.Find(c => c.GetID() == id);   
@@ -120,8 +123,11 @@ public class DataSystem : MonoBehaviour {
                 public Item GetMiscellaneous(int id) => m_miscellaneous.Find(c => c.GetID() == id);   
                 public List<Item> GetMiscellaneous() => m_miscellaneous;  
 
+            //Player
+            public int GetPlayerHealth() => m_playerHealth;
+
         //Functions
-        public int GetRandomWeaponIndex(int probabilityIncrement) => GetRandomItemsIndex(probabilityIncrement, m_weapons.Cast<Item>().ToList());
+        public int GetRandomWeaponID(int probabilityIncrement) => GetRandomItemsIndex(probabilityIncrement, m_weapons.Cast<Item>().ToList());
         public int GetRandomSeedID(int probabilityIncrement, Seed.SeedType seedType) => GetRandomItemsIndex(probabilityIncrement, m_seeds.FindAll(s => s.GetSeedType() == seedType).Cast<Item>().ToList());
         
         private int GetRandomItemsIndex(int probabilityIncrement, List<Item> items) {
@@ -171,6 +177,12 @@ public class DataSystem : MonoBehaviour {
                 }
             }
 
+        public void GoToRuins() {
+
+            SaveSystem.Save();
+            SceneController.GetSingleton().LoadScene(Scenes.Ruins, false);
+            }
+
         private void SetItemsDatas() {
 
             #region Weapons
@@ -196,7 +208,7 @@ public class DataSystem : MonoBehaviour {
                     
                     for(int c = 0; c < m_weapons[i].GetDefaultCount(); c ++) { 
                     
-                        m_gameData.GetInventoryData().AddWeapon(m_weapons[i].GetID(), m_weapons[i].GetUses());
+                        m_gameData.GetInventoryData().AddWeapon(m_weapons[i].GetID(), m_weapons[i].GetUses(), ref m_gameData.GetInventoryData().m_lastWeaponID);
                         }   
                     }
                 }
@@ -246,5 +258,56 @@ public class DataSystem : MonoBehaviour {
             #endregion
             
             m_gameData.TurnGiftOff();
+            }
+        public InventoryData GetNewDungeonInventoryData(bool giftData) {
+
+            InventoryData m_inventory = new InventoryData();
+
+            List<ItemData> SetItemData(List<ItemData> gameData, List<ItemData> savedData, List<Item> items) {
+
+                if (savedData.Count == 0) {
+
+                    List<ItemData> m_newList = new List<ItemData>();
+
+                    for(int i = 0; i < items.Count; i ++) {
+
+                        int m_count = 5;
+                        ItemData m_iD = new ItemData(i, giftData ? m_count : 0, (giftData ? m_count > 0 : false) || gameData.Find(c => c.GetID() == i).GetUnlocked());
+                        m_newList.Add(m_iD);
+                        }
+
+                    return m_newList;
+                    }
+                
+                return savedData;
+                }
+            List<ItemData> m_dataList = null;
+            InventoryData m_gameInventory = DataSystem.GetSingleton().GetGameData().GetInventoryData();
+
+            //Weapons
+            if (giftData) {
+                
+                for(int i = 0; i < m_weapons.Count; i ++) {
+                    
+                    for(int c = 0; c < 5; c ++) { 
+                    
+                        m_inventory.AddWeapon(m_weapons[i].GetID(), m_weapons[i].GetUses(), ref m_gameData.GetInventoryData().m_lastWeaponID);
+                        }   
+                    }
+                }
+
+            //Seeds
+            m_dataList = SetItemData(m_gameInventory.GetSeedList(), m_inventory.GetSeedList(), m_seeds.Cast<Item>().ToList());
+            m_inventory.SetSeedList(m_dataList);
+
+            //Potions
+            m_dataList = SetItemData(m_gameInventory.GetPotionList(), m_inventory.GetPotionList(), m_potions.Cast<Item>().ToList());
+            m_inventory.SetPotionList(m_dataList);
+
+            //Plants
+            m_dataList = SetItemData(m_gameInventory.GetPlantList(), m_inventory.GetPlantList(), m_plants.Cast<Item>().ToList());
+            m_inventory.SetPlantList(m_dataList);
+
+            return m_inventory;
             }
         }

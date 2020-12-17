@@ -46,7 +46,7 @@ public class Weapon : Item {
         //Funciones publicas.
         public WeaponType GetWeaponType() => m_type;
         public int GetMinDamage() => m_baseDamage;
-        public int GetUses() => 300 + (200 * (int) GetRarity());
+        public int GetUses() => 50 + (50 * (int) GetRarity());
         public int GetCriticalProbability() => m_criticalProbability;
 
         public float GetKnockbackForce() => m_knockbackForce;

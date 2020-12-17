@@ -23,7 +23,7 @@ public class FarmingBaseUI : MonoBehaviour {
             //Publicas.
             [Header("References")]
             [SerializeField] private SeedSelectorUI m_seedSelector = null;
-            [SerializeField] private InventoryUI m_inventory = null;
+            [SerializeField] private Inventory_FarmingUI m_inventory = null;
 			
             //Privadas.
 			

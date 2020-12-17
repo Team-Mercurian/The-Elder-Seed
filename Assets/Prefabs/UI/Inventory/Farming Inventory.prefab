@@ -1826,8 +1826,13 @@ GameObject:
   - component: {fileID: 8560541263368784289}
   - component: {fileID: 809693760331840254}
   - component: {fileID: 3707575017293160542}
+  - component: {fileID: 5085445369433104099}
+  - component: {fileID: 7247430448450682288}
+  - component: {fileID: 5508812954763603331}
+  - component: {fileID: 2552476083242572857}
+  - component: {fileID: 5078646871688249116}
   m_Layer: 0
-  m_Name: Inventory
+  m_Name: Farming Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1912,16 +1917,83 @@ MonoBehaviour:
   m_changeableTextB: {fileID: 7647618943471153459}
   m_changeableTextC: {fileID: 8473526563298991526}
   m_weaponStatsUI: {fileID: 0}
-  m_plantItem: {fileID: 358325633225858962, guid: 36c16f7449aacc8428b3567a86314075,
-    type: 3}
-  m_seedItem: {fileID: 358325633225858962, guid: 0392e55bc8e22fe42ba409dfc66b547d,
-    type: 3}
-  m_weaponItem: {fileID: 358325633225858962, guid: 14bcb0feeaf9b8f41ba49c0b380eec8f,
-    type: 3}
-  m_potionItem: {fileID: 358325633225858962, guid: 54896799e01d71d4cb954d9db7e1a4ff,
-    type: 3}
-  m_miscellaneousItem: {fileID: 358325633225858962, guid: 9abce8ef37fbd7d448fe847b128fe0b1,
-    type: 3}
+  m_confirmationUI: {fileID: 0}
+  m_weaponRepairUI: {fileID: 0}
+  m_seedCreator: {fileID: 5085445369433104099}
+  m_plantCreator: {fileID: 7247430448450682288}
+  m_weaponCreator: {fileID: 5508812954763603331}
+  m_potionCreator: {fileID: 2552476083242572857}
+  m_miscCreator: {fileID: 5078646871688249116}
+--- !u!114 &5085445369433104099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7410675719061849167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36e08fde1ad0d024b884786cda90d75d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_inventory: {fileID: 3707575017293160542}
+  m_item: {fileID: 358325633225858962, guid: 0392e55bc8e22fe42ba409dfc66b547d, type: 3}
+--- !u!114 &7247430448450682288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7410675719061849167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81f35ce35e5e59a41bfbb0333e64b007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_inventory: {fileID: 3707575017293160542}
+  m_item: {fileID: 358325633225858962, guid: 36c16f7449aacc8428b3567a86314075, type: 3}
+--- !u!114 &5508812954763603331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7410675719061849167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542564a52da82ac41a2e971b5e5aefc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_inventory: {fileID: 3707575017293160542}
+  m_item: {fileID: 358325633225858962, guid: 14bcb0feeaf9b8f41ba49c0b380eec8f, type: 3}
+--- !u!114 &2552476083242572857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7410675719061849167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8251abf9921f74987242058ebc4252, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_inventory: {fileID: 3707575017293160542}
+  m_item: {fileID: 358325633225858962, guid: 54896799e01d71d4cb954d9db7e1a4ff, type: 3}
+--- !u!114 &5078646871688249116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7410675719061849167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11ae277acdf021b4ebc328f1b8c6487b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_inventory: {fileID: 3707575017293160542}
+  m_item: {fileID: 358325633225858962, guid: 9abce8ef37fbd7d448fe847b128fe0b1, type: 3}
 --- !u!1 &7861086361449025776
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,7 +2260,7 @@ PrefabInstance:
     - target: {fileID: 358325633225858962, guid: 36c16f7449aacc8428b3567a86314075,
         type: 3}
       propertyPath: m_Name
-      value: Plant (Durability)
+      value: Plant Item
       objectReference: {fileID: 0}
     - target: {fileID: 713478866067425740, guid: 36c16f7449aacc8428b3567a86314075,
         type: 3}

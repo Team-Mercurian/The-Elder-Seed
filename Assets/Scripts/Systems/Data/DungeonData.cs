@@ -7,41 +7,36 @@ public class DungeonData {
     private PlayerData m_playerData; 
     private List<RoomData> m_rooms;
     private Vector2Int m_actualRoom;
-
     private int m_floor;
+	private int m_actualWeaponIndex;
 
-    private List<int> m_recolectedSeedsIndex;
+    private InventoryData m_dungeonInventory;
 
-    public DungeonData(PlayerData playerData) {
+    public DungeonData() {
 
-        m_playerData = playerData;
         m_rooms = null;
         m_actualRoom = Vector2Int.zero;
-
-        m_recolectedSeedsIndex = new List<int>();
-
         m_floor = 0;
+        m_actualWeaponIndex = -1;
+        
+        m_playerData = new PlayerData();
+        m_dungeonInventory = new InventoryData();
         }   
         
     public PlayerData GetPlayer() => m_playerData;
-    public RoomData GetRoomData(int index) => m_rooms[index];
-    public RoomData GetRoomData(Vector2Int position) {
 
-        foreach(RoomData m_d in m_rooms) {
-
-            if (m_d.GetRoomPosition() == position) return m_d;
-            }
-
-        return null;
-        }    
-
-    public List<RoomData> GetRoomsDatas() => m_rooms;
-
+    public RoomData GetRoomData(Vector2Int position) => m_rooms.Find(c => c.GetRoomPosition() == position);
+    
     public void SetRoomDatas(List<RoomData> rooms) => m_rooms = rooms;
+    public List<RoomData> GetRoomDatas() => m_rooms;
+
     public int GetFloor() => m_floor;
 
     public void SetActualRoom(Vector2Int position) => m_actualRoom = position;
     public Vector2Int GetActualRoom() => m_actualRoom;
+
+    public WeaponEntityData GetActualWeapon() => m_dungeonInventory.SearchInWeaponInventory(m_actualWeaponIndex);
+    public void UseWeapon() => m_dungeonInventory.SearchInWeaponInventory(m_actualWeaponIndex).UseWeapon();
 
     public void NextFloor() {
 
@@ -50,23 +45,11 @@ public class DungeonData {
         m_actualRoom = Vector2Int.zero;
         }
 
-    public void AddSeed(int index) => m_recolectedSeedsIndex.Add(index);
-    public void LoseInventoryPart(int percent) {
+    public int GetActualWeaponIndex() => m_actualWeaponIndex;
+    public void SetActualWeapon(int index) => m_actualWeaponIndex = index; 
 
-        Debug.Log("Inventario antes de morir: " + m_recolectedSeedsIndex.Count);
-
-        List<int> m_newSeeds = m_recolectedSeedsIndex;
-        int m_actualPercentIndex = 0;
-        int m_maxPercentIndex = Mathf.FloorToInt(m_recolectedSeedsIndex.Count * (percent/100f));
-
-        while(m_actualPercentIndex < m_maxPercentIndex) {
-
-            m_newSeeds.RemoveAt(Random.Range(0, m_newSeeds.Count));
-            m_actualPercentIndex ++;
-            }
-
-        Debug.Log("Inventario despues de morir: " + m_newSeeds.Count);
-        }
+    public void SetInventoryData(InventoryData inventory) => m_dungeonInventory = inventory;
+    public InventoryData GetInventoryData() => m_dungeonInventory;
     }
 public class RoomData {
     
@@ -121,11 +104,11 @@ public class PlayerData {
 
     private int m_playerHealth;
 
-    public PlayerData(int playerHealth) {
+    public PlayerData() {
 
-        m_playerHealth = playerHealth;
-        }   
-
+        m_playerHealth = 0;
+        }
+    
     public void SetHealth(int health) => m_playerHealth = health; 
     public int GetHealth() => m_playerHealth;
     }

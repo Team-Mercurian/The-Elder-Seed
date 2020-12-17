@@ -16,8 +16,8 @@ public class Inventory_Item_WeaponUI : Inventory_ItemUI {
         
 		//Non Static
 		[Header("Weapon References")]
-		[SerializeField] private TextMeshProUGUI m_equipText = null;
 		[SerializeField] private TextMeshProUGUI m_usesCount = null;
+
         private WeaponEntityData m_entityData; 
 
     //Functions
@@ -26,12 +26,11 @@ public class Inventory_Item_WeaponUI : Inventory_ItemUI {
         
         
 		//Public Functions
-		public void SetValues(Weapon weapon, WeaponEntityData entityData, bool isOdd, InventoryUI inventory) {
+		public virtual void SetValues(Weapon weapon, WeaponEntityData entityData, bool isOdd, InventoryUI inventory) {
 
 			m_entityData = entityData;
-			m_usesCount.text = entityData.GetUses() + "/" + weapon.GetUses();
-
-			m_equipText.text = DataSystem.GetSingleton().GetGameData().GetInventoryData().GetActualWeaponIndex() == entityData.GetIndex() ? "X" : "";
+			
+			if (m_usesCount != null) m_usesCount.text = entityData.GetUses() + "/" + weapon.GetUses();
 			SetBaseValues(weapon, isOdd, inventory);
 			}
 		public override void Use() {
@@ -41,7 +40,7 @@ public class Inventory_Item_WeaponUI : Inventory_ItemUI {
 			}
         
 		//Private Functions
-        
+        protected WeaponEntityData GetWeaponEntity() => m_entityData;
         
 	//Coroutines
 	

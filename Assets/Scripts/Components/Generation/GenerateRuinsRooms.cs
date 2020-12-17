@@ -54,7 +54,19 @@ public class GenerateRuinsRooms : GameBehaviour {
 
             if (dead) {
 
-                DataSystem.GetSingleton().GetDungeonData().LoseInventoryPart(Random.Range(40, 61));
+                InventoryData m_iD = DataSystem.GetSingleton().GetDungeonData().GetInventoryData();
+                int m_losePercent = Random.Range(40, 61);
+
+                foreach(WeaponEntityData m_ed in m_iD.GetWeaponList()) {
+                    
+                    m_ed.SetUses(Mathf.RoundToInt(m_ed.GetUses() - (DataSystem.GetSingleton().GetWeapon(m_ed.GetID()).GetUses() * 0.35f)));
+                    }
+
+                m_iD.SetPotionList(new List<ItemData>());
+                m_iD.SetPlantList(new List<ItemData>());
+
+                List<Seed> m_seeds = DataSystem.GetSingleton().GetSeeds();
+                foreach(Seed m_s in m_seeds) m_iD.AddSeed(m_s.GetID(), -m_iD.GetSeedData(m_s.GetID()).GetCount() * (m_losePercent / 100));
                 }
 
             foreach(GridData m_d in DataSystem.GetSingleton().GetGameData().GetFarmData().GetGridDatas()) {
@@ -64,7 +76,10 @@ public class GenerateRuinsRooms : GameBehaviour {
 
             RoomController.SetAppearDirection(Direction.Up);
 
-            DataSystem.GetSingleton().SetDungeonData(null);
+            DataSystem m_dS = DataSystem.GetSingleton();
+
+            m_dS.GetGameData().GetInventoryData().AddDungeonInventory(m_dS.GetDungeonData().GetInventoryData());
+            m_dS.SetDungeonData(null);
             SaveSystem.Save();
             SceneController.GetSingleton().LoadScene(Scenes.House, false);
             }
@@ -73,10 +88,21 @@ public class GenerateRuinsRooms : GameBehaviour {
         //Funciones privadas.
         private void GenerateAllRooms() {
 
-            if (m_dataSystem.GetDungeonData() == null) m_dataSystem.SetDungeonData(new DungeonData(new PlayerData(PlayerBrain.GetSingleton().GetHealth().GetMaxHealth())));
+            if (m_dataSystem.GetDungeonData() == null) {
+                
+                DungeonData m_dD = new DungeonData();
+                m_dD.GetPlayer().SetHealth(PlayerBrain.GetSingleton().GetHealth().GetMaxHealth());
+
+                InventoryData m_iD = DataSystem.GetSingleton().GetNewDungeonInventoryData(true);
+                m_dD.SetInventoryData(m_iD);
+                m_dD.SetActualWeapon(m_iD.GetWeaponList()[0].GetIndex());
+
+                m_dataSystem.SetDungeonData(m_dD);
+                }
+                
             m_actualFloor = m_dataSystem.GetDungeonData().GetFloor();
 
-            List<RoomData> m_roomsDatas = m_dataSystem.GetDungeonData().GetRoomsDatas();
+            List<RoomData> m_roomsDatas = m_dataSystem.GetDungeonData().GetRoomDatas();
 
             if (m_roomsDatas == null) {
 

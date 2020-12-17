@@ -102,8 +102,7 @@ public class FarmData {
 [System.Serializable]
 public class InventoryData {
 
-	[SerializeField] private int m_actualWeaponIndex;
-    [SerializeField] private int m_lastWeaponID = 0;
+    [SerializeField] public int m_lastWeaponID;
 
     [SerializeField] private List<WeaponEntityData> m_weapons;
 
@@ -113,8 +112,6 @@ public class InventoryData {
     [SerializeField] private List<ItemData> m_miscellaneous;
 
     public InventoryData() {
-
-		m_actualWeaponIndex = 0;
 
         m_weapons = new List<WeaponEntityData>();
         m_seeds = new List<ItemData>();
@@ -136,13 +133,8 @@ public class InventoryData {
 		public void SetPotionList(List<ItemData> potionList) => m_potions = potionList;
         public void SetMiscellaneousList(List<ItemData> miscellaneousList) => m_miscellaneous = miscellaneousList;
 
-		public WeaponEntityData GetActualWeapon() => SearchInWeaponInventory(m_actualWeaponIndex);
         public WeaponEntityData GetWeaponData(int index) => SearchInWeaponInventory(index);
         public WeaponEntityData SearchInWeaponInventory(int index) => m_weapons.Find(c => c.GetIndex() == index);
-
-        public int GetActualWeaponIndex() => m_actualWeaponIndex;
-
-        public void SetActualWeapon(int index) => m_actualWeaponIndex = index; 
 
 		public ItemData GetSeedData(int id) => FindItemDataViaID(m_seeds, id);
 		public ItemData GetPotionData(int id) => FindItemDataViaID(m_potions, id);
@@ -164,7 +156,14 @@ public class InventoryData {
 			return m_itemData;
 			}
 
-        public void AddWeapon(int id, int uses) => m_weapons.Add(new WeaponEntityData(id, m_lastWeaponID += 1, uses));
+        public void AddWeapon(int id, int uses, ref int lastID) {
+
+            m_weapons.Add(new WeaponEntityData(id, lastID, uses));
+            lastID ++;
+            }
+
+        public void AddWeapon(WeaponEntityData entityData) => m_weapons.Add(entityData);
+
 		public void AddSeed(int id, int count) => FindItemDataViaID(m_seeds, id).AddCount(count);
 		public void AddPlant(int id, int count) => FindItemDataViaID(m_plants, id).AddCount(count);
 		public void AddPotion(int id, int count) => FindItemDataViaID(m_potions, id).AddCount(count);
@@ -174,14 +173,53 @@ public class InventoryData {
             m_weapons.Remove(SearchInWeaponInventory(index));
             AddMagicalFragments(magicalFragments);
             }    
+        public void RemoveWeapon(WeaponEntityData entityData) => m_weapons.Remove(entityData);
 
-        public void UseWeapon() => SearchInWeaponInventory(m_actualWeaponIndex).UseWeapon();
         public void UseWeapon(int index) => SearchInWeaponInventory(index).UseWeapon();
 
         public void AddMagicalFragments(int count) => SearchMagicalFragments().AddCount(count);
         public int GetMagicalFragments() => SearchMagicalFragments().GetCount();
 
         private ItemData SearchMagicalFragments() => m_miscellaneous.Find(c => c.GetID() == 0);
+
+        public int GetLastWeaponID() => m_lastWeaponID;
+
+        public void AddDungeonInventory(InventoryData dungeonInventory) {
+            
+            foreach(WeaponEntityData m_ed in dungeonInventory.GetWeaponList()) {
+
+                WeaponEntityData m_gameEntity = m_weapons.Find(c => c.GetIndex() == m_ed.GetIndex());
+
+                if (m_gameEntity != null) m_gameEntity.SetUses(m_ed.GetUses());
+                else m_weapons.Add(m_ed);    
+                }
+
+            MixItemData(m_seeds, dungeonInventory.GetSeedList());
+            MixItemData(m_plants, dungeonInventory.GetPlantList());
+            MixItemData(m_potions, dungeonInventory.GetPotionList());
+
+            void MixItemData(List<ItemData> gameData, List<ItemData> dungeonData) {
+                
+                foreach(ItemData m_i in dungeonData) {
+                    
+                    gameData.Find(c => c.GetID() == m_i.GetID()).AddCount(m_i.GetCount());
+                    }
+                }
+            }
+        public void RemoveDungeonItems(InventoryData dungeonInventory) {
+
+            RemoveItemData(m_seeds, dungeonInventory.GetSeedList());
+            RemoveItemData(m_plants, dungeonInventory.GetPlantList());
+            RemoveItemData(m_potions, dungeonInventory.GetPotionList());
+
+            void RemoveItemData(List<ItemData> gameData, List<ItemData> dungeonData) {
+                
+                foreach(ItemData m_i in dungeonData) {
+                    
+                    gameData.Find(c => c.GetID() == m_i.GetID()).AddCount(-m_i.GetCount());
+                    }
+                }
+            }
         }
 
 [System.Serializable]
@@ -241,6 +279,8 @@ public class ItemData {
 
     public void AddCount(int value) => m_count += value;
     public void SubtractCount(int value) => m_count -= value; 
+    
+    public void SetCount(int count) => m_count = count;
     public int GetCount() => m_count;
 
     public void Unlock() => m_unlocked = true;

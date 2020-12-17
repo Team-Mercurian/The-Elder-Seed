@@ -22,7 +22,11 @@ public class WeaponRepairUI : PanelUI {
 		[SerializeField] private InventoryUI m_inventory = null;
 		[SerializeField] private TextMeshProUGUI m_countText = null;
         
+		[Header("Values")]
+		[SerializeField] private bool m_dungeonRepair = false;
+
 		private Rarity m_rarity;
+		private InventoryData m_inventoryData;
 
     //Functions
 	
@@ -30,15 +34,17 @@ public class WeaponRepairUI : PanelUI {
         
         
 		//Public Functions
-		public void SetRarity(Rarity rarity) => m_rarity = rarity;
 		public void SetItemDatas(Rarity rarity) {
+
+			m_rarity = rarity;
+			m_inventoryData = m_dungeonRepair ? DataSystem.GetSingleton().GetDungeonData().GetInventoryData() : DataSystem.GetSingleton().GetGameData().GetInventoryData();
 
 			//Destroy item holder childs.
 			for(int i = 0; i < m_itemHolder.childCount; i ++) Destroy(m_itemHolder.GetChild(i).gameObject);
 			CreateWeapons(rarity);
 
 			Plant m_plant = DataSystem.GetSingleton().GetPlants().Find(c => c.GetRarity() == rarity);
-			int m_count = DataSystem.GetSingleton().GetGameData().GetInventoryData().GetPlantData(m_plant.GetID()).GetCount();
+			int m_count = m_inventoryData.GetPlantData(m_plant.GetID()).GetCount();
 
 			string m_text = "";
 
@@ -55,7 +61,7 @@ public class WeaponRepairUI : PanelUI {
 		public void Open(Rarity rarity) {
 
 			base.Open();
-			Reset(m_rarity);
+			Reset(rarity);
 			}
 
 		public override void Close() {
@@ -67,14 +73,14 @@ public class WeaponRepairUI : PanelUI {
 		public void UsePlant() {
 			
 			int m_plantID = DataSystem.GetSingleton().GetPlants().Find(c => c.GetRarity() == m_rarity).GetID();
-			DataSystem.GetSingleton().GetGameData().GetInventoryData().GetPlantData(m_plantID).AddCount(-1);
+			m_inventoryData.GetPlantData(m_plantID).AddCount(-1);
 			}
         
 		//Private Functions
 		private void CreateWeapons(Rarity rarity) {	
 			
 			List<Weapon> m_weapons = DataSystem.GetSingleton().GetWeapons();
-			List<WeaponEntityData> m_iD = DataSystem.GetSingleton().GetGameData().GetInventoryData().GetWeaponList();
+			List<WeaponEntityData> m_iD = m_inventoryData.GetWeaponList();
 			m_iD = m_iD.FindAll(c => DataSystem.GetSingleton().GetWeapon(c.GetID()).GetRarity() == rarity);
 
 			m_iD = m_iD.OrderBy(c => c.GetUses()).ThenBy(c => m_weapons[c.GetID()].GetName()).ToList();

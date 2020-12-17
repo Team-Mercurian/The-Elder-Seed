@@ -85,7 +85,7 @@ public class PlayerAttack : EntityAttack {
             if (!collider.CompareTag("Enemy")) return;
 
             //Variables
-            InventoryData m_data = DataSystem.GetSingleton().GetGameData().GetInventoryData();
+            DungeonData m_data = DataSystem.GetSingleton().GetDungeonData();
             Weapon m_weapon = DataSystem.GetSingleton().GetActualWeapon();
 
             //Knockback

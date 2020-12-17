@@ -45,6 +45,7 @@ public class InputController : MonoBehaviour {
             private CursorController m_cursorController;
 
             private bool m_isShowingCursor = false;
+            private bool m_isInUIMode = false;
 
             private PlayerMovement m_playerMovement;
             private EntityAttack m_playerAttack;
@@ -79,8 +80,11 @@ public class InputController : MonoBehaviour {
             Vector2 m_lookValue = m_lookAction.ReadValue<Vector2>();
             Look(m_lookValue);
 
-            //Establecer la velocidad del jugador.
-            Vector2 m_moveValue = m_moveAction.ReadValue<Vector2>();
+            //Mover al jugador.
+            Vector2 m_moveValue = new Vector2();
+
+            if (!m_isInUIMode) m_moveValue = m_moveAction.ReadValue<Vector2>();
+                
             SetPlayerVelocity(new Vector2(m_moveValue.x, m_moveValue.y));
 
             if (m_playerInput.currentControlScheme == "Keyboard") m_currentInput = InputType.Keyboard;
@@ -88,6 +92,9 @@ public class InputController : MonoBehaviour {
             }
 		
         //Funciones privadas.
+        public void Move(InputAction.CallbackContext context) {
+
+            }
         private void Look(Vector2 velocity) {
 
             if (m_lookInput == null) return;
@@ -115,7 +122,7 @@ public class InputController : MonoBehaviour {
             }
         public void Zoom(InputAction.CallbackContext context) {
             
-            if (m_cameraBrain == null) return;
+            if (m_cameraBrain == null || m_isInUIMode) return;
 
             m_cameraBrain.Zoom(-context.ReadValue<float>());
             }
@@ -133,13 +140,13 @@ public class InputController : MonoBehaviour {
             }*/
         public void Jump(InputAction.CallbackContext context) {
             
-            if (context.phase != InputActionPhase.Started) return;
+            if (context.phase != InputActionPhase.Started || m_isInUIMode) return;
             
             m_playerMovement.Jump();
             }
         public void Attack(InputAction.CallbackContext context) {
             
-            if (context.phase != InputActionPhase.Started) return;
+            if (context.phase != InputActionPhase.Started || m_isInUIMode) return;
             
             m_playerAttack.Attack();
             }
@@ -159,7 +166,8 @@ public class InputController : MonoBehaviour {
             
         public void SetUIMode(bool active) {
 
-            m_playerInput.SwitchCurrentActionMap(active ? "UI" : "Player");
+            m_isInUIMode = active;
+            //m_playerInput.SwitchCurrentActionMap(active ? "d4c126e7-3a00-4cce-86a2-ba25af907865" : "3b8294c4-a30f-4e3d-a15c-df10248ad2a7");
             }
 
         //Funciones heredadas.

@@ -14,24 +14,45 @@ public class ConfirmationUI : PanelUI, IHasTwoOptionsUI {
 	//Set Variables
 	
 		//Static
+		private static ConfirmationUI m_instance;
         
 		//No Static
 		[Header("References")]
 		[SerializeField] private TextMeshProUGUI m_titleText = null;
 		[SerializeField] private TextMeshProUGUI m_leftText = null;
 		[SerializeField] private TextMeshProUGUI m_rightText = null;
+		[SerializeField] private GameObject m_closeButton = null;
 
-		[Header("Events")]
-		[SerializeField] private UnityEvent m_eventLeft = null;
-		[SerializeField] private UnityEvent m_eventRight = null;
+		private UnityEvent m_eventLeft = null;
+		private UnityEvent m_eventRight = null;
         
-        
+        private PanelUI m_savedPanel;
+
     //Functions
 	
 		//MonoBehaviour Functions
+		protected override void Start() {
+			
+			m_instance = this;
+			base.Start();
+			}
 			
 		//Public Functions
-		public void SetData(string title, ButtonEvent left, ButtonEvent right) {
+		public override void Open() {
+
+			m_savedPanel = GameSystem.GetUI();
+			base.Open();
+            InputController.SetLookObject(null);
+			GameSystem.SetUI(this);
+			}
+		public override void Close() {
+ 
+			base.Close();
+            InputController.SetLookObject(CameraController.GetSingleton());
+			GameSystem.SetUI(m_savedPanel);
+			}
+
+		public void SetData(string title, ButtonEvent left, ButtonEvent right, bool hasCloseButton) {
 			
 			m_titleText.text = title;
 			m_leftText.text = left.GetText();
@@ -39,6 +60,8 @@ public class ConfirmationUI : PanelUI, IHasTwoOptionsUI {
 
 			m_eventLeft = left.GetEvent();
 			m_eventRight = right.GetEvent();
+			
+			m_closeButton.SetActive(hasCloseButton);
 			}
 
 		public void LeftEvent() {
@@ -52,7 +75,10 @@ public class ConfirmationUI : PanelUI, IHasTwoOptionsUI {
 			Close();
 			}
 
+		public static ConfirmationUI GetSingleton() => m_instance; 
+
 		//Private Functions
+		
 	
 	}
 

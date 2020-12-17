@@ -53,7 +53,8 @@ public class WeaponStatsUI : PanelUI, IHasTwoOptionsUI {
 			m_criticalProbability.text = "Probabilidad de Critico: " + m_weapon.GetCriticalProbability().ToString();
 			m_knockbackForce.text = "Empuje: " + (m_weapon.GetKnockbackForce() * m_weapon.GetKnockbackTime()).ToString();
 
-			m_buttonDestroy.interactable = DataSystem.GetSingleton().GetGameData().GetInventoryData().GetWeaponList().Count > 1;	
+			bool m_a = DataSystem.GetSingleton().GetGameData().GetInventoryData().GetWeaponList().Count > 1;
+			m_buttonDestroy.interactable = m_a;	
 			}
 
 		public void LeftEvent() {
@@ -68,14 +69,15 @@ public class WeaponStatsUI : PanelUI, IHasTwoOptionsUI {
 			ButtonEvent m_leftButtonEvent = new ButtonEvent("No", null);
 			ButtonEvent m_rightButtonEvent = new ButtonEvent("Si", m_rightEvent);
 
-			m_inventory.GetConfirmationUI().SetData(m_t, m_leftButtonEvent, m_rightButtonEvent);
+			m_inventory.GetConfirmationUI().SetData(m_t, m_leftButtonEvent, m_rightButtonEvent, false);
 			m_inventory.GetConfirmationUI().Open();
 			}
+		
 		public void RightEvent() {
-			
+
 			//Equip
-			DataSystem.GetSingleton().GetGameData().GetInventoryData().SetActualWeapon(m_weaponEntity.GetIndex());
-			m_inventory.Reset(InventoryUI.Sections.Weapons);
+			DataSystem.GetSingleton().GetDungeonData().SetActualWeapon(m_weaponEntity.GetIndex());
+			m_inventory.Reset(Inventory_FarmingUI.Sections.Weapons);
 			Close();
 			}
         
@@ -83,7 +85,7 @@ public class WeaponStatsUI : PanelUI, IHasTwoOptionsUI {
         private void DestroyWeapon(int magicalFragments) {
 			
 			DataSystem.GetSingleton().GetGameData().GetInventoryData().RemoveWeapon(m_weaponEntity.GetIndex(), magicalFragments);
-			m_inventory.Reset(InventoryUI.Sections.Weapons);
+			m_inventory.Reset(Inventory_FarmingUI.Sections.Weapons);
 			Close();
 			}
         

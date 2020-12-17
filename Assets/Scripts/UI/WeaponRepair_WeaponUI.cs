@@ -46,7 +46,7 @@ public class WeaponRepair_WeaponUI : Inventory_ItemUI {
 			ButtonEvent m_leftButtonEvent = new ButtonEvent("No", null);
 			ButtonEvent m_rightButtonEvent = new ButtonEvent("Si", m_rightEvent);
 
-			GetInventory().GetConfirmationUI().SetData(m_t, m_leftButtonEvent, m_rightButtonEvent);
+			GetInventory().GetConfirmationUI().SetData(m_t, m_leftButtonEvent, m_rightButtonEvent, false);
 			GetInventory().GetConfirmationUI().Open();
 			}
         

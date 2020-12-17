@@ -85,6 +85,14 @@ public abstract class EntityHealth : MonoBehaviour {
         protected abstract void SaveHealth(int health);
         public int GetMaxHealth() => m_health;
 
+        public void OverrideHealth(int health) {
+
+            m_actualHealth = Mathf.Clamp(health, 0, m_health);
+            SaveHealth(m_actualHealth);
+            if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health, false);
+            }
+
+
         [ContextMenu("Get Debug Damage")]
         private void DebugReceiveDamage() {
 

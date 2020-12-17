@@ -51,7 +51,7 @@ public class EnemyHealth : EntityHealth {
         //Funciones publicas.
         protected override int SetActualHealth() {
             
-           return m_health;
+            return Mathf.RoundToInt(m_health * (1 + (0.25f * DataSystem.GetSingleton().GetDungeonData().GetFloor())));
             }
 		protected override void Dead() {
             
