@@ -44,11 +44,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_rooms:
-  - {fileID: 719703697605135045, guid: 92d20d0261850cc40bebd235363566a6, type: 3}
+  - {fileID: 5689030042232751321, guid: 7f2725d3a3616234cbcffbaeb43087ae, type: 3}
+  - {fileID: 5689030042232751321, guid: 05df4cbec9dd44b45a04dd4370214989, type: 3}
+  - {fileID: 5689030042232751321, guid: a6600f3c45a09aa4bb580ca696a1453f, type: 3}
   m_chestRooms:
-  - {fileID: 719703697605135045, guid: bd9615e5b4cac0649930ce32e9debe67, type: 3}
+  - {fileID: 719703697605135045, guid: 9d743c88fb952d8439cc678e3fd9935f, type: 3}
   m_stairsRooms:
-  - {fileID: 719703697605135045, guid: 391471a3522ac68499faf063ca4b7427, type: 3}
+  - {fileID: 719703697605135045, guid: 526d8bfa67c6dcd44b230edf700da4f0, type: 3}
   m_enemies:
   - {fileID: 5215380405671523419, guid: bb46ab08b2ff42a4c90306a5cb23c2b3, type: 3}
   m_defaultWeapon: {fileID: 11400000, guid: 602a6d90d8ce13749a6a2be39817e5e2, type: 2}
@@ -57,6 +59,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5d63c581ab9064a4ca559d7e1922798c, type: 2}
   - {fileID: 11400000, guid: 6b3a19d1f44258b4080f43330964d3e3, type: 2}
   - {fileID: 11400000, guid: b2f69abc0d91be54f8d0f7de9148442f, type: 2}
+  - {fileID: 11400000, guid: 6e55c20084a69e84ca41ae39bcc679a7, type: 2}
+  - {fileID: 11400000, guid: 48449593763f45541b31a41914fa785a, type: 2}
+  - {fileID: 11400000, guid: 86e2e7f6cd2614749acddec222f66a1c, type: 2}
+  - {fileID: 11400000, guid: efc2d46b126671a4ba1bfe071a5f8859, type: 2}
   m_seeds:
   - {fileID: 11400000, guid: 2a45833b72af5eb47b290c84c48db5c1, type: 2}
   - {fileID: 11400000, guid: f1e68ea86e9033d4f92750772cdae95e, type: 2}
@@ -90,3 +96,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 439772983fadad64dbb79fe4315ac905, type: 2}
   m_miscellaneous:
   - {fileID: 11400000, guid: 236d4de326953c245954d804f7e64794, type: 2}
+  m_playerHealth: 1200

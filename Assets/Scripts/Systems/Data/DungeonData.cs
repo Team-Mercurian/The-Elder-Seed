@@ -63,6 +63,8 @@ public class RoomData {
     private Vector2Int m_roomPosition;
     private int m_roomPrefabIndex;
     private RoomType m_roomType;
+    private bool m_unlocked;
+    private bool m_hasVisited;
 
     private List<RoomPropData> m_roomProps;
     
@@ -72,8 +74,16 @@ public class RoomData {
         m_roomPrefabIndex = prefabIndex;
         m_roomType = roomType;
         m_roomProps = roomProps;
+        m_unlocked = false;
+        m_hasVisited = false;
         }
 
+    public void Unlock() => m_unlocked = true; 
+    public bool GetUnlocked() => m_unlocked;
+
+    public void Visit() => m_hasVisited = true;
+    public bool HasVisited() => m_hasVisited;
+ 
     public Vector2Int GetRoomPosition() => m_roomPosition;
     public int GetRoomPrefabIndex() => m_roomPrefabIndex;
     public RoomType GetRoomType() => m_roomType;

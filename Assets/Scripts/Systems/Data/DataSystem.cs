@@ -127,10 +127,20 @@ public class DataSystem : MonoBehaviour {
             public int GetPlayerHealth() => m_playerHealth;
 
         //Functions
-        public int GetRandomWeaponID(int probabilityIncrement) => GetRandomItemsIndex(probabilityIncrement, m_weapons.Cast<Item>().ToList());
-        public int GetRandomSeedID(int probabilityIncrement, Seed.SeedType seedType) => GetRandomItemsIndex(probabilityIncrement, m_seeds.FindAll(s => s.GetSeedType() == seedType).Cast<Item>().ToList());
-        
-        private int GetRandomItemsIndex(int probabilityIncrement, List<Item> items) {
+        public int GetRandomWeaponID(int probabilityIncrement) {
+            
+            List<Item> m_list = GetRandomItemsIndex(probabilityIncrement, m_weapons.Cast<Item>().ToList());
+            m_list = m_list.FindAll(c => m_gameData.GetWeaponBaseData().Find(a => a.GetID() == c.GetID()).GetUnlocked());
+
+            return m_list[Random.Range(0, m_list.Count)].GetID();
+            }
+        public int GetRandomSeedID(int probabilityIncrement, Seed.SeedType seedType) {
+            
+            List<Item> m_list = GetRandomItemsIndex(probabilityIncrement, m_seeds.FindAll(s => s.GetSeedType() == seedType).Cast<Item>().ToList());
+            return m_list[Random.Range(0, m_list.Count)].GetID();
+            }
+            
+        private List<Item> GetRandomItemsIndex(int probabilityIncrement, List<Item> items) {
 
             probabilityIncrement = Mathf.Clamp(probabilityIncrement, 0, 16);
 
@@ -169,11 +179,11 @@ public class DataSystem : MonoBehaviour {
                     }
                 }
             
-            if (m_rarityList.Count > 0) return m_rarityList[Random.Range(0, m_rarityList.Count)].GetID();
+            if (m_rarityList.Count > 0) return m_rarityList;
             else {
                 
                 Debug.Log("No existe un item dentro de esta categoria.");
-                return -1;
+                return null;
                 }
             }
 

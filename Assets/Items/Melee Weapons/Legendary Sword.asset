@@ -19,7 +19,7 @@ MonoBehaviour:
   m_defaultCount: 0
   m_defaultUnlocked: 0
   m_type: 0
-  m_baseDamage: 300
+  m_baseDamage: 220
   m_criticalProbability: 40
   m_knockbackForce: 9
   m_knockbackTime: 0.5

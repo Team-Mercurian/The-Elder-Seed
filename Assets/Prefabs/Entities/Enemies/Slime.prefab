@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae805963038f834b9d0eb2af324e962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_health: 400
+  m_health: 800
   m_damageText: {fileID: 7533356923139126215, guid: ce7c225c2553d60488b69cb5bc4c8a21,
     type: 3}
   m_damageTextOffset: 1
@@ -339,8 +339,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_attackCollider: {fileID: 6429356520045414890}
   m_parent: {fileID: 5215380405671523415}
-  m_attackDamage: 15
-  m_knockbackForce: 1
+  m_attackDamage: 168
+  m_knockbackForce: 1.5
   m_knockbackTime: 0.5
 --- !u!1001 &1593623638648833374
 PrefabInstance:

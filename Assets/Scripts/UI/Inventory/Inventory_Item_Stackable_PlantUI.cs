@@ -64,8 +64,24 @@ public class Inventory_Item_Stackable_PlantUI : Inventory_Item_StackableUI {
 			}
 		private bool UseUnlockPlant() {
 
-			Debug.Log("Aun no existen suficientes armas para desbloquear.");
-			return false;
+			InventoryData m_inventoryData = DataSystem.GetSingleton().GetGameData().GetInventoryData();
+			Rarity m_rarity = GetItem().GetRarity();
+			List<WeaponBaseData> m_unlockeableWeapons = DataSystem.GetSingleton().GetGameData().GetWeaponBaseData().FindAll(c => !c.GetUnlocked());
+			m_unlockeableWeapons = m_unlockeableWeapons.FindAll(c => DataSystem.GetSingleton().GetWeapon(c.GetID()).GetRarity() == m_rarity);
+
+			if (m_unlockeableWeapons.Count > 0) {
+
+				Weapon m_finalWeapon = DataSystem.GetSingleton().GetWeapon(m_unlockeableWeapons[Random.Range(0, m_unlockeableWeapons.Count)].GetID());
+				DataSystem.GetSingleton().GetGameData().GetWeaponBaseData().Find(c => c.GetID() == m_finalWeapon.GetID()).Unlock();
+				SaveSystem.Save();
+				Debug.Log("Desbloqueada la arma en el indice: " + m_finalWeapon.GetID());
+				return true;
+				}	
+			else {
+
+				Debug.Log("No quedan armas para desbloquear.");
+				return false;
+				}
 			}
         
         

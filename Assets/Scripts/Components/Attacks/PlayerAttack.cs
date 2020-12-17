@@ -127,7 +127,7 @@ public class PlayerAttack : EntityAttack {
 
         GetCollider().transform.position = target.position;
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.10f);
         GetCollider().transform.localPosition = m_savedPosition;
         }
     }

@@ -27,6 +27,9 @@ public class GenerateRuinsRooms : GameBehaviour {
             [Header("Debug")]
             [SerializeField] private GameObject m_testScene = null;
 
+            [Header("Map")]
+            [SerializeField] private MapController m_mapController = null;
+
             //Privadas.
             private DataSystem m_dataSystem;
 
@@ -37,6 +40,7 @@ public class GenerateRuinsRooms : GameBehaviour {
 
             m_dataSystem = DataSystem.GetSingleton();
             GenerateAllRooms();
+            m_mapController.SetMap(DataSystem.GetSingleton().GetDungeonData());
             }
 		
         //Funciones publicas.
@@ -219,6 +223,26 @@ public class GenerateRuinsRooms : GameBehaviour {
 
                 m_roomPrefab = m_dataSystem.GetStairsRoomPrefab(roomData.GetRoomPrefabIndex());
                 }
+
+
+            List<RoomData> m_rd = DataSystem.GetSingleton().GetDungeonData().GetRoomDatas();
+
+            roomData.Unlock();
+            roomData.Visit();
+            
+            RoomData m_r;
+
+            m_r = m_rd.Find(c => c.GetRoomPosition() == roomData.GetRoomPosition() + Vector2Int.up);
+            if (m_r != null) m_r.Unlock();
+
+            m_r = m_rd.Find(c => c.GetRoomPosition() == roomData.GetRoomPosition() + Vector2Int.down);
+            if (m_r != null) m_r.Unlock();
+
+            m_r = m_rd.Find(c => c.GetRoomPosition() == roomData.GetRoomPosition() + Vector2Int.left);
+            if (m_r != null) m_r.Unlock();
+
+            m_r = m_rd.Find(c => c.GetRoomPosition() == roomData.GetRoomPosition() + Vector2Int.right);
+            if (m_r != null) m_r.Unlock();
 
             RoomController m_roomController = Instantiate(m_roomPrefab, transform).GetComponent<RoomController>();
             m_roomController.SetData(roomData.GetRoomPosition());
