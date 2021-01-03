@@ -69,6 +69,7 @@ public class DungeonChestController : InteractableBehaviour {
 
             //Destruir cofre.
             RoomController.GetSingleton().DestroyProp(gameObject);
+            m_dS.GetDungeonData().GetActualRoomData().Complete();
             Destroy(gameObject);            
             }
 		

@@ -92,9 +92,6 @@ public class InputController : MonoBehaviour {
             }
 		
         //Funciones privadas.
-        public void Move(InputAction.CallbackContext context) {
-
-            }
         private void Look(Vector2 velocity) {
 
             if (m_lookInput == null) return;

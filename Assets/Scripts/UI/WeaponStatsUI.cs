@@ -25,9 +25,6 @@ public class WeaponStatsUI : PanelUI, IHasTwoOptionsUI {
 		[SerializeField] private TextMeshProUGUI m_actualDamage = null;
 		[SerializeField] private TextMeshProUGUI m_criticalProbability = null;
 		[SerializeField] private TextMeshProUGUI m_knockbackForce = null;
-
-		[Header("Buttons")]
-		[SerializeField] private Button m_buttonDestroy = null;
         
         private WeaponEntityData m_weaponEntity;
 		private InventoryUI m_inventory;
@@ -52,25 +49,32 @@ public class WeaponStatsUI : PanelUI, IHasTwoOptionsUI {
 			m_actualDamage.text = "Daño actual: " + m_weapon.GetCalculatedDamage(m_weaponEntity.GetUses()).ToString();
 			m_criticalProbability.text = "Probabilidad de Critico: " + m_weapon.GetCriticalProbability().ToString();
 			m_knockbackForce.text = "Empuje: " + (m_weapon.GetKnockbackForce() * m_weapon.GetKnockbackTime()).ToString();
-
-			bool m_a = DataSystem.GetSingleton().GetGameData().GetInventoryData().GetWeaponList().Count > 1;
-			m_buttonDestroy.interactable = m_a;	
 			}
 
 		public void LeftEvent() {
 			
-			//Destroy
-			int m_mFC = (int)DataSystem.GetSingleton().GetWeapon(m_weaponEntity.GetID()).GetRarity() + 1;
-			string m_t = "¿Deseas convertir esta arma en " + m_mFC + " " + (m_mFC == 1 ? "fragmento magico" : "fragmentos magicos") + "?";
-			
-			UnityEvent m_rightEvent = new UnityEvent();
-			m_rightEvent.AddListener(() => DestroyWeapon(m_mFC));
+			bool m_a = DataSystem.GetSingleton().GetGameData().GetInventoryData().GetWeaponList().Count > 1;
+			if (m_a) {
 
-			ButtonEvent m_leftButtonEvent = new ButtonEvent("No", null);
-			ButtonEvent m_rightButtonEvent = new ButtonEvent("Si", m_rightEvent);
+				//Destroy
+				int m_mFC = (int)DataSystem.GetSingleton().GetWeapon(m_weaponEntity.GetID()).GetRarity() + 1;
+				string m_t = "¿Deseas convertir esta arma en " + m_mFC + " " + (m_mFC == 1 ? "fragmento magico" : "fragmentos magicos") + "?";
+				
+				UnityEvent m_rightEvent = new UnityEvent();
+				m_rightEvent.AddListener(() => DestroyWeapon(m_mFC));
 
-			m_inventory.GetConfirmationUI().SetData(m_t, m_leftButtonEvent, m_rightButtonEvent, false);
-			m_inventory.GetConfirmationUI().Open();
+				ButtonEvent m_leftButtonEvent = new ButtonEvent("No", null);
+				ButtonEvent m_rightButtonEvent = new ButtonEvent("Si", m_rightEvent);
+
+				m_inventory.GetConfirmationUI().SetData(m_t, m_leftButtonEvent, m_rightButtonEvent, false);
+				m_inventory.GetConfirmationUI().Open();
+				}	
+
+			else {
+
+				WarningPanelUI.GetSingleton().SetData("Debes tener minimo un arma en tu inventario.", "Cerrar");
+				WarningPanelUI.GetSingleton().Open();
+				}
 			}
 		
 		public void RightEvent() {
@@ -83,7 +87,7 @@ public class WeaponStatsUI : PanelUI, IHasTwoOptionsUI {
         
 		//Private Functions
         private void DestroyWeapon(int magicalFragments) {
-			
+		
 			DataSystem.GetSingleton().GetGameData().GetInventoryData().RemoveWeapon(m_weaponEntity.GetIndex(), magicalFragments);
 			m_inventory.Reset(Inventory_FarmingUI.Sections.Weapons);
 			Close();

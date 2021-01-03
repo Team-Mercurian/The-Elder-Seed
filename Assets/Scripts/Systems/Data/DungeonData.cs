@@ -34,6 +34,7 @@ public class DungeonData {
 
     public void SetActualRoom(Vector2Int position) => m_actualRoom = position;
     public Vector2Int GetActualRoom() => m_actualRoom;
+    public RoomData GetActualRoomData() => m_rooms.Find(c=> c.GetRoomPosition() == m_actualRoom);
 
     public WeaponEntityData GetActualWeapon() => m_dungeonInventory.SearchInWeaponInventory(m_actualWeaponIndex);
     public void UseWeapon() => m_dungeonInventory.SearchInWeaponInventory(m_actualWeaponIndex).UseWeapon();
@@ -65,6 +66,7 @@ public class RoomData {
     private RoomType m_roomType;
     private bool m_unlocked;
     private bool m_hasVisited;
+    private bool m_isCompleted;
 
     private List<RoomPropData> m_roomProps;
     
@@ -76,6 +78,7 @@ public class RoomData {
         m_roomProps = roomProps;
         m_unlocked = false;
         m_hasVisited = false;
+        m_isCompleted = false;
         }
 
     public void Unlock() => m_unlocked = true; 
@@ -84,6 +87,9 @@ public class RoomData {
     public void Visit() => m_hasVisited = true;
     public bool HasVisited() => m_hasVisited;
  
+    public void Complete() => m_isCompleted = true;
+    public bool GetIfIsCompleted() => m_isCompleted;
+
     public Vector2Int GetRoomPosition() => m_roomPosition;
     public int GetRoomPrefabIndex() => m_roomPrefabIndex;
     public RoomType GetRoomType() => m_roomType;

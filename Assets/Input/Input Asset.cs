@@ -97,6 +97,14 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Map"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8d91427-baff-4c0b-81f5-43128c03c251"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -405,6 +413,17 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b05a6963-04cc-497a-afb4-f87efaa6994f"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Map"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -950,6 +969,7 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
         m_Player_SelectSeed = m_Player.FindAction("Select Seed", throwIfNotFound: true);
         m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
+        m_Player_Map = m_Player.FindAction("Map", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1022,6 +1042,7 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_SelectSeed;
     private readonly InputAction m_Player_Run;
     private readonly InputAction m_Player_Inventory;
+    private readonly InputAction m_Player_Map;
     public struct PlayerActions
     {
         private @InputGeneratedAsset m_Wrapper;
@@ -1036,6 +1057,7 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
         public InputAction @SelectSeed => m_Wrapper.m_Player_SelectSeed;
         public InputAction @Run => m_Wrapper.m_Player_Run;
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
+        public InputAction @Map => m_Wrapper.m_Player_Map;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1075,6 +1097,9 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
                 @Inventory.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventory;
                 @Inventory.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventory;
                 @Inventory.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInventory;
+                @Map.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMap;
+                @Map.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMap;
+                @Map.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMap;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1109,6 +1134,9 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
                 @Inventory.started += instance.OnInventory;
                 @Inventory.performed += instance.OnInventory;
                 @Inventory.canceled += instance.OnInventory;
+                @Map.started += instance.OnMap;
+                @Map.performed += instance.OnMap;
+                @Map.canceled += instance.OnMap;
             }
         }
     }
@@ -1238,6 +1266,7 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
         void OnSelectSeed(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
+        void OnMap(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

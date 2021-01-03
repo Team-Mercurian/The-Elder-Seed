@@ -126,6 +126,7 @@ public class InventoryData {
 		public List<ItemData> GetPotionList() => m_potions;  
         public List<ItemData> GetMiscellaneousList() => m_miscellaneous;
 
+        public void SetWeaponList(List<WeaponEntityData> weapons) => m_weapons = weapons;
 		public List<WeaponEntityData> GetWeaponList() => m_weapons;  
 
 		public void SetSeedList(List<ItemData> seedList) => m_seeds = seedList;

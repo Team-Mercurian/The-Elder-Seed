@@ -43,7 +43,7 @@ public abstract class PanelUI : MonoBehaviour, IHasOpenAndClose {
 
             m_defValue = m_rectTransform.anchoredPosition;
             
-            m_canvasGroup.alpha = 0;
+            if (m_closeAtStart) m_canvasGroup.alpha = 0;
             m_canvasGroup.interactable = false;
 
             m_isOpen = !m_closeAtStart;

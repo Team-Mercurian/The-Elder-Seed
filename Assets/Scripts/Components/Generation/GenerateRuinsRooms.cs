@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,7 +29,8 @@ public class GenerateRuinsRooms : GameBehaviour {
             [SerializeField] private GameObject m_testScene = null;
 
             [Header("Map")]
-            [SerializeField] private MapController m_mapController = null;
+            [SerializeField] private MapController m_smallMapController = null;
+            [SerializeField] private MapController m_bigMapController = null;
 
             //Privadas.
             private DataSystem m_dataSystem;
@@ -40,7 +42,8 @@ public class GenerateRuinsRooms : GameBehaviour {
 
             m_dataSystem = DataSystem.GetSingleton();
             GenerateAllRooms();
-            m_mapController.SetMap(DataSystem.GetSingleton().GetDungeonData());
+            m_smallMapController.SetMap(DataSystem.GetSingleton().GetDungeonData());
+            m_bigMapController.SetMap(DataSystem.GetSingleton().GetDungeonData());
             }
 		
         //Funciones publicas.
@@ -96,10 +99,15 @@ public class GenerateRuinsRooms : GameBehaviour {
                 
                 DungeonData m_dD = new DungeonData();
                 m_dD.GetPlayer().SetHealth(PlayerBrain.GetSingleton().GetHealth().GetMaxHealth());
+                
+                InventoryData m_iD = DataSystem.GetSingleton().GetNewInventoryData(true);
 
-                InventoryData m_iD = DataSystem.GetSingleton().GetNewDungeonInventoryData(true);
+                //Set best weapon to the default weapon.
+                List<WeaponEntityData> m_weaponDatas = m_iD.GetWeaponList().OrderByDescending(c => c.GetUses()).ThenByDescending(c => DataSystem.GetSingleton().GetWeapon(c.GetID()).GetRarity()).ToList();
+                int m_actualWeapon = m_weaponDatas[0].GetIndex();
+
                 m_dD.SetInventoryData(m_iD);
-                m_dD.SetActualWeapon(m_iD.GetWeaponList()[0].GetIndex());
+                m_dD.SetActualWeapon(m_actualWeapon);
 
                 m_dataSystem.SetDungeonData(m_dD);
                 }
