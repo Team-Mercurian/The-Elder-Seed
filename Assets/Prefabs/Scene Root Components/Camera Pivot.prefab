@@ -58,8 +58,8 @@ MonoBehaviour:
   m_elevationDownMultiplier: 0.1
   m_minVerticalAngle: -50
   m_maxVerticalAngle: 70
-  m_minPhysicsDistance: 2
-  m_physicsZoomSmoothness: 0.05
+  m_minPhysicsDistance: 1
+  m_physicsZoomSmoothness: 0.1
   m_cameraHolder: {fileID: 5347571576136446217}
   m_target: {fileID: 0}
   m_gamepadLookMultiplier: 20

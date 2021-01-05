@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1323688376876077364}
   m_Layer: 8
   m_Name: Back Collider
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4333508306404389484}
   m_Layer: 8
   m_Name: Closed Prop
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,8 +137,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.02, y: 0.0024999997, z: 0.02}
-  m_Center: {x: 0, y: 0.005, z: 0.01}
+  m_Size: {x: 0.02, y: 0.0024999997, z: 0.04}
+  m_Center: {x: 0, y: 0.005, z: 0.02}
 --- !u!1 &9045906016584687172
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 3148012921055431026}
   - component: {fileID: 8110605786009882547}
   - component: {fileID: 3044723477119939484}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Passage Template
   m_TagString: Interactable
   m_Icon: {fileID: 0}

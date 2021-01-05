@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2825488261768865399}
   - component: {fileID: 2825488261768865397}
   - component: {fileID: 2825488261768865396}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,10 @@ GameObject:
   - component: {fileID: 2825488262500319680}
   - component: {fileID: 2825488262500319681}
   - component: {fileID: 8061321852115285891}
-  m_Layer: 0
+  - component: {fileID: 2624134817403568837}
+  - component: {fileID: 3292209845837938089}
+  - component: {fileID: 5666358399895016997}
+  m_Layer: 8
   m_Name: Ruins Entry
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -215,6 +218,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_dungeonInventory: {fileID: 0}
+--- !u!65 &2624134817403568837
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2825488262500319683}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 6, z: 4}
+  m_Center: {x: -3, y: 3, z: 0}
+--- !u!65 &3292209845837938089
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2825488262500319683}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 6, z: 4}
+  m_Center: {x: 3, y: 3, z: 0}
+--- !u!65 &5666358399895016997
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2825488262500319683}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8, y: 6, z: 4}
+  m_Center: {x: 0, y: 3, z: 4}
 --- !u!1 &9100306079639752800
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,7 +268,7 @@ GameObject:
   - component: {fileID: 6766389458232137189}
   - component: {fileID: 7881369323505919717}
   - component: {fileID: 5581726683344609881}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
