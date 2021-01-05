@@ -304,6 +304,7 @@ MonoBehaviour:
   m_itemPrefab: {fileID: 3062285932991549434, guid: 1884c991d88d2544fa78c040ec71006a,
     type: 3}
   m_itemTitle: {fileID: 3913457925027038644}
+  m_titleMessage: {fileID: 181880307881904303}
 --- !u!1 &1926976861125035509
 GameObject:
   m_ObjectHideFlags: 0

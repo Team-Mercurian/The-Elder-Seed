@@ -99,7 +99,7 @@ public class InputController : MonoBehaviour {
             }
         private void SetPlayerVelocity(Vector2 velocity) {
 
-            if (m_playerMovement == null) return;
+            if (m_playerMovement == null || m_isInUIMode) return;
             m_playerMovement.SetHorizontalVelocity(velocity);
             }
 
@@ -155,17 +155,20 @@ public class InputController : MonoBehaviour {
                 if (m_dungeonQuitCoroutine != null) StopCoroutine(m_dungeonQuitCoroutine); 
                 }
             }
+        public void OpenPause(InputAction.CallbackContext context) {
+
+            if (context.phase != InputActionPhase.Started) return;
+            
+            PausePanelUI.GetSingleton().Pause();
+            }
 		
         public static void SetLookObject(IHasLookInput lookInput) => m_lookInput = lookInput;
             
         public static InputController GetSingleton() => m_instance;
         public static InputType GetInputType() => m_currentInput;
             
-        public void SetUIMode(bool active) {
-
-            m_isInUIMode = active;
-            //m_playerInput.SwitchCurrentActionMap(active ? "d4c126e7-3a00-4cce-86a2-ba25af907865" : "3b8294c4-a30f-4e3d-a15c-df10248ad2a7");
-            }
+        public void SetUIMode(bool active) => m_isInUIMode = active;
+        public bool GetUIMode() => m_isInUIMode;
 
         //Funciones heredadas.
 		

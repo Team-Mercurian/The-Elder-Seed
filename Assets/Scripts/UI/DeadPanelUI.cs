@@ -33,6 +33,7 @@ public class DeadPanelUI : PanelUI {
 		[SerializeField] private Transform m_itemHolder = null;
 		[SerializeField] private GameObject m_itemPrefab = null;
         [SerializeField] private TMPro.TextMeshProUGUI m_itemTitle = null;
+        [SerializeField] private TMPro.TextMeshProUGUI m_titleMessage = null;
         
 		private DeadPanel_ItemUI m_selectedItem;
 
@@ -48,10 +49,11 @@ public class DeadPanelUI : PanelUI {
 		public override void Open() {
 
 			base.Open();
+			SetDeltaScaledTime(false);
             InputController.SetLookObject(null);
 			GameSystem.SetUI(this);	
 			}
-		public void SetData(List<LostItem> items) {
+		public void SetData(List<LostItem> items, string title) {
 			
 			foreach(Transform m_t in m_itemHolder.Cast<Transform>()) Destroy(m_t.gameObject);
 			foreach(LostItem m_item in items) {
@@ -60,6 +62,7 @@ public class DeadPanelUI : PanelUI {
 				m_i.SetData(m_item);
 				}
 
+			m_titleMessage.text = title;
 			m_itemTitle.text = "";
 			}
 

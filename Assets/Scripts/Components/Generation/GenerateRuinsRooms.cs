@@ -60,43 +60,42 @@ public class GenerateRuinsRooms : GameBehaviour {
             DataSystem m_dS = DataSystem.GetSingleton();
             FarmSpawnController.SetSpawn(dead ? FarmSpawnController.SpawnType.Altar : FarmSpawnController.SpawnType.Ruins);
 
-            if (dead) {
+            List<DeadPanelUI.LostItem> m_lostItems = new List<DeadPanelUI.LostItem>();
+
+            InventoryData m_iD = DataSystem.GetSingleton().GetDungeonData().GetInventoryData();
+
+            int m_losePercent = Random.Range(40, 61);
+
+            foreach(WeaponEntityData m_ed in m_iD.GetWeaponList()) {
                 
-                List<DeadPanelUI.LostItem> m_lostItems = new List<DeadPanelUI.LostItem>();
-
-                InventoryData m_iD = DataSystem.GetSingleton().GetDungeonData().GetInventoryData();
-                int m_losePercent = Random.Range(40, 61);
-
-                foreach(WeaponEntityData m_ed in m_iD.GetWeaponList()) {
-                    
-                    m_ed.SetUses(Mathf.RoundToInt(m_ed.GetUses() - (DataSystem.GetSingleton().GetWeapon(m_ed.GetID()).GetUses() * 0.35f)));
-                    m_lostItems.Add(new DeadPanelUI.LostItem((Item) m_dS.GetWeapon(m_ed.GetID()), false));
-                    }
-
-                foreach(ItemData m_i in m_iD.GetPotionList()) m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPotion(m_i.GetID()), true));
-                m_iD.SetPotionList(new List<ItemData>());
-
-                foreach(ItemData m_i in m_iD.GetPlantList()) m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPlant(m_i.GetID()), true));
-                m_iD.SetPlantList(new List<ItemData>());
-
-                List<Seed> m_seeds = DataSystem.GetSingleton().GetSeeds();
-                foreach(Seed m_s in m_seeds) {
-                    
-                    int m_totalCount = m_iD.GetSeedData(m_s.GetID()).GetCount();
-
-                    int m_lostCount = Mathf.RoundToInt(m_totalCount * (m_losePercent / 100f));
-                    int m_finalCount = m_totalCount - m_lostCount;
-
-                    for(int i = 0; i < m_lostCount; i ++) m_lostItems.Add(new DeadPanelUI.LostItem(m_s, true));
-                    for(int i = 0; i < m_finalCount; i ++) m_lostItems.Add(new DeadPanelUI.LostItem(m_s, false));
-
-                    m_iD.AddSeed(m_s.GetID(), -m_lostCount);
-                    }
-
-                DeadPanelUI.GetSingleton().SetData(m_lostItems);
-                DeadPanelUI.GetSingleton().Open();
+                if (dead) m_ed.SetUses(Mathf.RoundToInt(m_ed.GetUses() - (DataSystem.GetSingleton().GetWeapon(m_ed.GetID()).GetUses() * 0.35f)));
+                m_lostItems.Add(new DeadPanelUI.LostItem((Item) m_dS.GetWeapon(m_ed.GetID()), false));
                 }
 
+            foreach(ItemData m_i in m_iD.GetPotionList()) m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPotion(m_i.GetID()), !dead));
+            if (dead) m_iD.SetPotionList(new List<ItemData>());
+
+            foreach(ItemData m_i in m_iD.GetPlantList()) m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPlant(m_i.GetID()), !dead));
+            if (dead) m_iD.SetPlantList(new List<ItemData>());
+
+            List<Seed> m_seeds = DataSystem.GetSingleton().GetSeeds();
+            
+            foreach(Seed m_s in m_seeds) {
+                
+                int m_totalCount = m_iD.GetSeedData(m_s.GetID()).GetCount();
+
+                int m_lostCount = dead ? Mathf.RoundToInt(m_totalCount * (m_losePercent / 100f)) : 0;
+                int m_finalCount = m_totalCount - m_lostCount;
+
+                for(int i = 0; i < m_lostCount; i ++) m_lostItems.Add(new DeadPanelUI.LostItem(m_s, true));
+                for(int i = 0; i < m_finalCount; i ++) m_lostItems.Add(new DeadPanelUI.LostItem(m_s, false));
+
+                m_iD.AddSeed(m_s.GetID(), -m_lostCount);
+                }
+
+            DeadPanelUI.GetSingleton().SetData(m_lostItems, dead ? "¡Te has desmayado!" : "¡Has logrado salir con exito!");
+            DeadPanelUI.GetSingleton().Open();
+                
             RoomController.SetAppearDirection(Direction.Up);
 
             m_dS.GetGameData().GetInventoryData().AddDungeonInventory(m_dS.GetDungeonData().GetInventoryData());
