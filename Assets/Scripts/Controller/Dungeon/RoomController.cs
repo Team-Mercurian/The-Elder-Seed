@@ -51,6 +51,8 @@ public class RoomController : GameBehaviour {
                 
                 if (m_propDatas[i].GetIfIsDestroyed()) Destroy(m_props[i]);
                 }
+
+            CheckAndOpenPassages(true);
             }
 		
         //Funciones privadas.
@@ -124,7 +126,7 @@ public class RoomController : GameBehaviour {
             
             return false;
             }
-        
+            
         //Funciones publicas.
         public void SetData(Vector2Int roomPosition) {
 
@@ -147,6 +149,32 @@ public class RoomController : GameBehaviour {
                 }
 
             Debug.LogError("Prop no encontrado al destruir.");
+            }
+        public void CheckAndOpenPassages(bool instant) {
+            
+            StartCoroutine(Wait());
+
+            IEnumerator Wait() {
+
+                yield return new WaitForSeconds(0.25f);
+                
+                foreach(GridData m_d in DataSystem.GetSingleton().GetGameData().GetFarmData().GetGridDatas()) {
+
+                    m_d.AddRoom();
+                    }
+                
+                SaveSystem.Save();
+                Finish();
+                }
+            void Finish() {
+                    
+                int m_enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+                if (m_enemyCount == 0) {
+
+                    RuinsPassageController[] m_passages = FindObjectsOfType<RuinsPassageController>();
+                    foreach(RuinsPassageController m_passage in m_passages) m_passage.Open(instant);
+                    }
+                }
             }
 
         public static Direction GetAppearDirection() => m_appearDirection;

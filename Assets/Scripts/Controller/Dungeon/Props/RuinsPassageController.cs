@@ -23,11 +23,17 @@ public class RuinsPassageController : InteractableBehaviour {
             [SerializeField] private GameObject m_passageOpenPrefab = null;
             [SerializeField] private GameObject m_passageClosedPrefab = null;
             [Space]
+            [SerializeField] private Transform m_closedProp = null;
             [SerializeField] private BoxCollider m_teleportTrigger = null;
+
+            [Header("Animation")]
+            [SerializeField] private float m_fallTime = 0.5f;
+            [SerializeField] private AnimationCurve m_animationCurve = null;
 			
             //Privadas.
 			private Vector2Int m_roomPositionToMove;
             private Vector2Int m_directionToMove;
+            private bool m_hasRoomConnected;
 			
     //Funciones
 		
@@ -48,8 +54,6 @@ public class RuinsPassageController : InteractableBehaviour {
             Gizmos.DrawWireSphere(m_tp + (m_rot * (Vector3.Scale(Vector3.right, m_tls))), 0.25f);
             }
 		
-        //Funciones privadas.
-		
         //Funciones publicas.
         public void SetData(bool opened, Vector2Int teleportPosition, Vector2Int direction) {
             
@@ -61,6 +65,7 @@ public class RuinsPassageController : InteractableBehaviour {
 
             m_roomPositionToMove = teleportPosition + direction;
             m_directionToMove = direction;
+            m_hasRoomConnected = opened;
             }
         public Vector2Int GetPositionToMove() {
 
@@ -92,6 +97,32 @@ public class RuinsPassageController : InteractableBehaviour {
                 SceneController.GetSingleton().LoadScene(Scenes.Ruins, true);
                 }
             }
+        public void Open(bool instant) {
+            
+            if (!m_hasRoomConnected) return;
+            
+            if (instant) FinishOpen(); 
+            else StartCoroutine(OpenAnimation());
+
+            IEnumerator OpenAnimation() {
+
+                Vector3 m_defPos = m_closedProp.localPosition;
+
+                for(float i = 0; i < m_fallTime; i += Time.deltaTime) {
+
+                    m_closedProp.localPosition = new Vector3(m_defPos.x, Mathf.Lerp(m_defPos.y, -1.99f, m_animationCurve.Evaluate(i / m_fallTime)), m_defPos.z);
+                    yield return null;
+                    }
+                
+                FinishOpen();
+                }
+            void FinishOpen() {
+                
+                m_closedProp.localPosition = new Vector3(m_closedProp.localPosition.x, -1.99f, m_closedProp.localPosition.z);
+                }
+            }
+		
+        //Funciones privadas.
 		
         //Funciones heredadas.
 		

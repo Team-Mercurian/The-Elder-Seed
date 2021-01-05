@@ -42,7 +42,7 @@ public abstract class EntityHealth : MonoBehaviour {
     //Funciones
 		
         //Funciones de MonoBehaviour
-        private void Start() {
+        protected virtual void Start() {
 			
             m_actualHealth = SetActualHealth();
             if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health, true);

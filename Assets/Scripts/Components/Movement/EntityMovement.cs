@@ -60,6 +60,7 @@ public abstract class EntityMovement : GravityValues {
 
                 protected Vector2 m_knockbackValue = new Vector2();
                 private Coroutine m_knockbackCoroutine;
+                private bool m_canMove = true;
 
 //                protected bool m_isInSlope = false;
 //                protected Vector3 m_slopeHitPlace;
@@ -161,6 +162,7 @@ public abstract class EntityMovement : GravityValues {
             }
         public virtual void SetHorizontalVelocity(Vector2 velocity) {
 
+            if (!m_canMove) return;
             SetReachVelocity(velocity);
             }
         public Vector2 GetMovementDirection() {
@@ -170,6 +172,7 @@ public abstract class EntityMovement : GravityValues {
 
             return m_direction;
             }
+        public void SetIfCanMove(bool canMove) => m_canMove = canMove; 
 
         //Funciones ha heredar.
 

@@ -57,9 +57,12 @@ public class GenerateRuinsRooms : GameBehaviour {
             }
         public static void ExitRuins(bool dead) {
             
+            DataSystem m_dS = DataSystem.GetSingleton();
             FarmSpawnController.SetSpawn(dead ? FarmSpawnController.SpawnType.Altar : FarmSpawnController.SpawnType.Ruins);
 
             if (dead) {
+                
+                List<DeadPanelUI.LostItem> m_lostItems = new List<DeadPanelUI.LostItem>();
 
                 InventoryData m_iD = DataSystem.GetSingleton().GetDungeonData().GetInventoryData();
                 int m_losePercent = Random.Range(40, 61);
@@ -67,28 +70,37 @@ public class GenerateRuinsRooms : GameBehaviour {
                 foreach(WeaponEntityData m_ed in m_iD.GetWeaponList()) {
                     
                     m_ed.SetUses(Mathf.RoundToInt(m_ed.GetUses() - (DataSystem.GetSingleton().GetWeapon(m_ed.GetID()).GetUses() * 0.35f)));
+                    m_lostItems.Add(new DeadPanelUI.LostItem((Item) m_dS.GetWeapon(m_ed.GetID()), false));
                     }
 
+                foreach(ItemData m_i in m_iD.GetPotionList()) m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPotion(m_i.GetID()), true));
                 m_iD.SetPotionList(new List<ItemData>());
+
+                foreach(ItemData m_i in m_iD.GetPlantList()) m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPlant(m_i.GetID()), true));
                 m_iD.SetPlantList(new List<ItemData>());
 
                 List<Seed> m_seeds = DataSystem.GetSingleton().GetSeeds();
-                foreach(Seed m_s in m_seeds) m_iD.AddSeed(m_s.GetID(), -m_iD.GetSeedData(m_s.GetID()).GetCount() * (m_losePercent / 100));
-                }
+                foreach(Seed m_s in m_seeds) {
+                    
+                    int m_totalCount = m_iD.GetSeedData(m_s.GetID()).GetCount();
 
-            foreach(GridData m_d in DataSystem.GetSingleton().GetGameData().GetFarmData().GetGridDatas()) {
+                    int m_lostCount = Mathf.RoundToInt(m_totalCount * (m_losePercent / 100f));
+                    int m_finalCount = m_totalCount - m_lostCount;
 
-                m_d.SetHarvest(true);
+                    for(int i = 0; i < m_lostCount; i ++) m_lostItems.Add(new DeadPanelUI.LostItem(m_s, true));
+                    for(int i = 0; i < m_finalCount; i ++) m_lostItems.Add(new DeadPanelUI.LostItem(m_s, false));
+
+                    m_iD.AddSeed(m_s.GetID(), -m_lostCount);
+                    }
+
+                DeadPanelUI.GetSingleton().SetData(m_lostItems);
+                DeadPanelUI.GetSingleton().Open();
                 }
 
             RoomController.SetAppearDirection(Direction.Up);
 
-            DataSystem m_dS = DataSystem.GetSingleton();
-
             m_dS.GetGameData().GetInventoryData().AddDungeonInventory(m_dS.GetDungeonData().GetInventoryData());
-            m_dS.SetDungeonData(null);
             SaveSystem.Save();
-            SceneController.GetSingleton().LoadScene(Scenes.House, false);
             }
         public static int GetActualFloor() => m_actualFloor;
 
@@ -98,7 +110,7 @@ public class GenerateRuinsRooms : GameBehaviour {
             if (m_dataSystem.GetDungeonData() == null) {
                 
                 DungeonData m_dD = new DungeonData();
-                m_dD.GetPlayer().SetHealth(PlayerBrain.GetSingleton().GetHealth().GetMaxHealth());
+                m_dD.GetPlayer().SetHealth(DataSystem.GetSingleton().GetPlayerHealth());
                 
                 InventoryData m_iD = DataSystem.GetSingleton().GetNewInventoryData(true);
 

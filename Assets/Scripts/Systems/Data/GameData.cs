@@ -246,20 +246,30 @@ public class GridData {
 
     [SerializeField] private int m_seedIndex;
     [SerializeField] private Vector3Int m_position;
+    [SerializeField] private int m_requiredRoomsToHarvest;
     [SerializeField] private bool m_canHarvest;
+    [SerializeField] private int m_roomCount;
 
-    public GridData(int seedIndex, Vector3Int position) {
+    public GridData(int seedIndex, Vector3Int position, int requiredRoomsToHarvest) {
 
         m_seedIndex = seedIndex;
         m_position = position;
+        m_requiredRoomsToHarvest = requiredRoomsToHarvest;
 
+        m_roomCount = 0;
         m_canHarvest = false;
         }   
 
+    public void AddRoom() {
+
+        if (m_canHarvest) return;
+
+        m_roomCount ++;
+        if (m_roomCount >= m_requiredRoomsToHarvest) m_canHarvest = true; 
+        }   
     public int GetSeedIndex() => m_seedIndex;
     public Vector3Int GetSeedPosition() => m_position;
     public bool GetHarvest() => m_canHarvest;
-    public void SetHarvest(bool harvest) => m_canHarvest = harvest;
     }
 
 [System.Serializable] 
