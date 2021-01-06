@@ -34,6 +34,7 @@ public class RuinsPassageController : InteractableBehaviour {
 			private Vector2Int m_roomPositionToMove;
             private Vector2Int m_directionToMove;
             private bool m_hasRoomConnected;
+            private bool m_canOpen = true;
 			
     //Funciones
 		
@@ -57,11 +58,19 @@ public class RuinsPassageController : InteractableBehaviour {
         //Funciones publicas.
         public void SetData(bool opened, Vector2Int teleportPosition, Vector2Int direction) {
             
-            if (teleportPosition + direction == new Vector2Int(0, -1) && DataSystem.GetSingleton().GetDungeonData().GetFloor() == 0) opened = true;
+            if (teleportPosition + direction == new Vector2Int(0, -1) && DataSystem.GetSingleton().GetDungeonData().GetFloor() == 0) {
+
+                opened = true;
+                m_canOpen = false;
+                Close();    
+                }
+            
             m_teleportTrigger.enabled = opened;
 
             GameObject m_passage = opened ? m_passageOpenPrefab : m_passageClosedPrefab;
             Instantiate(m_passage, transform.position, transform.rotation * Quaternion.Euler(0, 180, 0), transform);
+
+            FinishOpen();
 
             m_roomPositionToMove = teleportPosition + direction;
             m_directionToMove = direction;
@@ -83,43 +92,27 @@ public class RuinsPassageController : InteractableBehaviour {
 
             Vector2Int m_pos = GetPositionToMove();
 
-            if (m_pos == new Vector2Int(0, -1)) {
-                
-                GenerateRuinsRooms.ExitRuins(false);
-                }
-                
-            else {
-                
-                Direction m_direction = GetDirection(GetDirectionToMove());
-                RoomController.SetAppearDirection(m_direction);
+            Direction m_direction = GetDirection(GetDirectionToMove());
+            RoomController.SetAppearDirection(m_direction);
 
-                DataSystem.GetSingleton().GetDungeonData().SetActualRoom(m_pos);
-                SceneController.GetSingleton().LoadScene(Scenes.Ruins, true);
-                }
+            DataSystem.GetSingleton().GetDungeonData().SetActualRoom(m_pos);
+            SceneController.GetSingleton().LoadScene(Scenes.Ruins, true);
             }
         public void Open(bool instant) {
             
-            if (!m_hasRoomConnected) return;
+            if (!m_hasRoomConnected || !m_canOpen) return;
             
             if (instant) FinishOpen(); 
-            else StartCoroutine(OpenAnimation());
+            else StartCoroutine(IOAnimation(true));
+            }
+        public void Close() {
 
-            IEnumerator OpenAnimation() {
+            StartCoroutine(IOAnimation(false));
+            }
 
-                Vector3 m_defPos = m_closedProp.localPosition;
-
-                for(float i = 0; i < m_fallTime; i += Time.deltaTime) {
-
-                    m_closedProp.localPosition = new Vector3(m_defPos.x, Mathf.Lerp(m_defPos.y, -1.99f, m_animationCurve.Evaluate(i / m_fallTime)), m_defPos.z);
-                    yield return null;
-                    }
-                
-                FinishOpen();
-                }
-            void FinishOpen() {
-                
-                m_closedProp.localPosition = new Vector3(m_closedProp.localPosition.x, -1.99f, m_closedProp.localPosition.z);
-                }
+        private void FinishOpen() {
+            
+            m_closedProp.localPosition = new Vector3(m_closedProp.localPosition.x, -1.99f, m_closedProp.localPosition.z);
             }
 		
         //Funciones privadas.
@@ -129,5 +122,19 @@ public class RuinsPassageController : InteractableBehaviour {
         //Funciones ha heredar.
 		
         //Corotinas.
-		
+        private IEnumerator IOAnimation(bool open) {
+
+            Vector3 m_defPos = m_closedProp.localPosition;
+            float m_posA = open ? 0 : -2;
+            float m_posB = open ? -1.99f : 0;
+
+            for(float i = 0; i < m_fallTime; i += Time.deltaTime) {
+
+                m_closedProp.localPosition = new Vector3(m_defPos.x, Mathf.Lerp(m_posA, m_posB, m_animationCurve.Evaluate(i / m_fallTime)), m_defPos.z);
+                yield return null;
+                }
+            
+            if (open) FinishOpen();
+            else m_closedProp.localPosition = new Vector3(m_defPos.x, m_posB, m_defPos.z);
+            }
         }

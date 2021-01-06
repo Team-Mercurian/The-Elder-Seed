@@ -67,6 +67,7 @@ public class RoomData {
     private bool m_unlocked;
     private bool m_hasVisited;
     private bool m_isCompleted;
+    private int m_rotation;
 
     private List<RoomPropData> m_roomProps;
     
@@ -79,6 +80,7 @@ public class RoomData {
         m_unlocked = false;
         m_hasVisited = false;
         m_isCompleted = false;
+        m_rotation = Random.Range(0, 4);
         }
 
     public void Unlock() => m_unlocked = true; 
@@ -89,6 +91,8 @@ public class RoomData {
  
     public void Complete() => m_isCompleted = true;
     public bool GetIfIsCompleted() => m_isCompleted;
+
+    public int GetRotation() => m_rotation;
 
     public Vector2Int GetRoomPosition() => m_roomPosition;
     public int GetRoomPrefabIndex() => m_roomPrefabIndex;
