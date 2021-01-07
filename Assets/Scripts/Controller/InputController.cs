@@ -101,7 +101,7 @@ public class InputController : MonoBehaviour {
             }
         private void SetPlayerVelocity(Vector2 velocity) {
 
-            if (m_playerMovement == null || m_isInUIMode) return;
+            if (m_playerMovement == null) return;
             m_playerMovement.SetHorizontalVelocity(velocity);
             }
 
