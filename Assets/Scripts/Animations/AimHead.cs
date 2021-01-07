@@ -21,6 +21,7 @@ public class AimHead:MonoBehaviour
 
     [SerializeField] Transform m_aimTarget = null;
     [SerializeField] Transform m_player = null;
+    [SerializeField] Animator m_animator = null;
 
     // Start is called before the first frame update
     void Start()
@@ -38,8 +39,16 @@ public class AimHead:MonoBehaviour
         Vector3 m_defaultPos = m_player.position + Vector3.Scale(m_player.forward, new Vector3(m_defaultTargetPos.z, 1, m_defaultTargetPos.z)) + (Vector3.up * m_defaultTargetPos.y);
 
         //if list has targets
-        if (m_targets.Count > 0 && m_targets[0] != null) m_lookPosition = m_targets[0].transform.position;
-        else m_lookPosition = m_defaultPos;
+        if (m_targets.Count > 0 && m_targets[0] != null) 
+        {
+            m_lookPosition = m_targets[0].transform.position;
+            m_animator.SetBool("inCombat", true);
+        }
+        else 
+        {
+            m_lookPosition = m_defaultPos;
+            m_animator.SetBool("inCombat", false);
+        }
         
         float m_angle = (Mathf.Atan2(m_lookPosition.z - m_player.position.z, m_lookPosition.x - m_player.position.x) * Mathf.Rad2Deg) + m_player.eulerAngles.y;
         if (m_angle > 180) m_angle -= 360;

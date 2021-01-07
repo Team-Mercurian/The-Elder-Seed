@@ -29,7 +29,7 @@ public class SwordSlash : MonoBehaviour
         psystem = GetComponent<ParticleSystem>();
         StartCoroutine(Slash());
     }
-
+/*
     private void Update() {
         test_timer += Time.deltaTime;
         if(test_timer > 3)
@@ -38,7 +38,7 @@ public class SwordSlash : MonoBehaviour
             StartCoroutine(Slash());
         }
     } // delete whole update function later
-
+*/
     IEnumerator Slash()
     {
         psystem.Play();
