@@ -35,6 +35,7 @@ public class RuinsPassageController : InteractableBehaviour {
             private Vector2Int m_directionToMove;
             private bool m_hasRoomConnected;
             private bool m_canOpen = true;
+            private bool m_isOpen = false;
 			
     //Funciones
 		
@@ -100,6 +101,7 @@ public class RuinsPassageController : InteractableBehaviour {
             }
         public void Open(bool instant) {
             
+            if (m_isOpen) return;
             if (!m_hasRoomConnected || !m_canOpen) return;
             
             if (instant) FinishOpen(); 
@@ -107,12 +109,14 @@ public class RuinsPassageController : InteractableBehaviour {
             }
         public void Close() {
 
+            if (!m_isOpen) return;
             StartCoroutine(IOAnimation(false));
             }
 
         private void FinishOpen() {
             
             m_closedProp.localPosition = new Vector3(m_closedProp.localPosition.x, -1.99f, m_closedProp.localPosition.z);
+            m_isOpen = true;
             }
 		
         //Funciones privadas.
@@ -127,6 +131,8 @@ public class RuinsPassageController : InteractableBehaviour {
             Vector3 m_defPos = m_closedProp.localPosition;
             float m_posA = open ? 0 : -2;
             float m_posB = open ? -1.99f : 0;
+
+            if (!open) m_isOpen = false;
 
             for(float i = 0; i < m_fallTime; i += Time.deltaTime) {
 
