@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class PausePanelUI : PanelUI {
@@ -21,15 +22,15 @@ public class PausePanelUI : PanelUI {
         
 		//Non Static
 		[Header("Buttons")]
-		[SerializeField] private GameObject m_resumeButton = null;
+		[SerializeField] private Button m_resumeButton = null;
 		[SerializeField] private bool m_resumeIsActive = true;
 
 		[Space]
-		[SerializeField] private GameObject m_goToFarmButton = null;
+		[SerializeField] private Button m_goToFarmButton = null;
 		[SerializeField] private bool m_goToFarmIsActive = true;
 		
 		[Space]
-		[SerializeField] private GameObject m_exitButton = null;
+		[SerializeField] private Button m_exitButton = null;
 		[SerializeField] private bool m_exitIsActive = true;
         
 		private bool m_isPaused = false;
@@ -40,9 +41,9 @@ public class PausePanelUI : PanelUI {
 		//MonoBehaviour Functions
 		protected override void Start() {
 
-			m_resumeButton.SetActive(m_resumeIsActive);
-			m_goToFarmButton.SetActive(m_goToFarmIsActive);
-			m_exitButton.SetActive(m_exitIsActive);
+			m_resumeButton.gameObject.SetActive(m_resumeIsActive);
+			m_goToFarmButton.gameObject.SetActive(m_goToFarmIsActive);
+			m_exitButton.gameObject.SetActive(m_exitIsActive);
 			SetDeltaScaledTime(false);
 
 			base.Start();
@@ -83,6 +84,12 @@ public class PausePanelUI : PanelUI {
         private void InternalPause() {
 
 			if (InputController.GetSingleton().GetUIMode()) return;
+
+			if (m_goToFarmIsActive) {
+
+				if (GameObject.FindGameObjectsWithTag("Enemy").Length > 0) m_goToFarmButton.interactable = false;
+				else m_goToFarmButton.interactable = true;
+				}
 
 			Open();
 			ChangeTimeScale(false);
