@@ -48,6 +48,7 @@ public class InputController : MonoBehaviour {
             private bool m_isInUIMode = false;
 
             private PlayerMovement m_playerMovement;
+            private PlayerEvents m_playerEvents;
             private EntityAttack m_playerAttack;
 
             private Coroutine m_dungeonQuitCoroutine;
@@ -68,6 +69,7 @@ public class InputController : MonoBehaviour {
 
             m_playerMovement = PlayerBrain.GetSingleton().GetPlayerMovement();
             m_playerAttack = PlayerBrain.GetSingleton().GetAttack();
+            m_playerEvents = PlayerBrain.GetSingleton().GetPlayerEvents();
             m_cursorController = CursorController.GetSingleton();
 
             //Establecer las referencias a las acciones.
@@ -140,6 +142,12 @@ public class InputController : MonoBehaviour {
             if (context.phase != InputActionPhase.Started || m_isInUIMode) return;
             
             m_playerMovement.Jump();
+            }
+        public void Interact(InputAction.CallbackContext context) {
+            
+            if (context.phase != InputActionPhase.Started) return;
+            
+            m_playerEvents.Interact();
             }
         public void Attack(InputAction.CallbackContext context) {
             

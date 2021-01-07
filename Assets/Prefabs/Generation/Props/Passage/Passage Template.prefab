@@ -186,6 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98528544f76edc479b96a9e6e45cca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_instantInteract: 1
   m_passageOpenPrefab: {fileID: 981028429452889756, guid: bad2d2b9fabb16846ab10117b53258b1,
     type: 3}
   m_passageClosedPrefab: {fileID: 8003297632991349900, guid: 1df1829fa4b53994989760296232c118,

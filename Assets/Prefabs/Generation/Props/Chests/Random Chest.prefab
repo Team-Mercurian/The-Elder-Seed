@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4594430161169219730}
   - component: {fileID: 7517987673464020651}
-  - component: {fileID: 1400635959582939030}
+  - component: {fileID: 472372742576910544}
   m_Layer: 0
   m_Name: Random Chest
   m_TagString: Interactable
@@ -45,8 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f81ab56c1a4bde640942add14342f491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_instantInteract: 0
   m_probabilityToSpawn: 25
---- !u!65 &1400635959582939030
+--- !u!65 &472372742576910544
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,7 +58,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.75, y: 0.75, z: 0.75}
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0.375, z: 0}
 --- !u!1 &8945420452901233378
 GameObject:
@@ -70,8 +71,8 @@ GameObject:
   - component: {fileID: 7398904168874214545}
   - component: {fileID: 9067174599395557879}
   - component: {fileID: 7833000087341199674}
-  - component: {fileID: 3664180424421193320}
-  m_Layer: 0
+  - component: {fileID: 7953563688360458815}
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -141,18 +142,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3664180424421193320
-MonoBehaviour:
+--- !u!65 &7953563688360458815
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8945420452901233378}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8ae7a11dca089d49ab8adb2cd7396ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_event:
-    m_PersistentCalls:
-      m_Calls: []
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
