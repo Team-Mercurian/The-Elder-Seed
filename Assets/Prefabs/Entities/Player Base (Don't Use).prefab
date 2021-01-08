@@ -395,6 +395,7 @@ MonoBehaviour:
   m_aimHead: {fileID: 8460287973445187213}
   m_playerMovement: {fileID: 606783867811322470}
   m_slash: {fileID: 8460287973528500502}
+  m_weaponMesh: {fileID: 3282065874670671364}
   m_attackForce: 4
   m_attackForceTime: 0.4
   m_autoTargetAttackDistance: 1
@@ -481,6 +482,12 @@ Transform:
 --- !u!95 &7918198241945038131 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2297345758462064253, guid: 74dbdf2ee9e26af41a0f7e6677a74b72,
+    type: 3}
+  m_PrefabInstance: {fileID: 8215366795664563022}
+  m_PrefabAsset: {fileID: 0}
+--- !u!33 &3282065874670671364 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: 6885692758620458314, guid: 74dbdf2ee9e26af41a0f7e6677a74b72,
     type: 3}
   m_PrefabInstance: {fileID: 8215366795664563022}
   m_PrefabAsset: {fileID: 0}

@@ -30,10 +30,10 @@ public abstract class DamageBase : MonoBehaviour
             }
         }
 
+        StartCoroutine(AttackCoroutine());
         if (closestBrain == null) return;
         transform.position = closestBrain.transform.position;
         
-        StartCoroutine(AttackCoroutine());
     }
     public abstract void DoDamage(GameObject gameObject, Knockback knockback, int dmg);
 
@@ -53,10 +53,10 @@ public abstract class DamageBase : MonoBehaviour
         return m_weapon;
     }
 
-    protected virtual IEnumerator AttackCoroutine()
+    protected IEnumerator AttackCoroutine()
     {
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         Destroy(gameObject);
     }
 

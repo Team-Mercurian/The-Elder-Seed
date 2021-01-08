@@ -26,6 +26,7 @@ public class PlayerAttack : EntityAttack {
             [SerializeField] private AimHead m_aimHead = null;
             [SerializeField] private PlayerMovement m_playerMovement = null;
             [SerializeField] private SwordSlash m_slash = null;
+            [SerializeField] private MeshFilter m_weaponMesh = null;
 
             [Header("Attack Force")]
             [SerializeField] private float m_attackForce = 0.5f;
@@ -113,6 +114,12 @@ public class PlayerAttack : EntityAttack {
             } */
 
         //Funciones ha heredar.
+        public override void SetWeapon(Weapon weapon) {
+
+            base.SetWeapon(weapon);
+            m_weaponMesh.mesh = weapon.GetWeaponMesh();
+            }
+
 
     //Corotinas.
     private IEnumerator AttackCoroutine() {

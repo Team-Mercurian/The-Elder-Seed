@@ -35,6 +35,9 @@ public class Weapon : Item {
             [SerializeField] private float m_knockbackForce = 1f;
             [SerializeField] private float m_knockbackTime = 0.5f;
 
+            [Header("Weapon Mesh")]
+            [SerializeField] private Mesh m_weaponMesh = null;
+
             //Privadas.
 			
 			
@@ -53,6 +56,8 @@ public class Weapon : Item {
 
         public float GetKnockbackForce() => m_knockbackForce;
         public float GetKnockbackTime() => m_knockbackTime;
+
+        public Mesh GetWeaponMesh() => m_weaponMesh;
 		
         public int GetCalculatedDamage(int uses) {
             

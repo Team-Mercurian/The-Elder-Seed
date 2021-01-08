@@ -39,7 +39,7 @@ public class EntityAttack : MonoBehaviour
 
     //Funciones publicas.
     protected Transform GetParentTransform() => m_parent;
-    public void SetWeapon(Weapon weapon) => m_weapon = weapon;
+    public virtual void SetWeapon(Weapon weapon) => m_weapon = weapon;
         
 
     //Funciones heredadas.
