@@ -2693,9 +2693,9 @@ GameObject:
   - component: {fileID: 7429761350434534982}
   - component: {fileID: 1939479508945323289}
   - component: {fileID: 8972977869286216581}
-  - component: {fileID: 8449594994464424535}
   - component: {fileID: 6748022040365175396}
   - component: {fileID: 3655446254749656030}
+  - component: {fileID: 5602856333102225762}
   m_Layer: 0
   m_Name: Dungeon Selection Inventory
   m_TagString: Untagged
@@ -2783,23 +2783,9 @@ MonoBehaviour:
   m_weaponStatsUI: {fileID: 0}
   m_confirmationUI: {fileID: 0}
   m_weaponRepairUI: {fileID: 0}
-  m_plantCreator: {fileID: 8449594994464424535}
+  m_plantCreator: {fileID: 5602856333102225762}
   m_weaponCreator: {fileID: 6748022040365175396}
   m_potionCreator: {fileID: 3655446254749656030}
---- !u!114 &8449594994464424535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8579062847029607336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81f35ce35e5e59a41bfbb0333e64b007, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_inventory: {fileID: 8972977869286216581}
-  m_item: {fileID: 358325633225858962, guid: db9e0028fe7cf4b408949369396018b8, type: 3}
 --- !u!114 &6748022040365175396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2828,6 +2814,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_inventory: {fileID: 8972977869286216581}
   m_item: {fileID: 358325633225858962, guid: 496690808ce8b934caec21dce1f4656b, type: 3}
+--- !u!114 &5602856333102225762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8579062847029607336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f17d88d4a3d934893719ecc41729db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_inventory: {fileID: 8972977869286216581}
+  m_item: {fileID: 358325633225858962, guid: db9e0028fe7cf4b408949369396018b8, type: 3}
 --- !u!1 &8993343330816257815
 GameObject:
   m_ObjectHideFlags: 0
