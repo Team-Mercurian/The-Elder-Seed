@@ -22,6 +22,8 @@ public abstract class EntityAttack : MonoBehaviour {
             [Header("References")]
             [SerializeField] private BoxCollider m_attackCollider = null;
             [SerializeField] private Transform m_parent = null;
+
+            private Coroutine m_attackCoroutine = null;
 			
             //Privadas.
 			
@@ -45,7 +47,9 @@ public abstract class EntityAttack : MonoBehaviour {
         //Funciones ha heredar.
         public virtual void Attack() {
 
-            StartCoroutine(AttackCoroutine());
+            if (m_attackCoroutine != null) StopCoroutine(m_attackCoroutine);
+            m_attackCoroutine = StartCoroutine(AttackCoroutine());
+            return;
             }
         public abstract void DoDamage(Collider collider);
 

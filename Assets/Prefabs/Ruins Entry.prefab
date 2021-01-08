@@ -217,6 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea397f1dc3114c49bbc95af3190e04b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_instantInteract: 1
   m_dungeonInventory: {fileID: 0}
 --- !u!65 &2624134817403568837
 BoxCollider:

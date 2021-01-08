@@ -173,6 +173,7 @@ public abstract class EntityMovement : GravityValues {
             return m_direction;
             }
         public void SetIfCanMove(bool canMove) => m_canMove = canMove; 
+        public bool GetIfIsGrounded() => m_isGrounded;
 
         //Funciones ha heredar.
 
@@ -280,7 +281,7 @@ public abstract class JumpingCharacter : EntityMovement {
             }
 
         //Funciones publicas.
-        public void Jump() {
+        public virtual void Jump() {
 
             if (!m_isGrounded || !m_canJump) return;
             StartCoroutine(JumpAnimation());

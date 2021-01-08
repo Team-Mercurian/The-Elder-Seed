@@ -2455,6 +2455,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d11ae16ec6d8b5b4aa992149061b5050, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &730304022 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1276589643491275356, guid: aa518ac39c8b4664babb13d47dd77864,
+    type: 3}
+  m_PrefabInstance: {fileID: 8958870070855631062}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &747533260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1668355659184299281, guid: d0149db9a12d9e349b4841384083b1ca,
@@ -2646,7 +2652,7 @@ PrefabInstance:
     - target: {fileID: 1674918118014800139, guid: aa2ba663d27505a49866e469500df029,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 49.899902
+      value: 49.90039
       objectReference: {fileID: 0}
     - target: {fileID: 1939479508945323289, guid: aa2ba663d27505a49866e469500df029,
         type: 3}
@@ -6869,6 +6875,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1051005017552085554, guid: ce544f4aeda85b1448879397431fb713,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4082079987989339775, guid: ce544f4aeda85b1448879397431fb713,
         type: 3}
       propertyPath: m_Name
@@ -7754,6 +7765,21 @@ PrefabInstance:
       propertyPath: m_playerCell
       value: 
       objectReference: {fileID: 1302716800}
+    - target: {fileID: 1276589643491275356, guid: aa518ac39c8b4664babb13d47dd77864,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5028719524334690829, guid: aa518ac39c8b4664babb13d47dd77864,
+        type: 3}
+      propertyPath: m_animator
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5035865090155539250, guid: aa518ac39c8b4664babb13d47dd77864,
+        type: 3}
+      propertyPath: m_meshToDeactive
+      value: 
+      objectReference: {fileID: 730304022}
     - target: {fileID: 6171726559031416877, guid: aa518ac39c8b4664babb13d47dd77864,
         type: 3}
       propertyPath: m_LocalPosition.x

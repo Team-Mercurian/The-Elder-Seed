@@ -63,6 +63,8 @@ public class PlayerMovement : JumpingCharacter {
             SetVerticalVelocity(-m_fallVelocity);
             RotateSmooth(m_lookDirection);
 
+            m_animator.SetBool("isGrounded", m_isGrounded);
+
             //bool m_isRunning;
             //float m_finalSpeed = 0;
 
@@ -108,6 +110,11 @@ public class PlayerMovement : JumpingCharacter {
         public void CancelMovement() {
 
             SetHorizontalVelocity(Vector2.zero);
+            }
+        public override void Jump() {
+
+            base.Jump();
+            m_animator.SetTrigger("jump");
             }
 
         public void IsAttacking(bool isAttacking) => m_isAttacking = isAttacking;

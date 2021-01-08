@@ -32,6 +32,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2410182717324406577, guid: 05292389237196c4680b1412a93c9752,
+        type: 3}
+      propertyPath: m_aimHead
+      value: 
+      objectReference: {fileID: 754948255541983082}
+    - target: {fileID: 2410182717324406577, guid: 05292389237196c4680b1412a93c9752,
+        type: 3}
+      propertyPath: m_slash
+      value: 
+      objectReference: {fileID: 754948255593806065}
     - target: {fileID: 3022526979373369156, guid: 05292389237196c4680b1412a93c9752,
         type: 3}
       propertyPath: m_Name
@@ -132,6 +142,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7397382246710245260, guid: 05292389237196c4680b1412a93c9752,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8000808244514618084, guid: 05292389237196c4680b1412a93c9752,
         type: 3}
       propertyPath: m_RootOrder
@@ -144,6 +159,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05292389237196c4680b1412a93c9752, type: 3}
+--- !u!114 &754948255541983082 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8460287973445187213, guid: 05292389237196c4680b1412a93c9752,
+    type: 3}
+  m_PrefabInstance: {fileID: 9156634318592066023}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7894340fd7ddd8e4b8100e59af764b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &754948255593806065 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8460287973528500502, guid: 05292389237196c4680b1412a93c9752,
+    type: 3}
+  m_PrefabInstance: {fileID: 9156634318592066023}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f4033746f68ced409e15ef52720e9eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6800530061838315222 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2410182717324406577, guid: 05292389237196c4680b1412a93c9752,

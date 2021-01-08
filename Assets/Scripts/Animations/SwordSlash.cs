@@ -22,12 +22,15 @@ public class SwordSlash : MonoBehaviour
     public float lifetime;
 
     float test_timer;//delete
+
+    private Coroutine m_isSlashing;
+    
     // Start is called before the first frame update
     void Start()
     {
         mat = GetComponent<Renderer>().material;
         psystem = GetComponent<ParticleSystem>();
-        StartCoroutine(Slash());
+       
     }
 /*
     private void Update() {
@@ -39,7 +42,15 @@ public class SwordSlash : MonoBehaviour
         }
     } // delete whole update function later
 */
-    IEnumerator Slash()
+    public void Slash(bool inverse) {
+
+        if (m_isSlashing != null) StopCoroutine(m_isSlashing);
+        m_isSlashing = StartCoroutine(SlashAnimation());
+
+        transform.localScale = new Vector3(inverse ? -1 : 1, 1, 1);
+        }
+
+    IEnumerator SlashAnimation()
     {
         psystem.Play();
         float timer = 0;

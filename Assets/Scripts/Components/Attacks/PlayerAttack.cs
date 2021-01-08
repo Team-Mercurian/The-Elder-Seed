@@ -25,6 +25,7 @@ public class PlayerAttack : EntityAttack {
             [Header("Attack References")]
             [SerializeField] private AimHead m_aimHead = null;
             [SerializeField] private PlayerMovement m_playerMovement = null;
+            [SerializeField] private SwordSlash m_slash = null;
 
             [Header("Attack Force")]
             [SerializeField] private float m_attackForce = 0.5f;
@@ -36,6 +37,8 @@ public class PlayerAttack : EntityAttack {
             //Privadas.
             private float m_delay;
             private Vector3 m_savedPosition;
+            private bool m_inverse = false;
+            private Coroutine m_attackCoroutine;
 			
     //Funciones
 		
@@ -76,7 +79,13 @@ public class PlayerAttack : EntityAttack {
             m_knockback = new Knockback(m_dir, m_attackForce, m_attackForceTime);
             m_playerMovement.SetKnockback(m_knockback);
 
+            PlayerBrain.GetSingleton().GetAnimator().SetTrigger(m_inverse ? "attackL" : "attackR");
+
+            m_inverse = !m_inverse;
+            m_slash.Slash(m_inverse);
+
             base.Attack();
+            return;
             }
             
         //Funciones heredadas.
