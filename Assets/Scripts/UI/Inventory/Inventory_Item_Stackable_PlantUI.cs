@@ -22,6 +22,14 @@ public class Inventory_Item_Stackable_PlantUI : Inventory_Item_StackableUI {
         
         
 		//Public Functions    
+		public override void SetValues(Item item, int count, bool isOdd, InventoryUI inventory) {
+			
+			base.SetValues(item, count, isOdd, inventory);
+
+			Seed.SeedType m_seedType = DataSystem.GetSingleton().GetPlant(GetItem().GetID()).GetSeedType();
+			if (m_seedType == Seed.SeedType.Potion) GetButton().interactable = false;
+			}
+		
 		public override void Use() {
 
 			if (GetCount() <= 0) return;
@@ -42,7 +50,6 @@ public class Inventory_Item_Stackable_PlantUI : Inventory_Item_StackableUI {
 			switch(m_seedType) {
 
 				case Seed.SeedType.Durability : return UseDurabilityPlant(); 
-				case Seed.SeedType.Potion : return UsePotionPlant(); 
 				case Seed.SeedType.Unlock : return UseUnlockPlant(); 
 				}
 			
@@ -55,12 +62,6 @@ public class Inventory_Item_Stackable_PlantUI : Inventory_Item_StackableUI {
 			GetInventory().GetRepairWeapon().Open(m_rarity);
 
 			return false;
-			}
-		private bool UsePotionPlant() {
-
-			int m_potionID = DataSystem.GetSingleton().GetPotions().Find(c => c.GetRarity() == GetItem().GetRarity()).GetID();
-			DataSystem.GetSingleton().GetGameData().GetInventoryData().AddPotion(m_potionID, 1);
-			return true;
 			}
 		private bool UseUnlockPlant() {
 
