@@ -42,8 +42,7 @@ public class SeedEntityController : InteractableBehaviour {
 			
             DataSystem.GetSingleton().GetDungeonData().GetInventoryData().AddSeed(m_ID, 1);  //GetFarmData().AddSeed(m_type, Rarity.Common);
 			Seed m_sd = DataSystem.GetSingleton().GetSeed(m_ID);
-
-			Debug.Log("Added a seed to the dungeon loot: " + m_ID + ", " + m_sd.GetSeedType() + ", " + m_sd.GetRarity());
+			ObtainedObjectsUI.GetSingleton().AddItem(m_sd.GetIcon(), m_sd.GetName(), m_sd.GetRarity());
 			Destroy(gameObject);
 			}
         

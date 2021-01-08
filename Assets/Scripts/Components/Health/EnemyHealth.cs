@@ -58,6 +58,7 @@ public class EnemyHealth : EntityHealth {
             
             DropObject();
             RoomController.GetSingleton().DestroyProp(gameObject);
+            RoomController.GetSingleton().CheckAndOpenPassages(false);
             Destroy(gameObject);
             }
         protected override void HealthBarDeadAction() {

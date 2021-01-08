@@ -28,7 +28,7 @@ public class Inventory_Item_Stackable_SeedUI : Inventory_Item_StackableUI {
 		public override void SetValues(Item item, int count, bool isOdd, InventoryUI inventory) {
 			
 			base.SetValues(item, count, isOdd, inventory);
-			SetName("Semilla de " + item.GetName());
+			SetName(item.GetName());
 
 			m_equipText.text = PlayerFarming.GetSeedID() == GetItem().GetID() ? "X" : "";
 			}	 

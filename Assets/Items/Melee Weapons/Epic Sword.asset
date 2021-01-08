@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: Epic Sword
   m_EditorClassIdentifier: 
   m_id: 2
-  m_name: Epic Sword
+  m_name: Espada Epica
   m_rarity: 2
-  m_UIIcon: {fileID: 0}
+  m_UIIcon: {fileID: 1666068875700510706, guid: f3da331b06591b447aa66a5f90e06bdc,
+    type: 3}
   m_defaultCount: 0
-  m_defaultUnlocked: 0
+  m_defaultUnlocked: 1
   m_type: 0
-  m_baseDamage: 180
+  m_baseDamage: 250
   m_criticalProbability: 35
-  m_knockbackForce: 8
-  m_knockbackTime: 0.5
+  m_knockbackForce: 6
+  m_knockbackTime: 0.35

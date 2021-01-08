@@ -105,6 +105,11 @@ public class PlayerMovement : JumpingCharacter {
 
             m_lookDirection = direction;
             }
+        public void CancelMovement() {
+
+            SetHorizontalVelocity(Vector2.zero);
+            }
+
         public void IsAttacking(bool isAttacking) => m_isAttacking = isAttacking;
 
         //Funciones heredadas.

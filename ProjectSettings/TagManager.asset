@@ -9,6 +9,7 @@ TagManager:
   - Entity
   - Enemy
   - Interactable
+  - Wall
   layers:
   - Default
   - TransparentFX

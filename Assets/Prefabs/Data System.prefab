@@ -92,4 +92,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 439772983fadad64dbb79fe4315ac905, type: 2}
   m_miscellaneous:
   - {fileID: 11400000, guid: 236d4de326953c245954d804f7e64794, type: 2}
-  m_playerHealth: 1200
+  m_playerHealth: 600
