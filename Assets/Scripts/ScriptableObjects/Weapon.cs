@@ -47,7 +47,7 @@ public class Weapon : Item {
         //Funciones publicas.
         public WeaponType GetWeaponType() => m_type;
         public int GetMinDamage() => m_baseDamage;
-        public int GetUses() => 300 + (200 * (int) GetRarity());
+        public int GetUses() => 50 + (50 * (int) GetRarity());
         public int GetCriticalProbability() => m_criticalProbability;
         public float GetRange() => m_range;
 
@@ -64,6 +64,8 @@ public class Weapon : Item {
 
             return m_damage;
             }
+        
+        public int GetBaseDamage() => m_baseDamage * 2;
 
         //Funciones heredadas.
 		

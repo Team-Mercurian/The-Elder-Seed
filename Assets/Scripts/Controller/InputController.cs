@@ -25,6 +25,7 @@ public class InputController : MonoBehaviour {
             //Privadas.
             private static IHasLookInput m_lookInput;
             private static InputType m_currentInput = InputType.Keyboard;
+            private static InputController m_instance;
 			
         //Establecer variables.
 		
@@ -44,8 +45,10 @@ public class InputController : MonoBehaviour {
             private CursorController m_cursorController;
 
             private bool m_isShowingCursor = false;
+            private bool m_isInUIMode = false;
 
             private PlayerMovement m_playerMovement;
+            private PlayerEvents m_playerEvents;
             private EntityAttack m_playerAttack;
 
             private Coroutine m_dungeonQuitCoroutine;
@@ -54,6 +57,10 @@ public class InputController : MonoBehaviour {
     //Funciones
 		
         //Funciones de MonoBehaviour
+        private void Awake() {
+
+            m_instance = this;
+            }
         private void Start() {
 			
             //Establecer referencias a componentes.
@@ -62,6 +69,7 @@ public class InputController : MonoBehaviour {
 
             m_playerMovement = PlayerBrain.GetSingleton().GetPlayerMovement();
             m_playerAttack = PlayerBrain.GetSingleton().GetAttack();
+            m_playerEvents = PlayerBrain.GetSingleton().GetPlayerEvents();
             m_cursorController = CursorController.GetSingleton();
 
             //Establecer las referencias a las acciones.
@@ -74,8 +82,11 @@ public class InputController : MonoBehaviour {
             Vector2 m_lookValue = m_lookAction.ReadValue<Vector2>();
             Look(m_lookValue);
 
-            //Establecer la velocidad del jugador.
-            Vector2 m_moveValue = m_moveAction.ReadValue<Vector2>();
+            //Mover al jugador.
+            Vector2 m_moveValue = new Vector2();
+
+            if (!m_isInUIMode) m_moveValue = m_moveAction.ReadValue<Vector2>();
+                
             SetPlayerVelocity(new Vector2(m_moveValue.x, m_moveValue.y));
 
             if (m_playerInput.currentControlScheme == "Keyboard") m_currentInput = InputType.Keyboard;
@@ -110,7 +121,7 @@ public class InputController : MonoBehaviour {
             }
         public void Zoom(InputAction.CallbackContext context) {
             
-            if (m_cameraBrain == null) return;
+            if (m_cameraBrain == null || m_isInUIMode) return;
 
             m_cameraBrain.Zoom(-context.ReadValue<float>());
             }
@@ -128,13 +139,19 @@ public class InputController : MonoBehaviour {
             }*/
         public void Jump(InputAction.CallbackContext context) {
             
-            if (context.phase != InputActionPhase.Started) return;
+            if (context.phase != InputActionPhase.Started || m_isInUIMode) return;
             
             m_playerMovement.Jump();
             }
-        public void Attack(InputAction.CallbackContext context) {
+        public void Interact(InputAction.CallbackContext context) {
             
             if (context.phase != InputActionPhase.Started) return;
+            
+            m_playerEvents.Interact();
+            }
+        public void Attack(InputAction.CallbackContext context) {
+            
+            if (context.phase != InputActionPhase.Started || m_isInUIMode) return;
             
             m_playerAttack.Attack();
             }
@@ -146,16 +163,20 @@ public class InputController : MonoBehaviour {
                 if (m_dungeonQuitCoroutine != null) StopCoroutine(m_dungeonQuitCoroutine); 
                 }
             }
+        public void OpenPause(InputAction.CallbackContext context) {
+
+            if (context.phase != InputActionPhase.Started) return;
+            
+            PausePanelUI.GetSingleton().Pause();
+            }
 		
-        public static void SetLookObject(IHasLookInput lookInput) {
-
-            m_lookInput = lookInput;
-            }
-
-        public static InputType GetInputType() {
-
-            return m_currentInput;
-            }
+        public static void SetLookObject(IHasLookInput lookInput) => m_lookInput = lookInput;
+            
+        public static InputController GetSingleton() => m_instance;
+        public static InputType GetInputType() => m_currentInput;
+            
+        public void SetUIMode(bool active) => m_isInUIMode = active;
+        public bool GetUIMode() => m_isInUIMode;
 
         //Funciones heredadas.
 		

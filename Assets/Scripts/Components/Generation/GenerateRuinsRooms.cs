@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,6 +28,10 @@ public class GenerateRuinsRooms : GameBehaviour {
             [Header("Debug")]
             [SerializeField] private GameObject m_testScene = null;
 
+            [Header("Map")]
+            [SerializeField] private MapController m_smallMapController = null;
+            [SerializeField] private MapController m_bigMapController = null;
+
             //Privadas.
             private DataSystem m_dataSystem;
 
@@ -37,6 +42,8 @@ public class GenerateRuinsRooms : GameBehaviour {
 
             m_dataSystem = DataSystem.GetSingleton();
             GenerateAllRooms();
+            m_smallMapController.SetMap(DataSystem.GetSingleton().GetDungeonData());
+            m_bigMapController.SetMap(DataSystem.GetSingleton().GetDungeonData());
             }
 		
         //Funciones publicas.
@@ -44,39 +51,81 @@ public class GenerateRuinsRooms : GameBehaviour {
             
             RoomController.SetAppearDirection(Direction.Up);
             DataSystem.GetSingleton().GetDungeonData().NextFloor();
-            DataSystem.Save();
+            SaveSystem.Save();
 
             SceneController.GetSingleton().LoadScene(Scenes.Ruins, false);
             }
         public static void ExitRuins(bool dead) {
             
+            DataSystem m_dS = DataSystem.GetSingleton();
             FarmSpawnController.SetSpawn(dead ? FarmSpawnController.SpawnType.Altar : FarmSpawnController.SpawnType.Ruins);
 
-            if (dead) {
+            List<DeadPanelUI.LostItem> m_lostItems = new List<DeadPanelUI.LostItem>();
 
-                DataSystem.GetSingleton().GetDungeonData().LoseInventoryPart(Random.Range(40, 61));
+            InventoryData m_iD = DataSystem.GetSingleton().GetDungeonData().GetInventoryData();
+
+            int m_losePercent = Random.Range(40, 61);
+
+            foreach(WeaponEntityData m_ed in m_iD.GetWeaponList()) {
+                
+                if (dead) m_ed.SetUses(Mathf.RoundToInt(m_ed.GetUses() - (DataSystem.GetSingleton().GetWeapon(m_ed.GetID()).GetUses() * 0.35f)));
+                m_lostItems.Add(new DeadPanelUI.LostItem((Item) m_dS.GetWeapon(m_ed.GetID()), false));
                 }
 
-            foreach(GridData m_d in DataSystem.GetSingleton().GetGameData().GetFarmData().GetGridDatas()) {
+            foreach(ItemData m_i in m_iD.GetPotionList()) m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPotion(m_i.GetID()), !dead));
+            if (dead) m_iD.SetPotionList(new List<ItemData>());
 
-                m_d.SetHarvest(true);
+            foreach(ItemData m_i in m_iD.GetPlantList()) m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPlant(m_i.GetID()), !dead));
+            if (dead) m_iD.SetPlantList(new List<ItemData>());
+
+            List<Seed> m_seeds = DataSystem.GetSingleton().GetSeeds();
+            
+            foreach(Seed m_s in m_seeds) {
+                
+                int m_totalCount = m_iD.GetSeedData(m_s.GetID()).GetCount();
+
+                int m_lostCount = dead ? Mathf.RoundToInt(m_totalCount * (m_losePercent / 100f)) : 0;
+                int m_finalCount = m_totalCount - m_lostCount;
+
+                for(int i = 0; i < m_lostCount; i ++) m_lostItems.Add(new DeadPanelUI.LostItem(m_s, true));
+                for(int i = 0; i < m_finalCount; i ++) m_lostItems.Add(new DeadPanelUI.LostItem(m_s, false));
+
+                m_iD.AddSeed(m_s.GetID(), -m_lostCount);
                 }
 
+            DeadPanelUI.GetSingleton().SetData(m_lostItems, dead ? "¡Te has desmayado!" : "¡Has logrado salir con exito!");
+            DeadPanelUI.GetSingleton().Open();
+                
             RoomController.SetAppearDirection(Direction.Up);
 
-            DataSystem.GetSingleton().SetDungeonData(null);
-            DataSystem.Save();
-            SceneController.GetSingleton().LoadScene(Scenes.House, false);
+            m_dS.GetGameData().GetInventoryData().AddDungeonInventory(m_dS.GetDungeonData().GetInventoryData());
+            SaveSystem.Save();
             }
         public static int GetActualFloor() => m_actualFloor;
 
         //Funciones privadas.
         private void GenerateAllRooms() {
 
-            if (m_dataSystem.GetDungeonData() == null) m_dataSystem.SetDungeonData(new DungeonData(new PlayerData(PlayerBrain.GetSingleton().GetHealth().GetMaxHealth())));
+            if (m_dataSystem.GetDungeonData() == null) {
+                
+                DungeonData m_dD = new DungeonData();
+                m_dD.GetPlayer().SetHealth(DataSystem.GetSingleton().GetPlayerHealth());
+                
+                InventoryData m_iD = DataSystem.GetSingleton().GetNewInventoryData(true);
+
+                //Set best weapon to the default weapon.
+                List<WeaponEntityData> m_weaponDatas = m_iD.GetWeaponList().OrderByDescending(c => c.GetUses()).ThenByDescending(c => DataSystem.GetSingleton().GetWeapon(c.GetID()).GetRarity()).ToList();
+                int m_actualWeapon = m_weaponDatas[0].GetIndex();
+
+                m_dD.SetInventoryData(m_iD);
+                m_dD.SetActualWeapon(m_actualWeapon);
+
+                m_dataSystem.SetDungeonData(m_dD);
+                }
+                
             m_actualFloor = m_dataSystem.GetDungeonData().GetFloor();
 
-            List<RoomData> m_roomsDatas = m_dataSystem.GetDungeonData().GetRoomsDatas();
+            List<RoomData> m_roomsDatas = m_dataSystem.GetDungeonData().GetRoomDatas();
 
             if (m_roomsDatas == null) {
 
@@ -193,6 +242,26 @@ public class GenerateRuinsRooms : GameBehaviour {
 
                 m_roomPrefab = m_dataSystem.GetStairsRoomPrefab(roomData.GetRoomPrefabIndex());
                 }
+
+
+            List<RoomData> m_rd = DataSystem.GetSingleton().GetDungeonData().GetRoomDatas();
+
+            roomData.Unlock();
+            roomData.Visit();
+            
+            RoomData m_r;
+
+            m_r = m_rd.Find(c => c.GetRoomPosition() == roomData.GetRoomPosition() + Vector2Int.up);
+            if (m_r != null) m_r.Unlock();
+
+            m_r = m_rd.Find(c => c.GetRoomPosition() == roomData.GetRoomPosition() + Vector2Int.down);
+            if (m_r != null) m_r.Unlock();
+
+            m_r = m_rd.Find(c => c.GetRoomPosition() == roomData.GetRoomPosition() + Vector2Int.left);
+            if (m_r != null) m_r.Unlock();
+
+            m_r = m_rd.Find(c => c.GetRoomPosition() == roomData.GetRoomPosition() + Vector2Int.right);
+            if (m_r != null) m_r.Unlock();
 
             RoomController m_roomController = Instantiate(m_roomPrefab, transform).GetComponent<RoomController>();
             m_roomController.SetData(roomData.GetRoomPosition());

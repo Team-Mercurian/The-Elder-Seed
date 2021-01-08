@@ -30,9 +30,14 @@ public class PlayerHealth : EntityHealth {
         //Funciones privadas.
 		
         //Funciones publicas.
+        protected override void Start() {
+
+            m_health = DataSystem.GetSingleton().GetPlayerHealth();
+            base.Start();
+            }
 		
         //Funciones heredadas.
-		protected override int GetSavedHealth() {
+		protected int GetSavedHealth() {
 
             int m_h = m_health;
 
@@ -41,15 +46,23 @@ public class PlayerHealth : EntityHealth {
 
             return m_h;
             }
-        protected override void SetHealth(int value) {
+        protected override void SaveHealth(int health) {
+
+            DataSystem.GetSingleton().GetDungeonData().GetPlayer().SetHealth(health);
+            }
+        protected override int SetActualHealth() {
             
-            SetActualHealth(value);
-            DataSystem.GetSingleton().GetDungeonData().GetPlayer().SetHealth(value); // SetActualHealth(value);
+            return GetSavedHealth();
             }
 		protected override void Dead() {
             
+            PlayerBrain.GetSingleton().GetMovement().SetIfCanMove(false);
             CameraController.ResetCameraInStart();
             GenerateRuinsRooms.ExitRuins(true);
+            }
+        protected override void HealthBarDeadAction() {
+
+            
             }
 
         //Funciones ha heredar.

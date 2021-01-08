@@ -60,6 +60,7 @@ public abstract class EntityMovement : GravityValues {
 
                 protected Vector2 m_knockbackValue = new Vector2();
                 private Coroutine m_knockbackCoroutine;
+                private bool m_canMove = true;
 
 //                protected bool m_isInSlope = false;
 //                protected Vector3 m_slopeHitPlace;
@@ -161,6 +162,7 @@ public abstract class EntityMovement : GravityValues {
             }
         public virtual void SetHorizontalVelocity(Vector2 velocity) {
 
+            if (!m_canMove) return;
             SetReachVelocity(velocity);
             }
         public Vector2 GetMovementDirection() {
@@ -170,6 +172,8 @@ public abstract class EntityMovement : GravityValues {
 
             return m_direction;
             }
+        public void SetIfCanMove(bool canMove) => m_canMove = canMove; 
+        public bool GetIfIsGrounded() => m_isGrounded;
 
         //Funciones ha heredar.
 
@@ -277,7 +281,7 @@ public abstract class JumpingCharacter : EntityMovement {
             }
 
         //Funciones publicas.
-        public void Jump() {
+        public virtual void Jump() {
 
             if (!m_isGrounded || !m_canJump) return;
             StartCoroutine(JumpAnimation());

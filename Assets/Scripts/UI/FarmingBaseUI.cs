@@ -23,6 +23,7 @@ public class FarmingBaseUI : MonoBehaviour {
             //Publicas.
             [Header("References")]
             [SerializeField] private SeedSelectorUI m_seedSelector = null;
+            [SerializeField] private Inventory_FarmingUI m_inventory = null;
 			
             //Privadas.
 			
@@ -42,6 +43,11 @@ public class FarmingBaseUI : MonoBehaviour {
 
             if (context.started) m_seedSelector.Open();
             else if (context.canceled) m_seedSelector.Close();
+            }
+
+        public void OCInventory(InputAction.CallbackContext context) {
+
+            m_inventory.OpenClose();
             }
 
         public static FarmingBaseUI GetSingleton() => m_instance;
