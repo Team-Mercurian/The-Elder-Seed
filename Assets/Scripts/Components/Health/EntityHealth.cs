@@ -118,11 +118,11 @@ public abstract class EntityHealth : MonoBehaviour {
 
             for(float i = 0; i < m_damageCooldown; i += Time.deltaTime) {
                 
-                m_meshToDeactive.SetActive(((i * 10f) % 2f > 1));
+                if (m_meshToDeactive != null) m_meshToDeactive.SetActive(((i * 10f) % 2f > 1));
                 yield return null;
                 }
 
-            m_meshToDeactive.SetActive(true);
+            if (m_meshToDeactive != null) m_meshToDeactive.SetActive(true);
             m_canReceiveDamage = true;
             }
         }

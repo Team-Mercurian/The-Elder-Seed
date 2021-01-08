@@ -44,6 +44,8 @@ public class GenerateRuinsRooms : GameBehaviour {
             GenerateAllRooms();
             m_smallMapController.SetMap(DataSystem.GetSingleton().GetDungeonData());
             m_bigMapController.SetMap(DataSystem.GetSingleton().GetDungeonData());
+            
+            PlayerBrain.GetSingleton().GetAttack().SetWeapon(m_dataSystem.GetWeapon(m_dataSystem.GetDungeonData().GetActualWeapon().GetID()));
             }
 		
         //Funciones publicas.

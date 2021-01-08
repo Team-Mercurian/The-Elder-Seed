@@ -25,7 +25,7 @@ public class EntityAttack : MonoBehaviour
     [SerializeField] private Transform m_parent = null;
     [SerializeField] private GameObject m_meleeAttack = null;
     [SerializeField] private GameObject m_rangeAttack = null;
-    [SerializeField] private Weapon m_weapon = null;
+    [SerializeField] protected Weapon m_weapon = null;
     [SerializeField] private string m_tagToCompare = null;
 
     //Privadas.
@@ -39,6 +39,8 @@ public class EntityAttack : MonoBehaviour
 
     //Funciones publicas.
     protected Transform GetParentTransform() => m_parent;
+    public void SetWeapon(Weapon weapon) => m_weapon = weapon;
+        
 
     //Funciones heredadas.
 

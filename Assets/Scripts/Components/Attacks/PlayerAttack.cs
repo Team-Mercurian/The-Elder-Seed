@@ -81,6 +81,8 @@ public class PlayerAttack : EntityAttack {
             m_inverse = !m_inverse;
             m_slash.Slash(m_inverse);
 
+            StartCoroutine(AttackCoroutine());
+
             base.Attack();
             return;
             }
@@ -127,7 +129,7 @@ public class PlayerAttack : EntityAttack {
 
         m_playerMovement.IsAttacking(false);
         m_delay = 0;
-        yield return new WaitForSeconds(0.10f);
-        GetCollider().transform.localPosition = m_savedPosition;
+        //yield return new WaitForSeconds(0.10f);
+        //GetCollider().transform.localPosition = m_savedPosition;
         }
     }

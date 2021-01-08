@@ -356,7 +356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1310710401664682928
 Transform:
   m_ObjectHideFlags: 0
@@ -384,11 +384,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faa33309d5c163c4180e260f8d7d2fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_attackCollider: {fileID: 2228805919919331753}
   m_parent: {fileID: 3022526979373369159}
+  m_meleeAttack: {fileID: 7622685830876496375, guid: 6b0c6c4d036d6e44b9a69d7e14adab68,
+    type: 3}
+  m_rangeAttack: {fileID: 739282646706900337, guid: b24e95849ed5d284aaeb712d463f6b6e,
+    type: 3}
+  m_weapon: {fileID: 0}
+  m_tagToCompare: Enemy
   m_attackDelay: 0.4
-  m_aimHead: {fileID: 0}
+  m_aimHead: {fileID: 8460287973445187213}
   m_playerMovement: {fileID: 606783867811322470}
+  m_slash: {fileID: 8460287973528500502}
   m_attackForce: 4
   m_attackForceTime: 0.4
   m_autoTargetAttackDistance: 1
@@ -478,3 +484,27 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 8215366795664563022}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8460287973445187213 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 534278558753074627, guid: 74dbdf2ee9e26af41a0f7e6677a74b72,
+    type: 3}
+  m_PrefabInstance: {fileID: 8215366795664563022}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7894340fd7ddd8e4b8100e59af764b50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8460287973528500502 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 534278558802829912, guid: 74dbdf2ee9e26af41a0f7e6677a74b72,
+    type: 3}
+  m_PrefabInstance: {fileID: 8215366795664563022}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f4033746f68ced409e15ef52720e9eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
