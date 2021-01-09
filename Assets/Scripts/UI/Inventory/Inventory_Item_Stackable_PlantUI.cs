@@ -70,19 +70,41 @@ public class Inventory_Item_Stackable_PlantUI : Inventory_Item_StackableUI {
 			List<WeaponBaseData> m_unlockeableWeapons = DataSystem.GetSingleton().GetGameData().GetWeaponBaseData().FindAll(c => !c.GetUnlocked());
 			m_unlockeableWeapons = m_unlockeableWeapons.FindAll(c => DataSystem.GetSingleton().GetWeapon(c.GetID()).GetRarity() == m_rarity);
 
+			string m_str = "";
+
 			if (m_unlockeableWeapons.Count > 0) {
 
 				Weapon m_finalWeapon = DataSystem.GetSingleton().GetWeapon(m_unlockeableWeapons[Random.Range(0, m_unlockeableWeapons.Count)].GetID());
 				DataSystem.GetSingleton().GetGameData().GetWeaponBaseData().Find(c => c.GetID() == m_finalWeapon.GetID()).Unlock();
 				SaveSystem.Save();
-				Debug.Log("Desbloqueada la arma en el indice: " + m_finalWeapon.GetID());
-				return true;
+
+				string m_strRarity = "";
+
+				switch(m_rarity) {
+
+					case Rarity.Common : m_strRarity = "comun"; break;
+					case Rarity.Rare : m_strRarity = "rara"; break;
+					case Rarity.Epic : m_strRarity = "epica"; break;
+					case Rarity.Legendary : m_strRarity = "legendaria"; break;
+					}	 
+
+				string m_a = "¡Nueva arma " + m_strRarity + " desbloqueada!";
+				string m_b = m_finalWeapon.GetName();
+				string m_c = "<size=16> Para conseguirla deberas buscar en las ruinas.</size>";
+				m_str = m_a + "\n\n" + m_b + "\n" + m_c;
 				}	
 			else {
 
-				Debug.Log("No quedan armas para desbloquear.");
-				return false;
+				int m_fm = (int) m_rarity + 1;
+
+				string m_a = "No quedan armas para desbloquear de este tipo.";
+				string m_b = "<size=16> En compensacion has recibido " + m_fm + " " + (m_fm == 1 ? "fragmento magico." : "fragmentos magicos.") + "</size>";
+				m_str = m_a + "\n\n" + m_b;
 				}
+
+			WarningPanelUI.GetSingleton().SetData(m_str, "Cerrar");
+			WarningPanelUI.GetSingleton().Open();
+			return true;
 			}
         
         
