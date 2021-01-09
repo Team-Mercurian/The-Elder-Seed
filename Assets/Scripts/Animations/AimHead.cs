@@ -48,6 +48,13 @@ public class AimHead:MonoBehaviour
         {
             m_lookPosition = m_defaultPos;
             m_animator.SetBool("inCombat", false);
+            foreach(Transform target in m_targets)
+            {
+                if (target == null)
+                {
+                    m_targets.Remove(target);
+                }
+            }
         }
         
         float m_angle = (Mathf.Atan2(m_lookPosition.z - m_player.position.z, m_lookPosition.x - m_player.position.x) * Mathf.Rad2Deg) + m_player.eulerAngles.y;
