@@ -78,7 +78,7 @@ ModelImporter:
       name: Skeleton|Attack1
       takeName: Skeleton|Attack1
       internalID: 0
-      firstFrame: 0
+      firstFrame: 1
       lastFrame: 70
       wrapMode: 0
       orientationOffsetY: 0
@@ -107,7 +107,7 @@ ModelImporter:
       name: Skeleton|Attack2
       takeName: Skeleton|Attack2
       internalID: 0
-      firstFrame: 0
+      firstFrame: 1
       lastFrame: 70
       wrapMode: 0
       orientationOffsetY: 0
@@ -224,7 +224,7 @@ ModelImporter:
       takeName: Skeleton|Jump
       internalID: 0
       firstFrame: 0
-      lastFrame: 34
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

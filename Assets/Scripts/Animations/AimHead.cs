@@ -10,7 +10,7 @@ public class AimHead:MonoBehaviour
     List<Transform> m_targets = new List<Transform>();
 
     //default aim position
-    Vector3 m_defaultTargetPos = new Vector3(0, 1.45f, 3f);
+    Vector3 m_defaultTargetPos = new Vector3(0, 1.2f, 3f);
 
     Camera m_cam;
 
