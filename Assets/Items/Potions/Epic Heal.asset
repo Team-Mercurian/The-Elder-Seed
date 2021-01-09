@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Epic Heal
   m_EditorClassIdentifier: 
   m_id: 2
-  m_name: Pocion de Curacion III
+  m_name: Pocion Grande
   m_rarity: 2
   m_UIIcon: {fileID: 0}
   m_defaultCount: 0

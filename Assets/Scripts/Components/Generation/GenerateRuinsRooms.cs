@@ -74,11 +74,23 @@ public class GenerateRuinsRooms : GameBehaviour {
                 m_lostItems.Add(new DeadPanelUI.LostItem((Item) m_dS.GetWeapon(m_ed.GetID()), false));
                 }
 
-            foreach(ItemData m_i in m_iD.GetPotionList()) m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPotion(m_i.GetID()), !dead));
-            if (dead) m_iD.SetPotionList(new List<ItemData>());
+            foreach(ItemData m_i in m_iD.GetPotionList()) {
 
-            foreach(ItemData m_i in m_iD.GetPlantList()) m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPlant(m_i.GetID()), !dead));
-            if (dead) m_iD.SetPlantList(new List<ItemData>());
+                for(int i = 0; i < m_i.GetCount(); i ++) {
+                    
+                    m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPotion(m_i.GetID()), dead));
+                    }
+                if (dead) m_i.SetCount(0);
+                }
+
+            foreach(ItemData m_i in m_iD.GetPlantList()) {
+
+                for(int i = 0; i < m_i.GetCount(); i ++) {
+                    
+                    m_lostItems.Add(new DeadPanelUI.LostItem(m_dS.GetPlant(m_i.GetID()), dead));
+                    }
+                if (dead) m_i.SetCount(0);
+                }
 
             List<Seed> m_seeds = DataSystem.GetSingleton().GetSeeds();
             
