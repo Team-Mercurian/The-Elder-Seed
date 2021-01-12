@@ -2,58 +2,74 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EntityAttack : MonoBehaviour {
-	
+public class EntityAttack : MonoBehaviour
+{
+
     //Establecer variables.
-		
-        //Establecer estructuras.
-		
-        //Establecer enumeradores.
-		
-        //Establecer variables estaticas.
-		
-            //Publicas.
-			
-            //Privadas
-			
-        //Establecer variables.
-		
-            //Publicas.
-            [Header("References")]
-            [SerializeField] private BoxCollider m_attackCollider = null;
-            [SerializeField] private Transform m_parent = null;
-			
-            //Privadas.
-			
-			
+
+    //Establecer estructuras.
+
+    //Establecer enumeradores.
+
+    //Establecer variables estaticas.
+
+    //Publicas.
+
+    //Privadas
+
+    //Establecer variables.
+
+    //Publicas.
+    [Header("References")]
+
+    [SerializeField] private Transform m_parent = null;
+    [SerializeField] private GameObject m_meleeAttack = null;
+    [SerializeField] private GameObject m_rangeAttack = null;
+    [SerializeField] protected Weapon m_weapon = null;
+    [SerializeField] private string m_tagToCompare = null;
+
+    //Privadas.
+
+
     //Funciones
-		
-        //Funciones de MonoBehaviour.
-        protected virtual void Start() {
 
-            m_attackCollider.enabled = false;
-            }
-		
-        //Funciones privadas.
-		
-        //Funciones publicas.
-        protected BoxCollider GetCollider() => m_attackCollider;
-		protected Transform GetParentTransform() => m_parent;
+    //Funciones de MonoBehaviour.
 
-        //Funciones heredadas.
-		
-        //Funciones ha heredar.
-        public virtual void Attack() {
+    //Funciones privadas.
 
-            StartCoroutine(AttackCoroutine());
-            }
-        public abstract void DoDamage(Collider collider);
+    //Funciones publicas.
+    protected Transform GetParentTransform() => m_parent;
+    public virtual void SetWeapon(Weapon weapon) => m_weapon = weapon;
+        
 
-        //Corotinas.
-		protected virtual IEnumerator AttackCoroutine() {
+    //Funciones heredadas.
 
-            m_attackCollider.enabled = true;
-            yield return new WaitForSeconds(0.05f);
-            m_attackCollider.enabled = false;
+    //Funciones ha heredar.
+    public virtual void Attack()
+    {
+        GameObject attack = null;
+
+        if (m_weapon.GetWeaponType() == Weapon.WeaponType.Melee)
+        {
+            attack = Instantiate(m_meleeAttack);
+        }
+        else
+        {
+            attack = Instantiate(m_rangeAttack);
+        }
+
+        List<EntityBrain> m_brains = new List<EntityBrain>();
+
+        foreach (EntityBrain brain in FindObjectsOfType<EntityBrain>())
+        {
+            if (brain.gameObject.tag == m_tagToCompare)
+            {
+                m_brains.Add(brain);
             }
         }
+
+        attack.GetComponent<DamageBase>().Create(m_tagToCompare, m_parent, m_weapon, m_brains);
+
+    }
+
+}

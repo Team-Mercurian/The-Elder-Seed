@@ -30,6 +30,7 @@ public abstract class EntityHealth : MonoBehaviour {
 
             [Header("References")]
             [SerializeField] protected EntityMovement m_entityMovement = null;
+            [SerializeField] protected HealthBar m_healthBar = null;
 
             //Privadas.
             private Coroutine m_damageCoroutine;
@@ -41,9 +42,10 @@ public abstract class EntityHealth : MonoBehaviour {
     //Funciones
 		
         //Funciones de MonoBehaviour
-        private void Start() {
+        protected virtual void Start() {
 			
             m_actualHealth = SetActualHealth();
+            if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health, true);
             }
 		
         //Funciones privadas.
@@ -55,7 +57,7 @@ public abstract class EntityHealth : MonoBehaviour {
 
             //Reducir la vida.
             m_actualHealth = Mathf.Clamp(m_actualHealth - damage, 0, m_health);
-            DamageTextController m_dt = Instantiate(m_damageText, transform.position + (Vector3.up * m_damageTextOffset) , Quaternion.identity).GetComponent<DamageTextController>();
+            DamageTextController m_dt = Instantiate(m_damageText, transform.position + (Vector3.up * m_damageTextOffset), Quaternion.identity).GetComponent<DamageTextController>();
             m_dt.SetData(damage.ToString());
 
             m_entityMovement.SetKnockback(knockback);
@@ -64,10 +66,13 @@ public abstract class EntityHealth : MonoBehaviour {
             if (m_actualHealth == 0) {
 
                 Dead();
+                if (m_healthBar != null) HealthBarDeadAction();
                 }
 
             else {
-
+                
+                SaveHealth(m_actualHealth);
+                if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health, false);
                 if (m_damageCooldown > 0) m_damageCoroutine = StartCoroutine(CooldownAnimation());
                 }
             }
@@ -76,13 +81,22 @@ public abstract class EntityHealth : MonoBehaviour {
             //Añadir vida.
             m_actualHealth = Mathf.Clamp(m_actualHealth + health, 0, m_health);
             }
-		
+
+        protected abstract void SaveHealth(int health);
         public int GetMaxHealth() => m_health;
+
+        public void OverrideHealth(int health) {
+
+            m_actualHealth = Mathf.Clamp(health, 0, m_health);
+            SaveHealth(m_actualHealth);
+            if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health, false);
+            }
+
 
         [ContextMenu("Get Debug Damage")]
         private void DebugReceiveDamage() {
 
-            GetDamage(1, new Knockback());
+            GetDamage(150, new Knockback());
             }
             
         [ContextMenu("Debug Dead")]
@@ -95,6 +109,7 @@ public abstract class EntityHealth : MonoBehaviour {
         //Funciones ha heredar.
         protected abstract int SetActualHealth();
         protected abstract void Dead();
+        protected abstract void HealthBarDeadAction();
 		
         //Corotinas.
         private IEnumerator CooldownAnimation() {
@@ -103,11 +118,11 @@ public abstract class EntityHealth : MonoBehaviour {
 
             for(float i = 0; i < m_damageCooldown; i += Time.deltaTime) {
                 
-                m_meshToDeactive.SetActive(((i * 10f) % 2f > 1));
+                if (m_meshToDeactive != null) m_meshToDeactive.SetActive(((i * 10f) % 2f > 1));
                 yield return null;
                 }
 
-            m_meshToDeactive.SetActive(true);
+            if (m_meshToDeactive != null) m_meshToDeactive.SetActive(true);
             m_canReceiveDamage = true;
             }
         }

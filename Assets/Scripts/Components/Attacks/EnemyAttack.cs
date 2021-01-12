@@ -38,7 +38,7 @@ public class EnemyAttack : EntityAttack {
         //Funciones publicas.
 		
         //Funciones heredadas.
-        public override void DoDamage(Collider collider) {
+/*        public override void DoDamage(Collider collider) {
 
             if (!collider.CompareTag("Player")) return;
 
@@ -49,9 +49,11 @@ public class EnemyAttack : EntityAttack {
 
             Knockback m_knockback = new Knockback(m_direction, m_knockbackForce, m_knockbackTime);
 
-            collider.GetComponent<EntityHealth>().GetDamage(m_attackDamage, m_knockback);   
+            int m_damage = Mathf.RoundToInt(m_attackDamage * (1 + (0.25f * DataSystem.GetSingleton().GetDungeonData().GetFloor())));
+
+            collider.GetComponent<EntityHealth>().GetDamage(m_damage, m_knockback);   
             }
-		
+		*/
         //Funciones ha heredar.
 		
         //Corotinas.

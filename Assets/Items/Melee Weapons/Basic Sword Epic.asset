@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28881f1d49f82e846b76596dcbae4457, type: 3}
+  m_Name: Basic Sword Epic
+  m_EditorClassIdentifier: 
+  m_id: 2
+  m_name: Espada Epica
+  m_rarity: 2
+  m_UIIcon: {fileID: 1666068875700510706, guid: f3da331b06591b447aa66a5f90e06bdc,
+    type: 3}
+  m_defaultCount: 0
+  m_defaultUnlocked: 0
+  m_type: 0
+  m_baseDamage: 250
+  m_criticalProbability: 35
+  m_range: 0
+  m_knockbackForce: 6
+  m_knockbackTime: 0.35
+  m_weaponMesh: {fileID: -5712142429949666421, guid: 5dee3b01292eac64bb9c884960f93b8d,
+    type: 3}

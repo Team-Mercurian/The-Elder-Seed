@@ -219,78 +219,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &5218471412373416700
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2226143695978134416}
-  - component: {fileID: 6429356520045414890}
-  - component: {fileID: 7130164610559775352}
-  m_Layer: 0
-  m_Name: Attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2226143695978134416
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5218471412373416700}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1563572918801935451}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &6429356520045414890
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5218471412373416700}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.25, z: 0}
---- !u!114 &7130164610559775352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5218471412373416700}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8ae7a11dca089d49ab8adb2cd7396ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_event:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7398143930599952937}
-        m_TargetAssemblyTypeName: EnemyAttack, Assembly-CSharp
-        m_MethodName: DoDamage
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &6630129704215920815
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,8 +246,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2226143695978134416}
+  m_Children: []
   m_Father: {fileID: 5215380405671523415}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -335,8 +262,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 003191c2fab5a4643a4c9f9eac0490a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_attackCollider: {fileID: 6429356520045414890}
   m_parent: {fileID: 5215380405671523415}
+  m_meleeAttack: {fileID: 7622685830876496375, guid: 6b0c6c4d036d6e44b9a69d7e14adab68,
+    type: 3}
+  m_rangeAttack: {fileID: 739282646706900337, guid: b24e95849ed5d284aaeb712d463f6b6e,
+    type: 3}
+  m_weapon: {fileID: 11400000, guid: 3466469a01331fa4b8291e62d391e997, type: 2}
+  m_tagToCompare: Player
   m_attackDamage: 15
   m_knockbackForce: 1
   m_knockbackTime: 0.5

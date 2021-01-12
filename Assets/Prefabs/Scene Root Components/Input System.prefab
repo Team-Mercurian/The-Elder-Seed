@@ -67,7 +67,19 @@ MonoBehaviour:
     m_ActionId: 6a3eed9b-5eff-4be2-9fbf-ed35dc463e4f
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5782245782921134665}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: Move
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 803d9eb4-ee54-4e79-be06-ef533310d9f7
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
@@ -103,10 +115,6 @@ MonoBehaviour:
     m_ActionId: 4e2d288d-2673-4bab-b78c-a4738fad305e
     m_ActionName: Player/Zoom[/Mouse/scroll/y]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5ccd54b8-87c7-4bd8-bb79-df93e826f76a
-    m_ActionName: Player/Run[/Keyboard/leftShift]
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5782245782921134665}
         m_TargetAssemblyTypeName: InputController, Assembly-CSharp
@@ -132,44 +140,56 @@ MonoBehaviour:
     m_ActionName: Player/Select Seed[/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: eba00e53-a9c1-44fa-8624-a492d60c1472
+    m_ActionId: ab8645d1-f3df-42f4-a738-0368aa3f4e7e
+    m_ActionName: Player/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0cefe5e3-023d-443a-9b61-b2c38d0d7ddf
+    m_ActionName: Player/Inventory[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a5c1a032-77b3-4598-a536-045f0ff3cddb
     m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 17a8c2ba-e9a4-4159-bb80-b286c31a86be
+    m_ActionId: 76ff1b21-4cde-4f84-bc64-61f378202efb
     m_ActionName: UI/Submit[/Keyboard/enter]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: ee511444-61c2-4a0d-a8da-fe2a02d8aefb
+    m_ActionId: e14a1752-58f5-4f74-b724-74672ae94759
     m_ActionName: UI/Cancel[/Keyboard/escape]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 40ed3a31-b0a5-467c-b72e-cce79cb4dc79
-    m_ActionName: UI/Point[/Mouse/position]
+    m_ActionId: 7ede614d-c67b-4bfa-b90f-4b572f6ed773
+    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 614794b5-ff8b-4603-a64f-e923a32d6510
-    m_ActionName: UI/Click[/Mouse/leftButton]
+    m_ActionId: deced462-cef9-41a8-8599-6f3f00169914
+    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e13a5179-d889-442c-adc3-ac169494a3aa
+    m_ActionId: 5dd2cf10-4e1d-414b-aa3e-dbf4cb4ba483
     m_ActionName: UI/ScrollWheel[/Mouse/scroll]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: a1578272-2a00-4024-9a10-fd246717716b
+    m_ActionId: 0a399560-a549-42bf-b5c2-780c441a7a8f
     m_ActionName: UI/MiddleClick[/Mouse/middleButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: ce7cb1fc-51db-4925-b859-5031cf699311
+    m_ActionId: 0c8966cd-4f9a-489b-947f-d49fb6626921
     m_ActionName: UI/RightClick[/Mouse/rightButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 6b6bb991-4979-4fed-b978-193a185c50fe
+    m_ActionId: 62114c76-850b-475c-b162-e45105980988
     m_ActionName: UI/TrackedDevicePosition
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 502f8c26-7913-4d38-bed5-9029c25a1231
+    m_ActionId: f50fa97e-1e77-40b6-8a17-37553d8a5819
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ffb28401-2219-41b1-ac42-2716ae21437c
+    m_ActionName: UI/CloseInventory[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

@@ -61,6 +61,11 @@ public class CursorController : MonoBehaviour {
             m_temporalVisibility = active;
             SetCursorVisibility(m_cursorVisibility);
             }
+        public void SetVisibility(bool active) {
+            
+            m_cursorVisibility = active;
+            SetCursorVisibility(m_cursorVisibility);
+            }
 		
         //Funciones heredadas.
 		

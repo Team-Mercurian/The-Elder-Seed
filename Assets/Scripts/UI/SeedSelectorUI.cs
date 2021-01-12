@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class SeedSelectorUI : PanelUI, IHasLookInput {
 	
@@ -21,7 +22,6 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             //Publicas.
             [Header("References")]
             [SerializeField] private Transform m_seedHolder = null;
-            [SerializeField] private CanvasGroup m_canvasGroup = null;
 
             [Space]
             [SerializeField] private RectTransform m_selector = null;
@@ -32,41 +32,27 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             [SerializeField] private GameObject m_lineSeparator = null;
 
             [Header("Values")]
-            [SerializeField] private AnimationCurve m_animationCurve = null;
             [SerializeField] private float m_distance = 64;
 
             //Privadas.
             private List<SeedSelector_SeedUI> m_seedsController;
             private Coroutine m_IORoutine = null;
 			
-            private int m_selectedSeed;
-            List<SeedData> m_seeds;
+            private int m_selectedSeedID;
+            private List<ItemData> m_unlockedSeeds;
 
     //Funciones
 		
         //Funciones de MonoBehaviour
-        protected override void Start() {
-
-            m_canvasGroup.alpha = 0;
-            m_canvasGroup.interactable = false;
-
-            base.Start();
-            }  
 		
         //Funciones privadas.
         private void CreateSeeds() {
 
             m_seedsController = new List<SeedSelector_SeedUI>();
 
-            List<SeedData> m_allSeeds = DataSystem.GetSingleton().GetGameData().GetFarmData().GetSeedDatas();
-            m_seeds = new List<SeedData>();
-
-            for(int i = 0; i < m_allSeeds.Count; i ++) {
-
-                if (m_allSeeds[i].GetUnlocked()) m_seeds.Add(m_allSeeds[i]);
-                }
-
-            int m_count = m_seeds.Count;
+            m_unlockedSeeds = DataSystem.GetSingleton().GetGameData().GetInventoryData().GetSeedList().FindAll(c => c.GetUnlocked() == true);
+            
+            int m_count = m_unlockedSeeds.Count;
 
             for(int i = 0; i < m_count * 2; i ++) {
 
@@ -87,7 +73,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
 
                     SeedSelector_SeedUI m_seedController = m_object.GetComponent<SeedSelector_SeedUI>();
 
-                    m_seedController.SetData(m_seeds[i/2].GetSeed().GetIcon(), m_seeds[i/2].GetCount());
+                    m_seedController.SetData(DataSystem.GetSingleton().GetSeed(m_unlockedSeeds[i/2].GetID()).GetIcon(), m_unlockedSeeds[i/2].GetCount());
                     m_seedsController.Add(m_seedController);
                     }
 
@@ -101,8 +87,8 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
                 if (selectedSeedIndex == i) {
 
                     m_seedsController[i].Select();
-                    m_selectedSeed = selectedSeedIndex == -1 ? -1 : m_seeds[i].GetIndex();
-                    m_selectedText.text = DataSystem.GetSingleton().GetSeed(m_seeds[i].GetIndex()).GetName();
+                    m_selectedSeedID = selectedSeedIndex == -1 ? -1 : m_unlockedSeeds[i].GetID();
+                    m_selectedText.text = DataSystem.GetSingleton().GetSeed(m_unlockedSeeds[i].GetID()).GetName();
                     }
                 
                 else m_seedsController[i].UnSelect();
@@ -127,7 +113,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             InputController.SetLookObject(this);
 
             m_selector.anchoredPosition = Vector2.zero;
-            m_selectedSeed = -1;
+            m_selectedSeedID = -1;
             }
             
         [ContextMenu("Debug Close")]
@@ -139,7 +125,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             m_IORoutine = StartCoroutine(PanelIOCoroutine(false));
             
             InputController.SetLookObject(CameraController.GetSingleton());
-            PlayerFarming.SetSeed(m_selectedSeed);
+            PlayerFarming.SetSeedID(m_selectedSeedID);
             } 
 		
         public void Look(Vector2 velocity) {
@@ -179,16 +165,16 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
         private IEnumerator PanelIOCoroutine(bool active) {
 
             float m_time = 0.25f;
-            float m_a = m_canvasGroup.alpha;
+            float m_a = GetCanvasGroup().alpha;
             float m_b = active ? 1 : 0;
 
             for(float i = 0; i < m_time; i += Time.deltaTime) {
 
-                m_canvasGroup.alpha = Mathf.Lerp(m_a, m_b, m_animationCurve.Evaluate(i / m_time));
+                GetCanvasGroup().alpha = Mathf.Lerp(m_a, m_b, GetAnimationCurveEvaluation(i / m_time));
                 yield return null;
                 }
             
-            m_canvasGroup.alpha = m_b;
+            GetCanvasGroup().alpha = m_b;
             
             if (!active) gameObject.SetActive(false);
             }

@@ -17,7 +17,7 @@ public class SeedEntityController : InteractableBehaviour {
 		[Header("Values")]
 		[SerializeField] private float m_moveToSpeed = 1;
 
-        private int m_index;
+        private int m_ID;
         
 		private Transform m_player;
 
@@ -34,16 +34,15 @@ public class SeedEntityController : InteractableBehaviour {
 			}
         
 		//Public Functions
-		public void SetData(int index) {
+		public void SetData(int id) {
 			
-			m_index = index;
+			m_ID = id;
 			}
 		public override void Interact() {
 			
-            DataSystem.GetSingleton().GetDungeonData().AddSeed(m_index);  //GetFarmData().AddSeed(m_type, Rarity.Common);
-			Seed m_sd = DataSystem.GetSingleton().GetSeed(m_index);
-
-			Debug.Log("Added a seed to the dungeon loot: " + m_index + ", " + m_sd.GetSeedType() + ", " + m_sd.GetRarity());
+            DataSystem.GetSingleton().GetDungeonData().GetInventoryData().AddSeed(m_ID, 1);  //GetFarmData().AddSeed(m_type, Rarity.Common);
+			Seed m_sd = DataSystem.GetSingleton().GetSeed(m_ID);
+			ObtainedObjectsUI.GetSingleton().AddItem(m_sd.GetIcon(), m_sd.GetName(), m_sd.GetRarity());
 			Destroy(gameObject);
 			}
         
