@@ -29,14 +29,10 @@ public class Weapon : Item {
             [SerializeField] private WeaponType m_type = WeaponType.Melee;
             [SerializeField] private int m_baseDamage = 120;
             [SerializeField] [Range(0, 100)] private int m_criticalProbability = 20;
-            [SerializeField] private float m_range = 20;
 
             [Header("Weapon Knockback")]
             [SerializeField] private float m_knockbackForce = 1f;
             [SerializeField] private float m_knockbackTime = 0.5f;
-
-            [Header("Weapon Mesh")]
-            [SerializeField] private Mesh m_weaponMesh = null;
 
             //Privadas.
 			
@@ -52,12 +48,9 @@ public class Weapon : Item {
         public int GetMinDamage() => m_baseDamage;
         public int GetUses() => 50 + (50 * (int) GetRarity());
         public int GetCriticalProbability() => m_criticalProbability;
-        public float GetRange() => m_range;
 
         public float GetKnockbackForce() => m_knockbackForce;
         public float GetKnockbackTime() => m_knockbackTime;
-
-        public Mesh GetWeaponMesh() => m_weaponMesh;
 		
         public int GetCalculatedDamage(int uses) {
             

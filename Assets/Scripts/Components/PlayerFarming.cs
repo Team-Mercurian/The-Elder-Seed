@@ -47,12 +47,10 @@ public class PlayerFarming : MonoBehaviour {
                 
                 m_data.GetInventoryData().AddPlant(m_plant.GetSeedID(), 1);
                 Seed m_seed = DataSystem.GetSingleton().GetSeed(m_plant.GetSeedID());
-			    ObtainedObjectsUI.GetSingleton().AddItem(m_seed.GetPlant().GetIcon(), m_seed.GetPlant().GetName(), m_seed.GetPlant().GetRarity());
 
                 if (Random.Range(0f, 100f) < (20 - (4 * (int) m_seed.GetRarity()))) {
                     
                     m_data.GetInventoryData().AddSeed(m_seed.GetID(), 1);
-			        ObtainedObjectsUI.GetSingleton().AddItem(m_seed.GetIcon(), m_seed.GetName(), m_seed.GetRarity());
                     }
 
                 m_data.GetFarmData().RemoveGridData(pos / cellSize);
@@ -85,7 +83,7 @@ public class PlayerFarming : MonoBehaviour {
                         
                     FarmingEnviromentController.GetSingleton().CreatePlant(m_pos, m_seedID, false);
 
-                    m_data.GetFarmData().AddGridData(new GridData(m_seedID, m_pos / m_cellSize, (int) (m_seed.GetRarity() + 1) * 4));
+                    m_data.GetFarmData().AddGridData(new GridData(m_seedID, m_pos / m_cellSize));
                     m_data.GetInventoryData().AddSeed(m_seed.GetID(), -1);
                     SaveSystem.Save();
                     }

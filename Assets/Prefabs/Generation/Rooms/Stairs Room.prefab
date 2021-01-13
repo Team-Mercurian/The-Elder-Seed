@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4621678327208318133}
   - component: {fileID: 4717580615565901915}
   m_Layer: 0
-  m_Name: Stairs Room
+  m_Name: Stairs Room Template 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4038,31 +4038,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3710849441667288196, guid: efd214f1890da5c4ab7a5a2e9c938562,
-        type: 3}
-      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[2].m_Overridden
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3710849441667288196, guid: efd214f1890da5c4ab7a5a2e9c938562,
-        type: 3}
-      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[1].m_Overridden
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4199921166075113255, guid: efd214f1890da5c4ab7a5a2e9c938562,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4199921166075113255, guid: efd214f1890da5c4ab7a5a2e9c938562,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5468115064704336808, guid: efd214f1890da5c4ab7a5a2e9c938562,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6792901350213669909, guid: efd214f1890da5c4ab7a5a2e9c938562,
         type: 3}

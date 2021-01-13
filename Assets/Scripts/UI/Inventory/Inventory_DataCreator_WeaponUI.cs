@@ -36,9 +36,7 @@ public class Inventory_DataCreator_WeaponUI : Inventory_DataCreatorUI {
 			for(int i = 0; i < m_iD.Count; i ++) {
 				
 				Weapon m_item = DataSystem.GetSingleton().GetWeapon(m_iD[i].GetID());
-				
-				Inventory_Item_WeaponUI m_wUI = Instantiate(GetItemPrefab(), GetItemHolder()).GetComponent<Inventory_Item_WeaponUI>();
-				m_wUI.SetValues(m_item, m_iD[i], (i % 2) < 1, GetInventory());
+				Instantiate(GetItemPrefab(), GetItemHolder()).GetComponent<Inventory_Item_WeaponUI>().SetValues(m_item, m_iD[i], (i % 2) < 1, GetInventory());
 				}
 			}
         

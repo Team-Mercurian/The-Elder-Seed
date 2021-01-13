@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rare Heal
   m_EditorClassIdentifier: 
   m_id: 1
-  m_name: Pocion Mediana
+  m_name: Pocion de Curacion II
   m_rarity: 1
   m_UIIcon: {fileID: 0}
   m_defaultCount: 0

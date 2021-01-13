@@ -34,7 +34,6 @@ public class ConfirmationUI : PanelUI, IHasTwoOptionsUI {
 		protected override void Start() {
 			
 			m_instance = this;
-			SetDeltaScaledTime(false);
 			base.Start();
 			}
 			

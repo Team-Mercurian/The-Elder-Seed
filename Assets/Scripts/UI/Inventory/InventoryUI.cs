@@ -86,11 +86,9 @@ public abstract class InventoryUI : PanelUI {
 		public ConfirmationUI GetConfirmationUI() => m_confirmationUI;
 		public WeaponRepairUI GetRepairWeapon() => m_weaponRepairUI;
 
-
 		//Private Functions        	
 		protected abstract void SetSectionsChanges(Sections section);
 		protected abstract Sections SetStartSection();
-		public Sections GetLastSection() => m_lastSection;
 
 		private void SetTMText(TextMeshProUGUI tm, string text) => tm.text = text;
 

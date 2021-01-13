@@ -45,16 +45,12 @@ public class RoomController : GameBehaviour {
             }
         private void Start() {
 
-            RoomData m_roomData = DataSystem.GetSingleton().GetDungeonData().GetRoomData(m_roomPosition);
-            List<RoomPropData> m_propDatas = m_roomData.GetPropDatas();
-            //transform.eulerAngles = new Vector3(0, m_roomData.GetRotation() * 90, 0);
+            List<RoomPropData> m_propDatas = DataSystem.GetSingleton().GetDungeonData().GetRoomData(m_roomPosition).GetPropDatas();
 
             for(int i = 0; i < m_propDatas.Count; i ++) {
                 
                 if (m_propDatas[i].GetIfIsDestroyed()) Destroy(m_props[i]);
                 }
-
-            CheckAndOpenPassages(true);
             }
 		
         //Funciones privadas.
@@ -68,41 +64,10 @@ public class RoomController : GameBehaviour {
             bool m_generateUpPassage = GetValueInList(m_roomPosition + Vector2Int.up, m_roomPositions);
             bool m_generateDownPassage = GetValueInList(m_roomPosition + Vector2Int.down, m_roomPositions);
 
-            RuinsPassageController m_pR = m_passageRight;
-            RuinsPassageController m_pD = m_passageDown;
-            RuinsPassageController m_pL = m_passageLeft;
-            RuinsPassageController m_pU = m_passageUp;
-
-            /*
-            switch(DataSystem.GetSingleton().GetDungeonData().GetRoomData(m_roomPosition).GetRotation()) {
-
-                case 0 : break;
-                case 1 :
-                    m_pR = m_passageDown;
-                    m_pD = m_passageLeft;
-                    m_pL = m_passageUp;
-                    m_pU = m_passageRight;
-                    break;
-                case 2 :
-                    m_pR = m_passageLeft;
-                    m_pD = m_passageUp;
-                    m_pL = m_passageRight;
-                    m_pU = m_passageDown;
-                    break;
-                case 3 :
-                    m_pR = m_passageUp;
-                    m_pD = m_passageRight;
-                    m_pL = m_passageDown;
-                    m_pU = m_passageLeft;
-                    break;
-                }
-
-            */
-
-            SetPassageData(m_pU, m_generateUpPassage, m_roomPosition, Vector2Int.up);
-            SetPassageData(m_pL, m_generateLeftPassage, m_roomPosition, Vector2Int.left);
-            SetPassageData(m_pD, m_generateDownPassage, m_roomPosition, Vector2Int.down);
-            SetPassageData(m_pR, m_generateRightPassage, m_roomPosition, Vector2Int.right);
+            SetPassageData(m_passageUp, m_generateUpPassage, m_roomPosition, Vector2Int.up);
+            SetPassageData(m_passageLeft, m_generateLeftPassage, m_roomPosition, Vector2Int.left);
+            SetPassageData(m_passageDown, m_generateDownPassage, m_roomPosition, Vector2Int.down);
+            SetPassageData(m_passageRight, m_generateRightPassage, m_roomPosition, Vector2Int.right);
             }
         private void SetPlayerPosition() {
 
@@ -159,7 +124,7 @@ public class RoomController : GameBehaviour {
             
             return false;
             }
-            
+        
         //Funciones publicas.
         public void SetData(Vector2Int roomPosition) {
 
@@ -182,38 +147,6 @@ public class RoomController : GameBehaviour {
                 }
 
             Debug.LogError("Prop no encontrado al destruir.");
-            }
-        public void CheckAndOpenPassages(bool instant) {
-            
-            StartCoroutine(Wait());
-
-            IEnumerator Wait() {
-
-                yield return new WaitForSeconds(0.25f);
-                
-                foreach(GridData m_d in DataSystem.GetSingleton().GetGameData().GetFarmData().GetGridDatas()) {
-
-                    m_d.AddRoom();
-                    }
-                
-                SaveSystem.Save();
-                Finish();
-                }
-            void Finish() {
-                    
-                int m_enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
-                RuinsPassageController[] m_passages = FindObjectsOfType<RuinsPassageController>();
-
-                if (m_enemyCount == 0) {
-
-                    foreach(RuinsPassageController m_passage in m_passages) m_passage.Open(instant);
-                    }
-                
-                else {
-
-                    foreach(RuinsPassageController m_passage in m_passages) m_passage.Close();
-                    }
-                }
             }
 
         public static Direction GetAppearDirection() => m_appearDirection;

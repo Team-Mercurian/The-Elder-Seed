@@ -58,11 +58,10 @@ MonoBehaviour:
   m_elevationDownMultiplier: 0.1
   m_minVerticalAngle: -50
   m_maxVerticalAngle: 70
-  m_minPhysicsDistance: 1
-  m_physicsZoomSmoothness: 0.1
+  m_minPhysicsDistance: 2
+  m_physicsZoomSmoothness: 0.05
   m_cameraHolder: {fileID: 5347571576136446217}
   m_target: {fileID: 0}
-  m_gamepadLookMultiplier: 20
 --- !u!1 &5691809430351298389
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +212,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   volumeAnchorOverride: {fileID: 0}
-  antialiasing: 1
+  antialiasing: 0
   SMAAQuality: 2
   dithering: 0
   stopNaNs: 0

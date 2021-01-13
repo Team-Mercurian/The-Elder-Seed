@@ -9,13 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07775b45fa41af7479a115cc2125c9c6, type: 3}
-  m_Name: Heal Legendary
+  m_Script: {fileID: 11500000, guid: 28881f1d49f82e846b76596dcbae4457, type: 3}
+  m_Name: Legendary Sword
   m_EditorClassIdentifier: 
-  m_id: 7
-  m_name: Regenerador IV
+  m_id: 3
+  m_name: Legendary Sword
   m_rarity: 3
   m_UIIcon: {fileID: 0}
   m_defaultCount: 0
   m_defaultUnlocked: 0
-  m_type: 1
+  m_type: 0
+  m_baseDamage: 220
+  m_criticalProbability: 40
+  m_knockbackForce: 9
+  m_knockbackTime: 0.5

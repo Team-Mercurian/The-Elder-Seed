@@ -61,7 +61,7 @@ public class Inventory_DungeonUI : InventoryUI {
 		protected void SetSeedsTexts() => SetTexts("Semillas", "", "", "Tienes");
 		protected void SetWeaponsTexts() => SetTexts("Armas", "Equipado", "Durabilidad", "Inspeccionar");
 
-		protected override Sections SetStartSection() => GetLastSection();
+		protected override Sections SetStartSection() => Sections.Weapons;
 
 	//Coroutines
 	

@@ -25,8 +25,6 @@ public class PlayerAttack : EntityAttack {
             [Header("Attack References")]
             [SerializeField] private AimHead m_aimHead = null;
             [SerializeField] private PlayerMovement m_playerMovement = null;
-            [SerializeField] private SwordSlash m_slash = null;
-            [SerializeField] private MeshFilter m_weaponMesh = null;
 
             [Header("Attack Force")]
             [SerializeField] private float m_attackForce = 0.5f;
@@ -38,14 +36,14 @@ public class PlayerAttack : EntityAttack {
             //Privadas.
             private float m_delay;
             private Vector3 m_savedPosition;
-            private bool m_inverse = false;
-            private Coroutine m_attackCoroutine;
-
+			
     //Funciones
 		
         //Funciones de MonoBehaviour.
-		protected void Start() {
+		protected override void Start() {
 
+            base.Start();
+            m_savedPosition = GetCollider().transform.localPosition;
             m_delay = 0;
             }
 
@@ -66,6 +64,7 @@ public class PlayerAttack : EntityAttack {
                 Vector3 m_rawDir = (m_target.position - transform.position).normalized;
 
                 m_dir = new Vector2(m_rawDir.x, m_rawDir.z);
+                StartCoroutine(SetCollisionTarget(m_target));
                 }
 
             else {
@@ -77,19 +76,11 @@ public class PlayerAttack : EntityAttack {
             m_knockback = new Knockback(m_dir, m_attackForce, m_attackForceTime);
             m_playerMovement.SetKnockback(m_knockback);
 
-            PlayerBrain.GetSingleton().GetAnimator().SetTrigger(m_inverse ? "attackL" : "attackR");
-
-            m_inverse = !m_inverse;
-            m_slash.Slash(m_inverse);
-
-            StartCoroutine(AttackCoroutine());
-
             base.Attack();
-            return;
             }
             
         //Funciones heredadas.
-/*        public override void DoDamage(Collider collider) {
+        public override void DoDamage(Collider collider) {
 
             if (!collider.CompareTag("Enemy")) return;
 
@@ -111,20 +102,15 @@ public class PlayerAttack : EntityAttack {
 
             //Do Damage
             collider.GetComponent<EntityHealth>().GetDamage(m_damage, m_knockback);   
-            } */
-
-        //Funciones ha heredar.
-        public override void SetWeapon(Weapon weapon) {
-
-            base.SetWeapon(weapon);
-            m_weaponMesh.mesh = weapon.GetWeaponMesh();
             }
 
+        //Funciones ha heredar.
 
     //Corotinas.
-    private IEnumerator AttackCoroutine() {
+    protected override IEnumerator AttackCoroutine() {
 
         m_playerMovement.IsAttacking(true);
+        yield return StartCoroutine(base.AttackCoroutine());
 
         m_delay = m_attackDelay;
 
@@ -136,7 +122,12 @@ public class PlayerAttack : EntityAttack {
 
         m_playerMovement.IsAttacking(false);
         m_delay = 0;
-        //yield return new WaitForSeconds(0.10f);
-        //GetCollider().transform.localPosition = m_savedPosition;
+        }
+    private IEnumerator SetCollisionTarget(Transform target) {
+
+        GetCollider().transform.position = target.position;
+
+        yield return new WaitForSeconds(0.10f);
+        GetCollider().transform.localPosition = m_savedPosition;
         }
     }

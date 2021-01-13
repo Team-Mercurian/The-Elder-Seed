@@ -43,8 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68e45fe1f9f0ae24bbad2ec146fd4578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_roomsCount: 6
+  m_roomsCount: 10
   m_chestsRooms: 2
   m_testScene: {fileID: 0}
-  m_smallMapController: {fileID: 0}
-  m_bigMapController: {fileID: 0}

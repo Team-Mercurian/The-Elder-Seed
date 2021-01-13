@@ -40,10 +40,7 @@ public class DungeonChestController : InteractableBehaviour {
             //Dar semillas de desbloqueo aleatorias dependiendo de una probabilidad.
             if (Random.Range(0f, 100f) < 20f) { 
 
-                int m_seedID = m_dS.GetRandomSeedID(m_probabilityIncrement, Seed.SeedType.Unlock);
-                Seed m_seed = m_dS.GetSeed(m_seedID);
-                m_dI.AddSeed(m_seedID, 1);
-			    ObtainedObjectsUI.GetSingleton().AddItem(m_seed.GetIcon(), m_seed.GetName(), m_seed.GetRarity());
+                m_dI.AddSeed(m_dS.GetRandomSeedID(m_probabilityIncrement, Seed.SeedType.Unlock), 1);
                 }
             
             //Añadir semillas.
@@ -57,11 +54,7 @@ public class DungeonChestController : InteractableBehaviour {
                     Seed.SeedType m_type = Random.Range(0, 2) < 1 ? Seed.SeedType.Durability : Seed.SeedType.Potion;
                     int m_index = m_dS.GetRandomSeedID(m_probabilityIncrement, m_type);
 
-                    if (m_index != -1) {
-                        
-                        m_dI.AddSeed(m_index, 1);
-			            ObtainedObjectsUI.GetSingleton().AddItem(m_dS.GetSeed(m_index).GetIcon(), m_dS.GetSeed(m_index).GetName(), m_dS.GetSeed(m_index).GetRarity());
-                        }
+                    if (m_index != -1) m_dI.AddSeed(m_index, 1);
                     }
 
             //Dar un arma al azar.
@@ -71,12 +64,11 @@ public class DungeonChestController : InteractableBehaviour {
 
                 Weapon m_weapon = m_dS.GetWeapon(m_weaponIndex);
                 m_dS.GetDungeonData().GetInventoryData().AddWeapon(m_weaponIndex, m_weapon.GetUses(), ref DataSystem.GetSingleton().GetGameData().GetInventoryData().m_lastWeaponID);
-			    ObtainedObjectsUI.GetSingleton().AddItem(m_weapon.GetIcon(), m_weapon.GetName(), m_weapon.GetRarity());
+                Debug.Log("Added the weapon: " + m_weapon.GetName() + " to the inventory.");
                 }
 
             //Destruir cofre.
             RoomController.GetSingleton().DestroyProp(gameObject);
-            m_dS.GetDungeonData().GetActualRoomData().Complete();
             Destroy(gameObject);            
             }
 		

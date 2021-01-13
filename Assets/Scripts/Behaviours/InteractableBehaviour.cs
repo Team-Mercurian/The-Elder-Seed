@@ -19,8 +19,6 @@ public abstract class InteractableBehaviour : GameBehaviour {
         //Establecer variables.
 		
             //Publicas.
-            [Header("Values")]
-            [SerializeField] private bool m_instantInteract = false;
 			
             //Privadas.
 			
@@ -33,7 +31,6 @@ public abstract class InteractableBehaviour : GameBehaviour {
 		
         //Funciones publicas.
         public abstract void Interact();
-        public bool GetInstant() => m_instantInteract;
 		
         //Funciones heredadas.
 		

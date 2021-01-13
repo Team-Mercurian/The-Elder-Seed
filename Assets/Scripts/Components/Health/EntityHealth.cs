@@ -42,7 +42,7 @@ public abstract class EntityHealth : MonoBehaviour {
     //Funciones
 		
         //Funciones de MonoBehaviour
-        protected virtual void Start() {
+        private void Start() {
 			
             m_actualHealth = SetActualHealth();
             if (m_healthBar != null) m_healthBar.SetValue(m_actualHealth, m_health, true);
@@ -118,11 +118,11 @@ public abstract class EntityHealth : MonoBehaviour {
 
             for(float i = 0; i < m_damageCooldown; i += Time.deltaTime) {
                 
-                if (m_meshToDeactive != null) m_meshToDeactive.SetActive(((i * 10f) % 2f > 1));
+                m_meshToDeactive.SetActive(((i * 10f) % 2f > 1));
                 yield return null;
                 }
 
-            if (m_meshToDeactive != null) m_meshToDeactive.SetActive(true);
+            m_meshToDeactive.SetActive(true);
             m_canReceiveDamage = true;
             }
         }

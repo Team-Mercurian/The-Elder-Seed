@@ -35,7 +35,6 @@ public abstract class PanelUI : MonoBehaviour, IHasOpenAndClose {
             private bool m_inOutAnimation = false;
 			private Vector2 m_defValue;
 		    private bool m_isOpen = false;
-            private bool m_deltaScaled = true;
 			
     //Funciones
 		
@@ -44,7 +43,7 @@ public abstract class PanelUI : MonoBehaviour, IHasOpenAndClose {
 
             m_defValue = m_rectTransform.anchoredPosition;
             
-            if (m_closeAtStart) m_canvasGroup.alpha = 0;
+            m_canvasGroup.alpha = 0;
             m_canvasGroup.interactable = false;
 
             m_isOpen = !m_closeAtStart;
@@ -91,11 +90,8 @@ public abstract class PanelUI : MonoBehaviour, IHasOpenAndClose {
             m_canvasGroup.interactable = false;
             }
 
-        protected void SetDeltaScaledTime(bool isScaled) => m_deltaScaled = isScaled;
         protected CanvasGroup GetCanvasGroup() => m_canvasGroup;
         protected float GetAnimationCurveEvaluation(float t) => m_animationCurve.Evaluate(t);
-        protected float GetAnimationTime() => m_time;
-        protected bool GetIsInAnimation() => m_inOutAnimation;
 
         //Corotinas.
         private IEnumerator PanelIOAnimation(bool entry) {
@@ -110,7 +106,7 @@ public abstract class PanelUI : MonoBehaviour, IHasOpenAndClose {
             float m_cGValue1 = entry ? 0 : 1;
             float m_cGValue2 = entry ? 1 : 0;
 
-            for(float i = 0; i < m_time; i += m_deltaScaled ? Time.deltaTime : Time.unscaledDeltaTime) {
+            for(float i = 0; i < m_time; i += Time.deltaTime) {
                 
                 float m_evaluation = m_animationCurve.Evaluate(i / m_time);
 

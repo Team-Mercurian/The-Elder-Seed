@@ -24,7 +24,7 @@ public class DungeonStairsController : InteractableBehaviour {
         
 		//Public Functions
 		public override void Interact() {
-			/*
+			
 			UnityEvent m_leftEvent = new UnityEvent();
 			m_leftEvent.AddListener(ExitRuins);
 
@@ -38,8 +38,6 @@ public class DungeonStairsController : InteractableBehaviour {
 
 			ConfirmationUI.GetSingleton().SetData(m_t, m_leftButtonEvent, m_rightButtonEvent, true);
 			ConfirmationUI.GetSingleton().Open();
-			*/
-			NextFloor();
 			}
 
 		public void NextFloor() => GenerateRuinsRooms.NextFloor();
