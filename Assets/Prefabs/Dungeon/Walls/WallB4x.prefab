@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1676762443775443584}
   m_Layer: 8
   m_Name: WallB4x
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 6e1f15fb2e808b24aa8e75e6b794cc42, type: 3}
+  - {fileID: 2100000, guid: 09662c21851eb604b99a3f367828146a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

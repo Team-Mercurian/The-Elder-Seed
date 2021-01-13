@@ -15,7 +15,8 @@ MonoBehaviour:
   m_id: 6
   m_name: Regenerador III
   m_rarity: 2
-  m_UIIcon: {fileID: 0}
+  m_UIIcon: {fileID: 6866944693739802424, guid: f3da331b06591b447aa66a5f90e06bdc,
+    type: 3}
   m_defaultCount: 0
   m_defaultUnlocked: 0
   m_type: 1

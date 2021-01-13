@@ -38,7 +38,7 @@ public class EnemyAttack : EntityAttack {
         //Funciones publicas.
 		
         //Funciones heredadas.
-        public override void DoDamage(Collider collider) {
+/*        public override void DoDamage(Collider collider) {
 
             if (!collider.CompareTag("Player")) return;
 
@@ -53,7 +53,7 @@ public class EnemyAttack : EntityAttack {
 
             collider.GetComponent<EntityHealth>().GetDamage(m_damage, m_knockback);   
             }
-		
+		*/
         //Funciones ha heredar.
 		
         //Corotinas.

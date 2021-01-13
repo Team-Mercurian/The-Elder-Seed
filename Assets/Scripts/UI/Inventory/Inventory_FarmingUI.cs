@@ -71,7 +71,7 @@ public class Inventory_FarmingUI : InventoryUI {
 		protected void SetWeaponsTexts() => SetTexts("Armas", "", "Durabilidad", "Inspeccionar");
 		protected void SetMiscTexts() => SetTexts("Miscelaneo", "", "Tienes", "Usar");
 
-		protected override Sections SetStartSection() => Sections.Seeds;
+		protected override Sections SetStartSection() => GetLastSection();
 
 	//Coroutines
 	

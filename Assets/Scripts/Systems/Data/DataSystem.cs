@@ -269,7 +269,7 @@ public class DataSystem : MonoBehaviour {
             
             m_gameData.TurnGiftOff();
             }
-        public InventoryData GetNewDungeonInventoryData(bool giftData) {
+        public InventoryData GetNewInventoryData(bool giftData) {
 
             InventoryData m_inventory = new InventoryData();
 

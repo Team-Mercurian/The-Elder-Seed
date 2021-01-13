@@ -21,6 +21,8 @@ public class PlayerBrain : EntityBrain {
 		
             //Publicas.
             [SerializeField] private PlayerMovement m_playerMovement = null;
+            [SerializeField] private PlayerEvents m_playerEvents = null;
+            [SerializeField] private Animator m_playerAnimator = null;
 			
             //Privadas.
 			
@@ -39,6 +41,11 @@ public class PlayerBrain : EntityBrain {
 
             return m_playerMovement;
             }
+        public PlayerEvents GetPlayerEvents() {
+
+            return m_playerEvents;
+            }
+        public Animator GetAnimator() => m_playerAnimator;
 
         public static PlayerBrain GetSingleton() {
             

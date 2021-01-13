@@ -47,6 +47,7 @@ public class CameraController : MonoBehaviour, IHasLookInput {
             [Header("Physics")]
             [SerializeField] private float m_minPhysicsDistance = 0.5f;
             [SerializeField] private float m_physicsZoomSmoothness = 0.05f;
+            [Range(0, 1)][SerializeField] private float m_physicsRayOffset = 0.5f;
 
             [Header("Camera References")]
             [SerializeField] private Transform m_cameraHolder = null;                                           //Referencia del sostenedor de la camara (Hijo).
@@ -103,16 +104,21 @@ public class CameraController : MonoBehaviour, IHasLookInput {
                 //Detectar colisiones.
                 Vector3 m_yDifference = new Vector3(0, transform.position.y - m_targetPosition.y, 0);
                 Vector3 m_endPoint = CalculateCameraChildPosition(m_targetPosition, new Vector2(m_reachDistance, m_reachDistance)) + m_yDifference;
+                float m_finalZoomSmoothness;
                 RaycastHit m_hit;
 
-                float m_finalZoomSmoothness;
-                Ray m_ray = new Ray(m_targetPosition, m_endPoint);
+                Vector3 m_rayA = m_targetPosition;
+                Vector3 m_rayB = m_targetPosition + m_endPoint;
+                
+                Debug.DrawLine(m_rayA, m_rayB, Color.yellow);
 
-                Debug.DrawRay(m_ray.origin, m_ray.direction);
+                bool m_hasCollide = Physics.Linecast(m_rayA, m_rayB, out m_hit, 1 << 8, QueryTriggerInteraction.Ignore);
+                bool m_isAWall = m_hasCollide ? m_hit.collider.CompareTag("Wall") : false;
+                bool m_isOverPhysicsDistance = m_hasCollide ? Vector3.Distance(m_rayA, m_hit.point) < Vector3.Distance(m_rayA + (m_endPoint * m_physicsRayOffset), m_rayB) : false;
 
-                if (Physics.Raycast(m_ray, out m_hit, m_reachDistance, 1 << 8, QueryTriggerInteraction.Ignore)) {
+                if (m_hasCollide && (m_isAWall || !m_isOverPhysicsDistance)) {
                     
-                    m_physicsDistance = Mathf.Min(Mathf.Clamp(m_hit.distance, m_minPhysicsDistance, m_maxDistance), m_reachDistance);
+                    m_physicsDistance = Mathf.Min(Mathf.Clamp(Vector3.Distance(m_targetPosition, m_hit.point), m_minPhysicsDistance, m_maxDistance), m_reachDistance);
                     m_finalZoomSmoothness = m_physicsZoomSmoothness;
                     }
                 else {
@@ -155,6 +161,8 @@ public class CameraController : MonoBehaviour, IHasLookInput {
             m_maxVerticalAngle = Mathf.Clamp(m_maxVerticalAngle, 0, 90);
 
             m_defaultDistance = Mathf.Clamp(m_defaultDistance, m_minDistance, m_maxDistance);
+
+            m_physicsRayOffset = Mathf.Clamp(m_physicsRayOffset, 0, 1);
 
             SetTargetPosition();
             m_cameraHolder.localPosition = CalculateCameraChildPosition(m_targetPosition, new Vector2(m_defaultDistance, m_defaultDistance));
@@ -225,7 +233,7 @@ public class CameraController : MonoBehaviour, IHasLookInput {
             Vector3 m_b = m_cameraHolder.position;
 
             Gizmos.color = Color.blue;
-            Gizmos.DrawLine(m_a, m_b);
+            //Gizmos.DrawLine(m_a, m_b);
 
             //Dibujar arco vertical.
             Gizmos.color = Color.red;
