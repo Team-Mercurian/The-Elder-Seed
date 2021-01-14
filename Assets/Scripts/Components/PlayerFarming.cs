@@ -71,6 +71,9 @@ public class PlayerFarming : MonoBehaviour {
 
                 m_data.GetFarmData().RemoveGridData(pos / cellSize);
 
+                if (DataSystem.GetSingleton().GetGameData().GetTutorialIndex() < 9) 
+                    TutorialController.GetSingleton().SetTutorialText(9);
+
                 FarmingEnviromentController.GetSingleton().RemovePlant(m_plant);
                 SaveSystem.Save();
                 Destroy(m_plant.gameObject);
@@ -99,7 +102,13 @@ public class PlayerFarming : MonoBehaviour {
                     m_selectedSeedCount.text = m_data.GetInventoryData().GetMagicalFragments().ToString();
                     m_gridData.AddRoom();
                     m_gridData.AddRoom();
-                    if (m_gridData.GetHarvest()) FarmingEnviromentController.GetSingleton().GetPlantController(m_pos).Finish();
+                    if (m_gridData.GetHarvest()) {
+                        
+                        if (DataSystem.GetSingleton().GetGameData().GetTutorialIndex() < 8) 
+                            TutorialController.GetSingleton().SetTutorialText(8);
+
+                        FarmingEnviromentController.GetSingleton().GetPlantController(m_pos).Finish();
+                        }
                     SaveSystem.Save();
                     }   
                 
@@ -117,6 +126,9 @@ public class PlayerFarming : MonoBehaviour {
                 
                 if (m_data.GetInventoryData().GetSeedData(m_seed.GetID()).GetCount() > 0) {
 
+                    if (DataSystem.GetSingleton().GetGameData().GetTutorialIndex() < 4) 
+                        TutorialController.GetSingleton().SetTutorialText(4);
+                    
                     FarmingEnviromentController.GetSingleton().CreatePlant(m_pos, m_seedID, false);
                     m_data.GetFarmData().AddGridData(new GridData(m_seedID, m_pos / m_cellSize, (int) (m_seed.GetRarity() + 1) * 4));
                     m_data.GetInventoryData().AddSeed(m_seed.GetID(), -1);

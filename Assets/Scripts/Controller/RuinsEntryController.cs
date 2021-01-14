@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class RuinsEntryController : InteractableBehaviour {
 	
@@ -31,10 +32,8 @@ public class RuinsEntryController : InteractableBehaviour {
         //Funciones de MonoBehaviour
 
         //Funciones privadas.
-		
-        //Funciones publicas.
-        public override void Interact() {
-
+		private void ConfirmEvent() {
+        
             DungeonData m_dD = new DungeonData();
             m_dD.GetPlayer().SetHealth(DataSystem.GetSingleton().GetPlayerHealth());
 
@@ -50,7 +49,32 @@ public class RuinsEntryController : InteractableBehaviour {
 
             DataSystem.GetSingleton().SetDungeonData(m_dD);
 
+            if (DataSystem.GetSingleton().GetGameData().GetTutorialIndex() < 11) 
+                TutorialController.GetSingleton().SetTutorialText(11);
+
             m_dungeonInventory.Open();
+            }
+
+        //Funciones publicas.
+        public override void Interact() {
+
+            if (DataSystem.GetSingleton().GetGameData().GetTutorialIndex() < 10) {
+
+                UnityEvent m_event;
+
+                m_event = new UnityEvent();
+                m_event.AddListener(() => ConfirmEvent());
+                ButtonEvent m_lEvent = new ButtonEvent("Si", m_event);
+                ButtonEvent m_rEvent = new ButtonEvent("No", null);
+
+                ConfirmationUI.GetSingleton().SetData("¿Quieres saltarte el tutorial?", m_lEvent, m_rEvent, false);
+                ConfirmationUI.GetSingleton().Open();
+                }
+            
+            else {
+
+                ConfirmEvent();
+                }
             }
 		
         //Funciones heredadas.

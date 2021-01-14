@@ -38,6 +38,8 @@ public abstract class EntityHealth : MonoBehaviour {
 
             private bool m_canReceiveDamage = true;
             protected int m_actualHealth;
+
+            private bool m_dead = false;
 			
 			
     //Funciones
@@ -54,7 +56,7 @@ public abstract class EntityHealth : MonoBehaviour {
         //Funciones publicas.
         public void GetDamage(int damage, Knockback knockback) {
             
-            if (!m_canReceiveDamage) return;
+            if (!m_canReceiveDamage || m_dead) return;
 
             //Reducir la vida.
             m_actualHealth = Mathf.Clamp(m_actualHealth - damage, 0, m_health);
@@ -70,6 +72,7 @@ public abstract class EntityHealth : MonoBehaviour {
             //Detectar si este perdio toda su vida.
             if (m_actualHealth == 0) {
 
+                m_dead = true;
                 Dead();
                 if (m_healthBar != null) HealthBarDeadAction();
                 }

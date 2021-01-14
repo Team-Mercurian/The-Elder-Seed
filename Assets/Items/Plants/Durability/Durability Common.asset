@@ -17,6 +17,6 @@ MonoBehaviour:
   m_desc: 
   m_rarity: 0
   m_UIIcon: {fileID: 0}
-  m_defaultCount: 5
+  m_defaultCount: 0
   m_defaultUnlocked: 1
   m_type: 0

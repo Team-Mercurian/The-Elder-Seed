@@ -36,6 +36,10 @@ public class Inventory_Item_Stackable_MiscellaneousUI : Inventory_Item_Stackable
 
 			if (GetCount() <= 0) return;
 			PlayerFarming.GetSingleton().ActiveMagicalFragments();
+			
+            if (DataSystem.GetSingleton().GetGameData().GetTutorialIndex() < 7) 
+                TutorialController.GetSingleton().SetTutorialText(7);
+
 			GetInventory().Close();
 			}
         
