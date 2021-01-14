@@ -87,6 +87,7 @@ public class FarmData {
             }   
 
         public List<GridData> GetGridDatas() => m_gridDatas;
+        public GridData GetGridData(Vector3Int position) => m_gridDatas.Find(c => c.GetSeedPosition() == position);
 
         public bool GetIfGridIsUsed(Vector3Int position) {
 
@@ -269,7 +270,9 @@ public class GridData {
         }   
     public int GetSeedIndex() => m_seedIndex;
     public Vector3Int GetSeedPosition() => m_position;
+
     public bool GetHarvest() => m_canHarvest;
+    public void Harvest() => m_canHarvest = true;
     }
 
 [System.Serializable] 

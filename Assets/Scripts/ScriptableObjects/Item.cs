@@ -23,6 +23,7 @@ public class Item : ScriptableObject {
             [Header("Base Values")]
             [SerializeField] private int m_id = 0;
             [SerializeField] private string m_name = "";
+            [SerializeField][TextArea] private string m_desc = "";
             [SerializeField] private Rarity m_rarity = Rarity.Common;
             [SerializeField] private Sprite m_UIIcon = null;
 
@@ -42,6 +43,7 @@ public class Item : ScriptableObject {
         //Funciones publicas.
         public int GetID() => m_id;
         public string GetName() => m_name;
+        public string GetDescription() => m_desc;
         public Rarity GetRarity() => m_rarity;
         public Sprite GetIcon() => m_UIIcon;
         public int GetDefaultCount() => m_defaultCount;

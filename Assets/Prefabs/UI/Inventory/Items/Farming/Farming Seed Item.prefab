@@ -17,6 +17,7 @@ MonoBehaviour:
   m_nameHolder: {fileID: 2042154114800465275}
   m_countHolder: {fileID: 902249411736410717}
   m_button: {fileID: 713478866067425740}
+  m_emptyInteract: 1
   m_equipText: {fileID: 6174337912490169867}
 --- !u!1001 &7953391451459929181
 PrefabInstance:
@@ -138,7 +139,7 @@ PrefabInstance:
     - target: {fileID: 7681197169700625359, guid: af77e1b1c8bbf1a4280820c1d259add0,
         type: 3}
       propertyPath: m_Name
-      value: Seed Item
+      value: Farming Seed Item
       objectReference: {fileID: 0}
     - target: {fileID: 8230098770779271462, guid: af77e1b1c8bbf1a4280820c1d259add0,
         type: 3}

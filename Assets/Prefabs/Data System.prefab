@@ -67,6 +67,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ffa5ec916576fc34584cf013da42b72b, type: 2}
   - {fileID: 11400000, guid: 09da3a83f805f2844a6804b1bb1b448b, type: 2}
   - {fileID: 11400000, guid: 347ee8fe7482e0242b056cfca5761028, type: 2}
+  - {fileID: 11400000, guid: da42350c67c53954ab2efad982433582, type: 2}
+  - {fileID: 11400000, guid: 504440dc054c6aa43a4a6e81e3bf0b4d, type: 2}
+  - {fileID: 11400000, guid: 496dce834233ef24a941a65f67dc37c7, type: 2}
+  - {fileID: 11400000, guid: 963eacd4664e91943900a311442c587a, type: 2}
   m_seeds:
   - {fileID: 11400000, guid: 2a45833b72af5eb47b290c84c48db5c1, type: 2}
   - {fileID: 11400000, guid: f1e68ea86e9033d4f92750772cdae95e, type: 2}

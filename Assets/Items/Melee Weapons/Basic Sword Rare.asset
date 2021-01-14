@@ -14,15 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_id: 1
   m_name: Espada Rara
+  m_desc: 
   m_rarity: 1
   m_UIIcon: {fileID: 1666068875700510706, guid: f3da331b06591b447aa66a5f90e06bdc,
     type: 3}
   m_defaultCount: 0
   m_defaultUnlocked: 0
   m_type: 0
-  m_baseDamage: 210
-  m_criticalProbability: 30
+  m_baseDamage: 120
+  m_criticalProbability: 20
   m_range: 0
+  m_baseUses: 60
   m_knockbackForce: 5
   m_knockbackTime: 0.35
   m_weaponMesh: {fileID: -5712142429949666421, guid: 5dee3b01292eac64bb9c884960f93b8d,

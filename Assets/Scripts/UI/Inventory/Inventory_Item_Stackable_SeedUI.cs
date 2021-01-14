@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using TMPro;
 
 public class Inventory_Item_Stackable_SeedUI : Inventory_Item_StackableUI {
@@ -30,12 +31,21 @@ public class Inventory_Item_Stackable_SeedUI : Inventory_Item_StackableUI {
 			base.SetValues(item, count, isOdd, inventory);
 			SetName(item.GetName());
 
-			m_equipText.text = PlayerFarming.GetSeedID() == GetItem().GetID() ? "X" : "";
+			m_equipText.text = PlayerFarming.GetSingleton().GetSeedID() == GetItem().GetID() ? "X" : "";
 			}	 
 		public override void Use() {
 
+			UnityEvent m_event = new UnityEvent();
+			m_event.AddListener(() => SetSeed());
+
+			ItemDescriptionUI.GetSingleton().SetData(GetItem(), GetCount(), m_event);
+			ItemDescriptionUI.GetSingleton().Open();
+			}
+
+		public void SetSeed() {
+
 			if (GetCount() <= 0) return;
-			PlayerFarming.SetSeedID(GetItem().GetID());
+			PlayerFarming.GetSingleton().SetSeedID(GetItem().GetID());
 			GetInventory().Close();
 			}
         

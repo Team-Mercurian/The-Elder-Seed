@@ -9,6 +9,7 @@ public class DungeonData {
     private Vector2Int m_actualRoom;
     private int m_floor;
 	private int m_actualWeaponIndex;
+	private int m_actualPotionID;
 
     private InventoryData m_dungeonInventory;
 
@@ -18,6 +19,7 @@ public class DungeonData {
         m_actualRoom = Vector2Int.zero;
         m_floor = 0;
         m_actualWeaponIndex = -1;
+        m_actualPotionID = -1;
         
         m_playerData = new PlayerData();
         m_dungeonInventory = new InventoryData();
@@ -39,6 +41,8 @@ public class DungeonData {
     public WeaponEntityData GetActualWeapon() => m_dungeonInventory.SearchInWeaponInventory(m_actualWeaponIndex);
     public void UseWeapon() => m_dungeonInventory.SearchInWeaponInventory(m_actualWeaponIndex).UseWeapon();
 
+    public void UsePotion() => m_dungeonInventory.GetPotionData(m_actualPotionID).AddCount(-1);
+
     public void NextFloor() {
 
         m_floor ++;
@@ -48,6 +52,10 @@ public class DungeonData {
 
     public int GetActualWeaponIndex() => m_actualWeaponIndex;
     public void SetActualWeapon(int index) => m_actualWeaponIndex = index; 
+
+    public ItemData GetActualPotion() => m_dungeonInventory.GetPotionData(m_actualPotionID);
+    public int GetActualPotionIndex() => m_actualPotionID;
+    public void SetActualPotion(int index) => m_actualPotionID = index; 
 
     public void SetInventoryData(InventoryData inventory) => m_dungeonInventory = inventory;
     public InventoryData GetInventoryData() => m_dungeonInventory;

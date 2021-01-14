@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerHealth : EntityHealth {
 	
+	private static PlayerHealth m_instance = null;
+	private void Awake() => m_instance = this;
+	public static PlayerHealth GetSingleton() => m_instance;
+
     //Establecer variables.
 		
         //Establecer estructuras.
@@ -34,6 +38,22 @@ public class PlayerHealth : EntityHealth {
 
             m_health = DataSystem.GetSingleton().GetPlayerHealth();
             base.Start();
+            }
+
+        public void UsePotion() {
+
+            if (m_actualHealth >= m_health) return;
+            if (DataSystem.GetSingleton().GetDungeonData().GetActualPotion().GetCount() <= 0) return;
+
+            DataSystem.GetSingleton().GetDungeonData().UsePotion();
+            
+            Potion m_potion = DataSystem.GetSingleton().GetPotion(DataSystem.GetSingleton().GetDungeonData().GetActualPotionIndex());
+            float m_healPercent = m_potion.GetHealPercent() / 100f;
+            int m_intHeal = m_actualHealth + Mathf.RoundToInt(m_healPercent * m_health);
+
+            OverrideHealth(m_intHeal);
+
+            SelectedPotionUI.GetSingleton().SetData(m_potion, DataSystem.GetSingleton().GetDungeonData().GetActualPotion().GetCount());
             }
 		
         //Funciones heredadas.
