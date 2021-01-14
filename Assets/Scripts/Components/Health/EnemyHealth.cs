@@ -61,6 +61,7 @@ public class EnemyHealth : EntityHealth {
                 m_animator.SetBool("dead", true);
             }
 
+            GetComponent<EnemyMovement>().SetHorizontalVelocity(Vector2.zero);
             DropObject();
             GetComponent<EnemyBrain>().StopAllCoroutines();
             Invoke("FinishDead", 1.5f);

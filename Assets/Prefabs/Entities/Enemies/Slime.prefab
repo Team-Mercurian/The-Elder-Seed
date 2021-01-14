@@ -95,8 +95,8 @@ MonoBehaviour:
   m_maxMovementTime: 3
   m_normalSpeed: 1
   m_attackSpeed: 1.5
-  m_minAttackWait: 1
-  m_maxAttackWait: 3
+  m_minAttackWait: 2
+  m_maxAttackWait: 2.5
   m_detectionDistance: 5
   m_detectionBreak: 8
 --- !u!114 &5215380405671523418

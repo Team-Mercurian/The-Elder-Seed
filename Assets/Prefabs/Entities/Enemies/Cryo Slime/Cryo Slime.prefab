@@ -167,14 +167,14 @@ MonoBehaviour:
   m_runSpeed: 2.5
   m_proyectile: {fileID: 8331674035104507404, guid: e0fd3cacc5a13d54e8055d1610c90132,
     type: 3}
-  m_minAttackWait: 2
+  m_minAttackWait: 1
   m_maxAttackWait: 3
   m_attackCounts: 2
   m_timeBetweenShoots: 0.35
-  m_minShotDistance: 5
-  m_maxShotDistance: 9
-  m_detectionDistance: 7
-  m_detectionBreak: 12
+  m_minShotDistance: 4
+  m_maxShotDistance: 6
+  m_detectionDistance: 5
+  m_detectionBreak: 8
 --- !u!1 &5215380406721348892
 GameObject:
   m_ObjectHideFlags: 0

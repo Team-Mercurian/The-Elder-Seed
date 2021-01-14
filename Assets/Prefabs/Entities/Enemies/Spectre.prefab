@@ -145,7 +145,7 @@ MonoBehaviour:
   m_maxMovementTime: 3
   m_normalSpeed: 1
   m_attackSpeed: 2
-  m_minAttackWait: 1
+  m_minAttackWait: 2.5
   m_maxAttackWait: 3
   m_detectionDistance: 4
   m_detectionBreak: 7
@@ -297,7 +297,7 @@ PrefabInstance:
     - target: {fileID: 4249369775711637721, guid: 7115cc50ddd530a4c9cd739ee9c04ba3,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2.25
+      value: 2.76
       objectReference: {fileID: 0}
     - target: {fileID: 4249369775711637721, guid: 7115cc50ddd530a4c9cd739ee9c04ba3,
         type: 3}
