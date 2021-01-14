@@ -29,7 +29,7 @@ public class EntityAttack : MonoBehaviour
     [SerializeField] private string m_tagToCompare = null;
 
     //Privadas.
-
+    protected bool m_useWeapon = false;
 
     //Funciones
 
@@ -40,7 +40,8 @@ public class EntityAttack : MonoBehaviour
     //Funciones publicas.
     protected Transform GetParentTransform() => m_parent;
     public virtual void SetWeapon(Weapon weapon) => m_weapon = weapon;
-        
+    
+    public Weapon GetWeapon() => m_weapon;
 
     //Funciones heredadas.
 
@@ -68,7 +69,7 @@ public class EntityAttack : MonoBehaviour
             }
         }
 
-        attack.GetComponent<DamageBase>().Create(m_tagToCompare, m_parent, m_weapon, m_brains);
+        attack.GetComponent<DamageBase>().Create(m_tagToCompare, m_parent, m_weapon, m_brains, m_useWeapon);
 
     }
 

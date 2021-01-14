@@ -129,6 +129,14 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Use Potion"",
+                    ""type"": ""Button"",
+                    ""id"": ""234b1bd2-f70a-436d-b458-6eeb0b06736e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -481,6 +489,17 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ec38695-8eb2-4730-add3-c3c5f5ce0f53"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Use Potion"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1030,6 +1049,7 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_Back = m_Player.FindAction("Back", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_UsePotion = m_Player.FindAction("Use Potion", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1106,6 +1126,7 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_Back;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_UsePotion;
     public struct PlayerActions
     {
         private @InputGeneratedAsset m_Wrapper;
@@ -1124,6 +1145,7 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @Back => m_Wrapper.m_Player_Back;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @UsePotion => m_Wrapper.m_Player_UsePotion;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1175,6 +1197,9 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
                 @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @UsePotion.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUsePotion;
+                @UsePotion.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUsePotion;
+                @UsePotion.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUsePotion;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1221,6 +1246,9 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @UsePotion.started += instance.OnUsePotion;
+                @UsePotion.performed += instance.OnUsePotion;
+                @UsePotion.canceled += instance.OnUsePotion;
             }
         }
     }
@@ -1354,6 +1382,7 @@ public class @InputGeneratedAsset : IInputActionCollection, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnUsePotion(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

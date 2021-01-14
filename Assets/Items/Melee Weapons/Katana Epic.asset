@@ -14,15 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_id: 10
   m_name: Katana Epica
+  m_desc: 
   m_rarity: 2
   m_UIIcon: {fileID: 1666068875700510706, guid: f3da331b06591b447aa66a5f90e06bdc,
     type: 3}
   m_defaultCount: 0
   m_defaultUnlocked: 0
   m_type: 0
-  m_baseDamage: 250
-  m_criticalProbability: 35
+  m_baseDamage: 220
+  m_criticalProbability: 50
   m_range: 0
+  m_baseUses: 40
   m_knockbackForce: 6
   m_knockbackTime: 0.35
   m_weaponMesh: {fileID: -5712142429949666421, guid: 3a71d17a2cc6a484fa1cc69d052fbdaa,

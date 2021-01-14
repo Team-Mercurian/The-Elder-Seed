@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Inventory_Item_Stackable_MiscellaneousUI : Inventory_Item_StackableUI {
 	
@@ -22,15 +23,20 @@ public class Inventory_Item_Stackable_MiscellaneousUI : Inventory_Item_Stackable
         
         
 		//Public Functions
-        public override void SetValues(Item item, int count, bool isOdd, InventoryUI inventory) {
-			
-			base.SetValues(item, count, isOdd, inventory);
-			SetInteractable(false);
-			}
 		public override void Use() {
 
+			UnityEvent m_event = new UnityEvent();
+			m_event.AddListener(() => SetMisc());
+
+			ItemDescriptionUI.GetSingleton().SetData(GetItem(), GetCount(), m_event);
+			ItemDescriptionUI.GetSingleton().Open();
+			}
+
+		public void SetMisc() {
+
 			if (GetCount() <= 0) return;
-			Debug.Log("Fragmentos magicos aun no implementados");
+			PlayerFarming.GetSingleton().ActiveMagicalFragments();
+			GetInventory().Close();
 			}
         
         

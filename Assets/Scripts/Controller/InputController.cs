@@ -169,6 +169,12 @@ public class InputController : MonoBehaviour {
             
             PausePanelUI.GetSingleton().Pause();
             }
+        public void UsePotion(InputAction.CallbackContext context) {
+
+            if (context.phase != InputActionPhase.Started) return;
+            
+            PlayerHealth.GetSingleton().UsePotion();
+            }
 		
         public static void SetLookObject(IHasLookInput lookInput) => m_lookInput = lookInput;
             

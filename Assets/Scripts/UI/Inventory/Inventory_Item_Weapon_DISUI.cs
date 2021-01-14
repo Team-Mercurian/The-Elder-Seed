@@ -59,7 +59,6 @@ public class Inventory_Item_Weapon_DISUI : Inventory_Item_WeaponUI {
 				}
 				
 			else m_iD.RemoveWeapon(GetWeaponEntity());
-
 			m_selectionImage.SetActive(m_selected);
 			}
         

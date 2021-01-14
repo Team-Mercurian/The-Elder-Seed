@@ -183,7 +183,7 @@ public abstract class EntityMovement : GravityValues {
                 m_reachVelocity = velocity;
                 m_smoothVelocity = (m_reachVelocity * m_speed); //if (m_movementCoroutine == null) m_movementCoroutine = StartCoroutine(HorizontalSmoothMove());
                 }
-            protected virtual void SetSpeed(float speed) {
+            public virtual void SetSpeed(float speed) {
 
                 m_speed = speed;
                 }

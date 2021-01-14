@@ -47,6 +47,7 @@ public class PlayerAttack : EntityAttack {
 		protected void Start() {
 
             m_delay = 0;
+            m_useWeapon = true;
             }
 
         //Funciones privadas.
@@ -77,10 +78,13 @@ public class PlayerAttack : EntityAttack {
             m_knockback = new Knockback(m_dir, m_attackForce, m_attackForceTime);
             m_playerMovement.SetKnockback(m_knockback);
 
-            PlayerBrain.GetSingleton().GetAnimator().SetTrigger(m_inverse ? "attackL" : "attackR");
+            if (DataSystem.GetSingleton().GetWeapon(DataSystem.GetSingleton().GetDungeonData().GetActualWeapon().GetID()).GetWeaponType() == Weapon.WeaponType.Melee) {
+                
+                PlayerBrain.GetSingleton().GetAnimator().SetTrigger(m_inverse ? "attackL" : "attackR");
 
-            m_inverse = !m_inverse;
-            m_slash.Slash(m_inverse);
+                m_inverse = !m_inverse;
+                m_slash.Slash(m_inverse);
+                }
 
             StartCoroutine(AttackCoroutine());
 

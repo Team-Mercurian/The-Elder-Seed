@@ -14,15 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_id: 7
   m_name: Sable Legendario
+  m_desc: 
   m_rarity: 3
   m_UIIcon: {fileID: 1666068875700510706, guid: f3da331b06591b447aa66a5f90e06bdc,
     type: 3}
   m_defaultCount: 0
   m_defaultUnlocked: 0
   m_type: 0
-  m_baseDamage: 250
-  m_criticalProbability: 20
+  m_baseDamage: 180
+  m_criticalProbability: 65
   m_range: 0
+  m_baseUses: 110
   m_knockbackForce: 8
   m_knockbackTime: 0.5
   m_weaponMesh: {fileID: -5812466510372841673, guid: f12891500317b5541ba1beb2ee00b987,

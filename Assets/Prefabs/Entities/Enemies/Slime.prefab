@@ -69,8 +69,14 @@ MonoBehaviour:
   m_attack: {fileID: 7398143930599952937}
   m_health: {fileID: 5215380405671523418}
   m_movement: {fileID: 5215380405671523417}
-  m_minRandomJump: 2
-  m_maxRandomJump: 3
+  m_minMovementTime: 2
+  m_maxMovementTime: 3
+  m_normalSpeed: 1
+  m_attackSpeed: 1.5
+  m_minAttackWait: 1
+  m_maxAttackWait: 3
+  m_detectionDistance: 5
+  m_detectionBreak: 8
 --- !u!114 &5215380405671523418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,13 +89,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bae805963038f834b9d0eb2af324e962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_health: 400
+  m_health: 900
   m_damageText: {fileID: 7533356923139126215, guid: ce7c225c2553d60488b69cb5bc4c8a21,
     type: 3}
   m_damageTextOffset: 1
   m_meshToDeactive: {fileID: 5215380406721348892}
   m_damageCooldown: 0
   m_entityMovement: {fileID: 5215380405671523417}
+  m_healthBar: {fileID: 0}
   m_seedEntity: {fileID: 7458109963534761173, guid: 688d08a986446d549ac84a83ffce4d4a,
     type: 3}
 --- !u!114 &5215380405671523417
@@ -104,8 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e726ad04a6f9cca48abfb195c10d8839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementSpeed: 4
-  m_movementSmoothness: 0.1
+  m_movementSpeed: 1
+  m_movementSmoothness: 0.25
   m_rotationSmoothness: 0.2
   m_characterController: {fileID: 5215380405671523416}
   m_upGravityMultiplier: 1

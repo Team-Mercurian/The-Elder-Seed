@@ -52,6 +52,11 @@ public class PlantController : MonoBehaviour {
 		public Vector3Int GetPosition() => m_position;
         public int GetSeedID() => m_seedID;
 
+        public void Finish() {
+
+            SetData(m_seedID, m_position, true);
+            }      
+
         //Funciones heredadas.
 		
         //Funciones ha heredar.

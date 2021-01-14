@@ -10,14 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 28881f1d49f82e846b76596dcbae4457, type: 3}
-  m_Name: SlimeHand
+  m_Name: Gun Rare
   m_EditorClassIdentifier: 
-  m_name: SlimeHand
-  m_rarity: 0
-  m_UIIcon: {fileID: 0}
-  m_type: 0
-  m_baseDamage: 20
-  m_criticalProbability: 20
-  m_range: 0
-  m_knockbackForce: 4
+  m_id: 13
+  m_name: Pistola Rara
+  m_desc: 
+  m_rarity: 1
+  m_UIIcon: {fileID: 418664828205878368, guid: f3da331b06591b447aa66a5f90e06bdc, type: 3}
+  m_defaultCount: 0
+  m_defaultUnlocked: 0
+  m_type: 1
+  m_baseDamage: 60
+  m_criticalProbability: 60
+  m_range: 5
+  m_baseUses: 65
+  m_knockbackForce: 1
   m_knockbackTime: 0.5
+  m_weaponMesh: {fileID: 0}

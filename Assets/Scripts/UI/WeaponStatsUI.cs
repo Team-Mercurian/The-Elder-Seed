@@ -83,6 +83,7 @@ public class WeaponStatsUI : PanelUI, IHasTwoOptionsUI {
 			DataSystem m_ds = DataSystem.GetSingleton();
 			m_ds.GetDungeonData().SetActualWeapon(m_weaponEntity.GetIndex());
             PlayerBrain.GetSingleton().GetAttack().SetWeapon(m_ds.GetWeapon(m_ds.GetDungeonData().GetActualWeapon().GetID()));
+			SelectedWeaponUI.GetSingleton().SetData(m_ds.GetActualWeapon(), m_ds.GetDungeonData().GetActualWeapon().GetUses());
 			m_inventory.Reset(Inventory_FarmingUI.Sections.Weapons);
 			Close();
 			}

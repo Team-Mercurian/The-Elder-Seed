@@ -137,6 +137,11 @@ public class GenerateRuinsRooms : GameBehaviour {
                 m_dataSystem.SetDungeonData(m_dD);
                 }
                 
+            SelectedWeaponUI.GetSingleton().SetData(m_dataSystem.GetActualWeapon(), m_dataSystem.GetDungeonData().GetActualWeapon().GetUses());     
+
+            ItemData m_potion = m_dataSystem.GetDungeonData().GetActualPotion();
+            SelectedPotionUI.GetSingleton().SetData(m_potion != null ? m_dataSystem.GetPotion(m_potion.GetID()) : null, m_potion == null ? 0 : m_potion.GetCount());
+
             m_actualFloor = m_dataSystem.GetDungeonData().GetFloor();
 
             List<RoomData> m_roomsDatas = m_dataSystem.GetDungeonData().GetRoomDatas();

@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class PlayerFarming : MonoBehaviour {
 	
@@ -16,26 +18,37 @@ public class PlayerFarming : MonoBehaviour {
             //Publicas.
 			
             //Privadas.
-            private static int m_seedID = -1;
+            private static PlayerFarming m_instance;
 			
         //Establecer variables.
 		
             //Publicas.
             [Header("References")]
             [SerializeField] private Transform m_playerCell = null;
-			
+            [SerializeField] private Image m_selectedSeed = null;
+            [SerializeField] private TextMeshProUGUI m_selectedSeedCount = null;
+
             //Privadas.
             private Vector3Int? m_actualGrid;
             private GameData m_data;
+
+            private int m_seedID = -1;
+            private bool m_magicalFragment = false;
 			
 			
     //Funciones
 		
         //Funciones de MonoBehaviour
+        private void Awake() {
+
+            m_instance = this;
+            }
         private void Start() {
 			
             StartCoroutine(CheckGrid(0.025f));
             m_data = DataSystem.GetSingleton().GetGameData();
+
+            SetSeedID(m_seedID);
             }
 		
         //Funciones privadas.
@@ -52,6 +65,7 @@ public class PlayerFarming : MonoBehaviour {
                 if (Random.Range(0f, 100f) < (20 - (4 * (int) m_seed.GetRarity()))) {
                     
                     m_data.GetInventoryData().AddSeed(m_seed.GetID(), 1);
+                    m_selectedSeedCount.text = m_data.GetInventoryData().GetSeedData(m_seedID).GetCount().ToString();
 			        ObtainedObjectsUI.GetSingleton().AddItem(m_seed.GetIcon(), m_seed.GetName(), m_seed.GetRarity());
                     }
 
@@ -71,22 +85,42 @@ public class PlayerFarming : MonoBehaviour {
             Vector3Int m_pos = new Vector3Int(m_actualGrid.Value.x, m_actualGrid.Value.y, m_actualGrid.Value.z);
             int m_cellSize = FarmingEnviromentController.GetCellSize();
 
+            PlantController m_plant = FarmingEnviromentController.GetSingleton().GetPlantController(m_pos);
+
             if (m_data.GetFarmData().GetIfGridIsUsed(m_pos / m_cellSize)) {
 
-                Harvest(m_pos, m_cellSize);
+                GridData m_gridData = m_data.GetFarmData().GetGridData(m_pos/m_cellSize);
+
+                if (m_magicalFragment && !m_gridData.GetHarvest()) {
+                    
+                    if (m_data.GetInventoryData().GetMagicalFragments() <= 0) return;
+                    
+                    m_data.GetInventoryData().AddMagicalFragments(-1);
+                    m_selectedSeedCount.text = m_data.GetInventoryData().GetMagicalFragments().ToString();
+                    m_gridData.AddRoom();
+                    m_gridData.AddRoom();
+                    if (m_gridData.GetHarvest()) FarmingEnviromentController.GetSingleton().GetPlantController(m_pos).Finish();
+                    SaveSystem.Save();
+                    }   
+                
+                else {
+
+                    Harvest(m_pos, m_cellSize);
+                    }
                 }
             
             else {
 
                 if (m_seedID < 0) return;
+
                 Seed m_seed = DataSystem.GetSingleton().GetSeed(m_seedID);
                 
                 if (m_data.GetInventoryData().GetSeedData(m_seed.GetID()).GetCount() > 0) {
-                        
-                    FarmingEnviromentController.GetSingleton().CreatePlant(m_pos, m_seedID, false);
 
+                    FarmingEnviromentController.GetSingleton().CreatePlant(m_pos, m_seedID, false);
                     m_data.GetFarmData().AddGridData(new GridData(m_seedID, m_pos / m_cellSize, (int) (m_seed.GetRarity() + 1) * 4));
                     m_data.GetInventoryData().AddSeed(m_seed.GetID(), -1);
+                    m_selectedSeedCount.text = m_data.GetInventoryData().GetSeedData(m_seedID).GetCount().ToString();
                     SaveSystem.Save();
                     }
                 
@@ -97,8 +131,37 @@ public class PlayerFarming : MonoBehaviour {
                 }
             }
 
-        public static void SetSeedID(int seedID) => m_seedID = seedID;
-        public static int GetSeedID() => m_seedID;
+        public void ActiveMagicalFragments() {
+            
+            m_selectedSeedCount.text = m_data.GetInventoryData().GetMagicalFragments().ToString();
+            m_selectedSeed.gameObject.SetActive(true);
+            m_selectedSeed.sprite = DataSystem.GetSingleton().GetMiscellaneous(0).GetIcon();
+            m_magicalFragment = true; 
+            }
+
+        public void SetSeedID(int seedID) {
+            
+            m_magicalFragment = false;
+            if (seedID >= 0) {
+                
+                m_selectedSeedCount.text = "";
+
+                m_selectedSeed.gameObject.SetActive(true);
+                m_selectedSeed.sprite = DataSystem.GetSingleton().GetSeed(seedID).GetIcon();
+                m_selectedSeedCount.text = m_data.GetInventoryData().GetSeedData(seedID).GetCount().ToString();
+                }
+
+            else {
+
+                m_selectedSeedCount.text = "";
+                m_selectedSeed.gameObject.SetActive(false);
+                }
+
+            m_seedID = seedID;
+            }
+        public int GetSeedID() => m_seedID;
+
+        public static PlayerFarming GetSingleton() => m_instance;
             
 		
         //Funciones heredadas.

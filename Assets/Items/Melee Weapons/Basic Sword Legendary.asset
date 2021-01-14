@@ -14,15 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_id: 3
   m_name: Espada Legendaria
+  m_desc: 
   m_rarity: 3
   m_UIIcon: {fileID: 1666068875700510706, guid: f3da331b06591b447aa66a5f90e06bdc,
     type: 3}
   m_defaultCount: 0
   m_defaultUnlocked: 0
   m_type: 0
-  m_baseDamage: 250
-  m_criticalProbability: 35
+  m_baseDamage: 200
+  m_criticalProbability: 40
   m_range: 0
+  m_baseUses: 110
   m_knockbackForce: 8
   m_knockbackTime: 0.5
   m_weaponMesh: {fileID: -5712142429949666421, guid: 5dee3b01292eac64bb9c884960f93b8d,

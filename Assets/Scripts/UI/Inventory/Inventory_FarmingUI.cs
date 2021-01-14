@@ -67,9 +67,9 @@ public class Inventory_FarmingUI : InventoryUI {
 
 		protected void SetPlantsTexts() => SetTexts("Plantas", "", "Tienes", "Usar");
 		protected void SetPotionsTexts() => SetTexts("Pociones", "", "", "Tienes");
-		protected void SetSeedsTexts() => SetTexts("Semillas", "Equipado", "Tienes", "Equipar");
+		protected void SetSeedsTexts() => SetTexts("Semillas", "Equipado", "Tienes", "Inspeccionar");
 		protected void SetWeaponsTexts() => SetTexts("Armas", "", "Durabilidad", "Inspeccionar");
-		protected void SetMiscTexts() => SetTexts("Miscelaneo", "", "Tienes", "Usar");
+		protected void SetMiscTexts() => SetTexts("Miscelaneo", "", "Tienes", "Inspeccionar");
 
 		protected override Sections SetStartSection() => GetLastSection();
 

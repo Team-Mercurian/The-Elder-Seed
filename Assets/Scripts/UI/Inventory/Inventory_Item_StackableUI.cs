@@ -19,6 +19,7 @@ public abstract class Inventory_Item_StackableUI : Inventory_ItemUI {
 		[Header("Stackable References")]
 		[SerializeField] private TextMeshProUGUI m_countHolder = null;
 		[SerializeField] private Button m_button = null;
+		[SerializeField] private bool m_emptyInteract = false;
         
 		private int m_count;
         
@@ -43,7 +44,7 @@ public abstract class Inventory_Item_StackableUI : Inventory_ItemUI {
 			
 			m_count = Mathf.Clamp(count, 0, 10000);
 			m_countHolder.text = m_count.ToString();
-			m_button.interactable = count > 0;
+			m_button.interactable = m_emptyInteract ? true : count > 0;
 			}
 		public int GetCount() => m_count;
 		public Button GetButton() => m_button;

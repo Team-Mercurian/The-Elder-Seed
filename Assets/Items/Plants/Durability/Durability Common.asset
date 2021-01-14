@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_id: 0
   m_name: Reparador Metalico I
+  m_desc: 
   m_rarity: 0
   m_UIIcon: {fileID: 0}
   m_defaultCount: 5

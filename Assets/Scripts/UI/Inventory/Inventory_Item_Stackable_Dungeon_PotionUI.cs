@@ -35,26 +35,15 @@ public class Inventory_Item_Stackable_Dungeon_PotionUI : Inventory_Item_Stackabl
 			}
 		public override void Use() {
 
-			if (GetCount() <= 0) return;
+			DataSystem.GetSingleton().GetDungeonData().SetActualPotion(GetItem().GetID());
 
-			if (UsePotion()) {
+            ItemData m_potion = DataSystem.GetSingleton().GetDungeonData().GetActualPotion();
+            SelectedPotionUI.GetSingleton().SetData(DataSystem.GetSingleton().GetPotion(m_potion.GetID()), m_potion == null ? 0 : m_potion.GetCount());
 
-				SubtractCount(1);
-				DataSystem.GetSingleton().GetDungeonData().GetInventoryData().AddPotion(GetItem().GetID(), -1);
-				SaveSystem.Save();
-				}
+			GetInventory().Close();
 			}
 
 		//Private Functions
-		private bool UsePotion() {
-
-			int m_actualHealth = DataSystem.GetSingleton().GetDungeonData().GetPlayer().GetHealth();
-			int m_maxHealth = DataSystem.GetSingleton().GetPlayerHealth();
-			if (m_actualHealth >= m_maxHealth) return false;
-
-			PlayerBrain.GetSingleton().GetHealth().OverrideHealth(m_actualHealth + ((m_maxHealth / 100) * m_healPercent));
-			return true;
-			}
         
         
 		//Private Functions

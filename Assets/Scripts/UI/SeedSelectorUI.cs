@@ -125,7 +125,7 @@ public class SeedSelectorUI : PanelUI, IHasLookInput {
             m_IORoutine = StartCoroutine(PanelIOCoroutine(false));
             
             InputController.SetLookObject(CameraController.GetSingleton());
-            PlayerFarming.SetSeedID(m_selectedSeedID);
+            PlayerFarming.GetSingleton().SetSeedID(m_selectedSeedID);
             } 
 		
         public void Look(Vector2 velocity) {

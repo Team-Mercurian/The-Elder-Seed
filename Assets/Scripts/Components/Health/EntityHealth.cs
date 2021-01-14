@@ -36,7 +36,7 @@ public abstract class EntityHealth : MonoBehaviour {
             private Coroutine m_damageCoroutine;
 
             private bool m_canReceiveDamage = true;
-            private int m_actualHealth;
+            protected int m_actualHealth;
 			
 			
     //Funciones
