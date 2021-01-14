@@ -24,7 +24,7 @@ public abstract class DamageBase : MonoBehaviour
         float minDistance = 10000;
         foreach (EntityBrain brain in brains)
         {
-            float distance = Mathf.Abs(Vector2.Distance(brain.transform.position, m_parent.position));
+            float distance = Mathf.Abs(Vector3.Distance(brain.transform.position, m_parent.position));
             if (distance < minDistance)
             {
                 closestBrain = brain;

@@ -53,6 +53,7 @@ public class CryoSlimeProyectile : MonoBehaviour {
 				Vector2 dir2 = new Vector2(dir1.x, dir1.z);
 				Knockback m_knockback = new Knockback(dir2, m_weapon.GetKnockbackForce(), m_weapon.GetKnockbackTime());
 				other.gameObject.GetComponent<EntityHealth>().GetDamage(m_weapon.GetCalculatedDamage(m_weapon.GetUses(), true), m_knockback);
+				Destroy(gameObject);
 				}
 			}
 

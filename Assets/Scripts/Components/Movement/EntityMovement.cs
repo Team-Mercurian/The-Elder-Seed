@@ -81,7 +81,7 @@ public abstract class EntityMovement : GravityValues {
             SetGravityVelocity();
 //            SlideDown();
             SetVerticalVelocity(-m_fallVelocity);
-            RotateSmooth(m_velocity);
+            RotateSmooth(m_reachVelocity);
             }
         protected void FixedUpdate() {
 
