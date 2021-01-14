@@ -35,26 +35,41 @@ public class AimHead:MonoBehaviour
         //Player looks at whatever camera is pointing at (doesn't work)
         //m_aimTarget.position = (m_cam.transform.position - (transform.position + m_headOffset)) * -1;
 
-        Vector3 m_lookPosition;
         Vector3 m_defaultPos = m_player.position + Vector3.Scale(m_player.forward, new Vector3(m_defaultTargetPos.z, 1, m_defaultTargetPos.z)) + (Vector3.up * m_defaultTargetPos.y);
+        Vector3 m_lookPosition = m_defaultPos;;
 
         //if list has targets
-        if (m_targets.Count > 0 && m_targets[0] != null) 
+        /*if (m_targets.Count > 0) 
         {
-            m_lookPosition = m_targets[0].transform.position;
-            m_animator.SetBool("inCombat", true);
-        }
-        else 
-        {
-            m_lookPosition = m_defaultPos;
-            m_animator.SetBool("inCombat", false);
+        
+            List<Transform> m_newTargets = m_targets;
+
             foreach(Transform target in m_targets)
             {
                 if (target == null)
                 {
-                    m_targets.Remove(target);
+                    m_newTargets.Remove(target);
                 }
             }
+
+            m_targets = m_newTargets;
+
+        }
+*/
+        if (m_targets.Count > 0) {
+
+            if (m_targets[0] != null) {
+
+                m_lookPosition = m_targets[0].transform.position;
+                m_animator.SetBool("inCombat", true);
+                }
+            }
+
+        else 
+        {
+            m_lookPosition = m_defaultPos;
+            m_animator.SetBool("inCombat", false);
+
         }
         
         float m_angle = (Mathf.Atan2(m_lookPosition.z - m_player.position.z, m_lookPosition.x - m_player.position.x) * Mathf.Rad2Deg) + m_player.eulerAngles.y;
