@@ -16,7 +16,7 @@ MonoBehaviour:
   m_name: Pistola Comun
   m_desc: 
   m_rarity: 0
-  m_UIIcon: {fileID: 418664828205878368, guid: f3da331b06591b447aa66a5f90e06bdc, type: 3}
+  m_UIIcon: {fileID: 21300000, guid: db95a0c4a0ce07645878f659589ec9d0, type: 3}
   m_defaultCount: 0
   m_defaultUnlocked: 0
   m_type: 1

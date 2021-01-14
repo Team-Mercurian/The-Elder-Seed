@@ -25,7 +25,7 @@ public class EnemyBrain : EntityBrain {
 
 			m_indicator.eulerAngles = new Vector3(0, CameraController.GetDirection().eulerAngles.y, 0);
 			}
-        
+
 		//Public Functions
         
         
@@ -69,6 +69,7 @@ public class EnemyBrain : EntityBrain {
 			GetMovement().Jump();
 			GetAttack().Attack();
 			}
+		
 
 		protected float GetPlayerDistance() => Mathf.Abs(Vector3.Distance(PlayerBrain.GetSingleton().transform.position, transform.position));
         

@@ -16,8 +16,7 @@ MonoBehaviour:
   m_name: Espada Epica
   m_desc: 
   m_rarity: 2
-  m_UIIcon: {fileID: 1666068875700510706, guid: f3da331b06591b447aa66a5f90e06bdc,
-    type: 3}
+  m_UIIcon: {fileID: 21300000, guid: 1e6428df7f8a88248a3b6d3ad9c19dab, type: 3}
   m_defaultCount: 0
   m_defaultUnlocked: 0
   m_type: 0

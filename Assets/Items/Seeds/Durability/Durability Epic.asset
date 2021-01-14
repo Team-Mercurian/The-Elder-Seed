@@ -21,8 +21,7 @@ MonoBehaviour:
     Para crecer requiere 6 habitaciones
     finalizadas dentro de las ruinas.'
   m_rarity: 2
-  m_UIIcon: {fileID: 6436143678100319355, guid: f3da331b06591b447aa66a5f90e06bdc,
-    type: 3}
+  m_UIIcon: {fileID: 21300000, guid: 6c08c9e09df0971469a1b48fcae47e70, type: 3}
   m_defaultCount: 0
   m_defaultUnlocked: 0
   m_type: 0

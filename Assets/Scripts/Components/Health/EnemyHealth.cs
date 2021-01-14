@@ -56,14 +56,27 @@ public class EnemyHealth : EntityHealth {
             }
 		protected override void Dead() {
             
+            if(m_animator != null)
+            {
+                m_animator.SetTrigger("dead");
+            }
+
             DropObject();
             RoomController.GetSingleton().DestroyProp(gameObject);
             RoomController.GetSingleton().CheckAndOpenPassages(false);
-            Destroy(gameObject);
+            
+            Invoke("FinishDead", 1.5f);
+
+            GetComponent<EnemyBrain>().StopAllCoroutines();
             }
         protected override void HealthBarDeadAction() {
 
             Destroy(m_healthBar.gameObject);
+            }
+
+        private void FinishDead() {
+
+            Destroy(gameObject);
             }
         protected override void SaveHealth(int health) {
 

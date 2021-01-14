@@ -257,10 +257,8 @@ MonoBehaviour:
     type: 3}
   m_playerPivot: {fileID: 5402334276728811052}
   m_floorText: {fileID: 8586436786143371512}
-  m_chestIcon: {fileID: 2620988852739936374, guid: f3da331b06591b447aa66a5f90e06bdc,
-    type: 3}
-  m_stairsIcon: {fileID: -206071241449947982, guid: f3da331b06591b447aa66a5f90e06bdc,
-    type: 3}
+  m_chestIcon: {fileID: 21300000, guid: d16a6ddc39c086c45a793601a511d70e, type: 3}
+  m_stairsIcon: {fileID: 21300000, guid: 81b10977507d7ba42b0b2b1b72d65f2c, type: 3}
   m_roomSize: 36
   m_roomSeparation: 4
 --- !u!225 &1822893603590667339
