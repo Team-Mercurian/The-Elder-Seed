@@ -75,7 +75,13 @@ public abstract class InventoryUI : PanelUI {
 		public void ChangeSection_Weapons() => SetItemDatas(Sections.Weapons, false);
 		public void ChangeSection_Plants() => SetItemDatas(Sections.Plants, false);
 		public void ChangeSection_Potions() => SetItemDatas(Sections.Potions, false);
-		public void ChangeSection_Miscellaneous() => SetItemDatas(Sections.Miscellaneous, false);
+		public void ChangeSection_Miscellaneous() {
+			
+            if (DataSystem.GetSingleton().GetGameData().GetTutorialIndex() < 6) 
+                TutorialController.GetSingleton().SetTutorialText(6);
+
+			SetItemDatas(Sections.Miscellaneous, false);
+			}
 
 		public void Reset() => SetItemDatas(m_lastSection, true);
 		public void Reset(Sections section) => SetItemDatas(section, true);

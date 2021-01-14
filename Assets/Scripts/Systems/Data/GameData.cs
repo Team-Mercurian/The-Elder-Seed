@@ -26,6 +26,7 @@ public class GameData {
     [SerializeField] private InventoryData m_inventoryData;
     [SerializeField] private List<WeaponBaseData> m_weaponData;
 	[SerializeField] private bool m_giftData;
+    [SerializeField] private int m_tutorialIndex;
 
     public GameData() { 
 
@@ -33,6 +34,7 @@ public class GameData {
         m_inventoryData = new InventoryData();
         m_weaponData = new List<WeaponBaseData>();
         m_giftData = true;
+        m_tutorialIndex = 0;
 		}
 
     public FarmData GetFarmData() => m_farmData;
@@ -50,6 +52,10 @@ public class GameData {
 		return false;
 		}
     
+    public void AddTutorialIndex() => m_tutorialIndex ++;
+    public void SetTutorialIndex(int index) => m_tutorialIndex = index;
+    public int GetTutorialIndex() => m_tutorialIndex;
+
 	public bool GiftData() => m_giftData;
 	public void TurnGiftOff() => m_giftData = false;
 	}
@@ -318,6 +324,6 @@ public class WeaponEntityData {
     public int GetID() => m_ID;
     public int GetIndex() => m_index;
     public void UseWeapon() => m_uses = Mathf.Clamp(m_uses - 1, 0, 5000);
-    public void SetUses(int count) => m_uses = count;
+    public void SetUses(int count) => Mathf.Clamp(count, 0, 5000);
     public int GetUses() => m_uses;
     }

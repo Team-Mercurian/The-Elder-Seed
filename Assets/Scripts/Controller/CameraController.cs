@@ -86,6 +86,8 @@ public class CameraController : MonoBehaviour, IHasLookInput {
                 m_resetCamera = false;
                 }
 
+            m_defaultDistance = m_maxDistance;
+
             m_actualAngle = m_reachAngle;
             m_smoothedDistance = m_reachDistance;
             SetTransformTargetPosition();

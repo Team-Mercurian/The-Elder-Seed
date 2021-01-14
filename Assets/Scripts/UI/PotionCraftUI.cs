@@ -98,6 +98,8 @@ public class PotionCraftUI : PanelUI {
 			WarningPanelUI.GetSingleton().SetData(m_str, "Cerrar");
 			WarningPanelUI.GetSingleton().Open();
 
+            if (DataSystem.GetSingleton().GetGameData().GetTutorialIndex() < 10) 
+                TutorialController.GetSingleton().SetTutorialText(10);
 			SetData();
 			}
 

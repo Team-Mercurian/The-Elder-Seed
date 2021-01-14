@@ -46,6 +46,12 @@ public class Inventory_Item_Stackable_SeedUI : Inventory_Item_StackableUI {
 
 			if (GetCount() <= 0) return;
 			PlayerFarming.GetSingleton().SetSeedID(GetItem().GetID());
+
+			if (DataSystem.GetSingleton().GetSeed(GetItem().GetID()).GetSeedType() == Seed.SeedType.Potion) {
+
+				if (DataSystem.GetSingleton().GetGameData().GetTutorialIndex() < 3) 
+					TutorialController.GetSingleton().SetTutorialText(3);
+				}
 			GetInventory().Close();
 			}
         

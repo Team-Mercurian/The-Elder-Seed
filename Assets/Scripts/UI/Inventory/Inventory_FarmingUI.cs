@@ -27,6 +27,16 @@ public class Inventory_FarmingUI : InventoryUI {
 		//MonoBehaviour Functions
         
 		//Public Functions
+		public override void Open() {
+
+			base.Open();
+
+            if (DataSystem.GetSingleton().GetGameData().GetTutorialIndex() < 2) 
+                TutorialController.GetSingleton().SetTutorialText(2);
+            
+            else if (DataSystem.GetSingleton().GetGameData().GetTutorialIndex() == 4) 
+                TutorialController.GetSingleton().SetTutorialText(5);
+			}
 
 		//Private Functions
 		protected override void SetSectionsChanges(Sections section) {

@@ -18,6 +18,6 @@ MonoBehaviour:
   m_rarity: 0
   m_UIIcon: {fileID: 6866944693739802424, guid: f3da331b06591b447aa66a5f90e06bdc,
     type: 3}
-  m_defaultCount: 3
+  m_defaultCount: 4
   m_defaultUnlocked: 1
   m_healPercent: 25

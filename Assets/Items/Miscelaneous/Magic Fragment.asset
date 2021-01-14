@@ -21,5 +21,5 @@ MonoBehaviour:
   m_rarity: 3
   m_UIIcon: {fileID: 1078675886051829931, guid: f3da331b06591b447aa66a5f90e06bdc,
     type: 3}
-  m_defaultCount: 0
+  m_defaultCount: 2
   m_defaultUnlocked: 1
