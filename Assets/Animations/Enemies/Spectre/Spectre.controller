@@ -11,6 +11,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: hurt
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: dead
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 246975717428531322}
   m_Solo: 0
@@ -39,19 +42,19 @@ AnimatorStateMachine:
     m_Position: {x: 500, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 246975717428531322}
-    m_Position: {x: 260, y: -30, z: 0}
+    m_Position: {x: 260, y: 30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5185609377667044016}
     m_Position: {x: 260, y: 200, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -931661658245333853}
-    m_Position: {x: 510, y: 20, z: 0}
+    m_Position: {x: 500, y: 30, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 688504176660111004}
-    m_Position: {x: 260, y: 130, z: 0}
+    m_Position: {x: 500, y: 210, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 563759716286532435}
-    m_Position: {x: 260, y: 50, z: 0}
+    m_Position: {x: 260, y: -60, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 7684663511647123351}
@@ -150,12 +153,6 @@ AnimatorController:
   m_Name: Spectre
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: dead
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
   - m_Name: hurt
     m_Type: 9
     m_DefaultFloat: 0
@@ -164,6 +161,12 @@ AnimatorController:
     m_Controller: {fileID: 0}
   - m_Name: attack
     m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: dead
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -346,6 +349,9 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
+  - m_ConditionMode: 1
+    m_ConditionEvent: hurt
+    m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: dead
     m_EventTreshold: 0
