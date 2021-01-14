@@ -114,7 +114,11 @@ public class PlayerMovement : JumpingCharacter {
         public override void Jump() {
 
             base.Jump();
-            m_animator.SetTrigger("jump");
+
+            if(!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Skeleton|Jump")) {
+
+                m_animator.SetTrigger("jump");
+                }
             }
 
         public void IsAttacking(bool isAttacking) => m_isAttacking = isAttacking;

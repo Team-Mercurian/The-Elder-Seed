@@ -81,6 +81,7 @@ public class SceneController : MonoBehaviour {
             float m_time = 0.25f;
 
             FadeControllerUI m_fade = Instantiate(fastFade ? m_fastFade : m_transitionFade).GetComponent<FadeControllerUI>();
+            CameraController.ResetCameraInStart();
 
             for(float i = 0; i < m_time; i += Time.deltaTime) {
 

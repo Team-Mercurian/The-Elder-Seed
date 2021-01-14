@@ -70,7 +70,7 @@ public abstract class EntityHealth : MonoBehaviour {
             }
 
             //Detectar si este perdio toda su vida.
-            if (m_actualHealth == 0) {
+            if (m_actualHealth <= 0) {
 
                 m_dead = true;
                 Dead();

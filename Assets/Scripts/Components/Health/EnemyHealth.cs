@@ -58,16 +58,12 @@ public class EnemyHealth : EntityHealth {
             
             if(m_animator != null)
             {
-                m_animator.SetTrigger("dead");
+                m_animator.SetBool("dead", true);
             }
 
             DropObject();
-            RoomController.GetSingleton().DestroyProp(gameObject);
-            RoomController.GetSingleton().CheckAndOpenPassages(false);
-            
-            Invoke("FinishDead", 1.5f);
-
             GetComponent<EnemyBrain>().StopAllCoroutines();
+            Invoke("FinishDead", 1.5f);
             }
         protected override void HealthBarDeadAction() {
 
@@ -76,6 +72,8 @@ public class EnemyHealth : EntityHealth {
 
         private void FinishDead() {
 
+            RoomController.GetSingleton().DestroyProp(gameObject);
+            RoomController.GetSingleton().CheckAndOpenPassages(false);
             Destroy(gameObject);
             }
         protected override void SaveHealth(int health) {
