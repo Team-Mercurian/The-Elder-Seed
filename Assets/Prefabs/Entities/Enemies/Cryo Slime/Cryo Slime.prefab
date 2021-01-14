@@ -309,7 +309,7 @@ MonoBehaviour:
   m_attackDamage: 15
   m_knockbackForce: 1
   m_knockbackTime: 0.5
-  m_animator: {fileID: 0}
+  m_animator: {fileID: 2082056112418300254}
 --- !u!1001 &76147355990810177
 PrefabInstance:
   m_ObjectHideFlags: 0
