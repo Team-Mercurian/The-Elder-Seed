@@ -14,13 +14,17 @@ public class EnemyBrain : EntityBrain {
         
         
 		//Non Static
+		[SerializeField] private Transform m_indicator = null;
         private Coroutine m_movementRoutine = null;
         private Coroutine m_jumpRoutine = null;
         
     //Functions
 	
 		//MonoBehaviour Functions
-        
+        private void Update() {
+
+			m_indicator.eulerAngles = new Vector3(0, CameraController.GetDirection().eulerAngles.y, 0);
+			}
         
 		//Public Functions
         
