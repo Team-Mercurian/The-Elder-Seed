@@ -26,6 +26,8 @@ MonoBehaviour:
   m_defaultCount: 0
   m_defaultUnlocked: 0
   m_type: 0
-  m_seedMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  m_plantMesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_seedMesh: {fileID: 2581767685970701815, guid: 654c3f0abcf0d084c987968e13ee0e97,
+    type: 3}
+  m_plantMesh: {fileID: -7997301668489507248, guid: 654c3f0abcf0d084c987968e13ee0e97,
+    type: 3}
   m_plant: {fileID: 11400000, guid: ccdcf04a58efcf0408e1cfcd9bd4ebbd, type: 2}

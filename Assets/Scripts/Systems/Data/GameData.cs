@@ -277,6 +277,9 @@ public class GridData {
     public int GetSeedIndex() => m_seedIndex;
     public Vector3Int GetSeedPosition() => m_position;
 
+    public int GetRoomCount() => m_roomCount;
+    public int GetMaxRoomCount() => m_requiredRoomsToHarvest;
+
     public bool GetHarvest() => m_canHarvest;
     public void Harvest() => m_canHarvest = true;
     }

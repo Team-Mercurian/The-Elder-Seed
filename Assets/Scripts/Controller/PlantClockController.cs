@@ -60,7 +60,6 @@ public class PlantClockController : MonoBehaviour {
         
         private void Update() {
 
-            SetHandsPosition();
             transform.eulerAngles = new Vector3(0, CameraController.GetDirection().eulerAngles.y, 0);
             }
 		

@@ -60,11 +60,15 @@ public class AimHead:MonoBehaviour
 
             float m_closestDistance = 9999;
             Transform m_closestCalculatedTarget = null;
+
+            List<Transform> m_newTargets = new List<Transform>();
+            m_newTargets.AddRange(m_targets);
+
             foreach(Transform target in m_targets)
             {
                 if (target == null)
                 {
-                    m_targets.Remove(target);
+                    m_newTargets.Remove(target);
                 }
                 else
                 {
@@ -76,9 +80,14 @@ public class AimHead:MonoBehaviour
                     }
                 }
             }
-            m_lookPosition = m_closestCalculatedTarget.position;
-            m_animator.SetBool("inCombat", true);
-            
+
+            m_targets = m_newTargets;
+
+            if (m_targets.Count > 0) {
+                
+                m_lookPosition = m_closestCalculatedTarget.position;
+                m_animator.SetBool("inCombat", true);
+                }
 
             /*
             if (m_targets[0] != null) {
@@ -88,7 +97,7 @@ public class AimHead:MonoBehaviour
                 }
             */
             }
-        else 
+        if (m_targets.Count == 0) 
         {
             m_lookPosition = m_defaultPos;
             m_animator.SetBool("inCombat", false);

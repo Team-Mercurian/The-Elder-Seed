@@ -60,7 +60,7 @@ public class FarmingEnviromentController : MonoBehaviour {
 
             foreach(GridData m_d in DataSystem.GetSingleton().GetGameData().GetFarmData().GetGridDatas()) {
                 
-                CreatePlant(m_d.GetSeedPosition() * m_gridSize, m_d.GetSeedIndex(), m_d.GetHarvest());
+                CreatePlant(m_d.GetSeedPosition() * m_gridSize, m_d.GetSeedIndex(), m_d.GetRoomCount(), m_d.GetMaxRoomCount());
                 }   
 
             m_playerGrid.localScale = Vector3.one * m_gridSize;
@@ -86,10 +86,10 @@ public class FarmingEnviromentController : MonoBehaviour {
 
         public void AddPlant(PlantController plant) => m_plants.Add(plant);
         public void RemovePlant(PlantController plant) => m_plants.Remove(plant);
-        public void CreatePlant(Vector3Int position, int seedID, bool canHarvest) {
+        public void CreatePlant(Vector3Int position, int seedID, int actualCount, int maxCount) {
         
             GameObject m_entity = Instantiate(m_plant, position, Quaternion.identity); 
-            m_entity.GetComponent<PlantController>().SetData(seedID, position, canHarvest);
+            m_entity.GetComponent<PlantController>().SetData(seedID, position, actualCount, maxCount);
 
             FarmingEnviromentController.GetSingleton().AddPlant(m_entity.GetComponent<PlantController>());
             }

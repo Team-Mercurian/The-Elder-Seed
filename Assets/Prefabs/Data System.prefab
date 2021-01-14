@@ -55,7 +55,7 @@ MonoBehaviour:
   - {fileID: 5689030042232751321, guid: 7e3d1cf4a7875dc4aa0611ac47d5fee7, type: 3}
   - {fileID: 5689030042232751321, guid: 7cf89c3aa6b803d4a82c0dea19c81206, type: 3}
   m_chestRooms:
-  - {fileID: 719703697605135045, guid: 9d743c88fb952d8439cc678e3fd9935f, type: 3}
+  - {fileID: 719703697605135045, guid: fc1da5f1c249add4d80b83a59dcd2cab, type: 3}
   m_stairsRooms:
   - {fileID: 719703697605135045, guid: 526d8bfa67c6dcd44b230edf700da4f0, type: 3}
   m_enemies:

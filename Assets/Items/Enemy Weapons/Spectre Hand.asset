@@ -20,7 +20,7 @@ MonoBehaviour:
   m_defaultCount: 0
   m_defaultUnlocked: 0
   m_type: 0
-  m_baseDamage: 65
+  m_baseDamage: 32
   m_criticalProbability: 20
   m_range: 0
   m_baseUses: 50

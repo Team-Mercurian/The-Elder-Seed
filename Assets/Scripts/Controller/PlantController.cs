@@ -21,6 +21,7 @@ public class PlantController : MonoBehaviour {
             //Publicas.
             [Header("References")]
             [SerializeField] private MeshFilter m_meshFilter = null;
+            [SerializeField] private PlantClockController m_plantClock = null;
 
             //Privadas.
             private bool m_canHarvest = false;
@@ -36,17 +37,12 @@ public class PlantController : MonoBehaviour {
         //Funciones privadas.
 		
         //Funciones publicas.
-        public void SetData(int seedID, Vector3Int position, bool canHarvest) {
+        public void SetData(int seedID, Vector3Int position, int count, int maxCount) {
 
             m_seedID = seedID;
-            Seed m_seed = DataSystem.GetSingleton().GetSeed(seedID);
-
-            m_meshFilter.mesh = m_seed.GetSeedMesh();
             m_position = position;
 
-            m_canHarvest = canHarvest;
-
-            m_meshFilter.mesh = m_canHarvest ? m_seed.GetPlantMesh() : m_seed.GetSeedMesh();
+            SetCount(count, maxCount);
             }
         public bool GetIfCanHarvest() => m_canHarvest;
 		public Vector3Int GetPosition() => m_position;
@@ -54,8 +50,20 @@ public class PlantController : MonoBehaviour {
 
         public void Finish() {
 
-            SetData(m_seedID, m_position, true);
+           SetCount(1, 1);
             }      
+        public void SetCount(int actual, int max) {
+            
+            m_canHarvest = actual == max;
+            m_plantClock.gameObject.SetActive(!m_canHarvest);
+            if (!m_canHarvest) {
+
+                m_plantClock.SetValue((float) actual / max);
+                }
+                
+            Seed m_seed = DataSystem.GetSingleton().GetSeed(m_seedID);
+            m_meshFilter.mesh = m_canHarvest ? m_seed.GetPlantMesh() : m_seed.GetSeedMesh();
+            }
 
         //Funciones heredadas.
 		
