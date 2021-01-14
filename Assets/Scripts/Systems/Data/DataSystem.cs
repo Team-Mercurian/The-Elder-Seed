@@ -129,9 +129,16 @@ public class DataSystem : MonoBehaviour {
         //Functions
         public int GetRandomWeaponID(int probabilityIncrement) {
             
-            List<Item> m_list = GetRandomItemsIndex(probabilityIncrement, m_weapons.Cast<Item>().ToList());
-            m_list = m_list.FindAll(c => m_gameData.GetWeaponBaseData().Find(a => a.GetID() == c.GetID()).GetUnlocked());
+            List<Item> m_list = null;
+            int m_count = 0;
 
+            while(m_count == 0) {
+                
+                m_list = GetRandomItemsIndex(probabilityIncrement, m_weapons.Cast<Item>().ToList());
+                m_list = m_list.FindAll(c => m_gameData.GetWeaponBaseData().Find(a => a.GetID() == c.GetID()).GetUnlocked());
+                m_count = m_list.Count;
+                }
+                
             return m_list[Random.Range(0, m_list.Count)].GetID();
             }
         public int GetRandomSeedID(int probabilityIncrement, Seed.SeedType seedType) {
@@ -178,14 +185,6 @@ public class DataSystem : MonoBehaviour {
                     if (items[i].GetRarity() == Rarity.Legendary) m_rarityList.Add(items[i]); 
                     }
                 }
-            
-            if (m_rarityList.Count == 0) {
-                
-                for(int i = 0; i < items.Count; i ++) {
-                    
-                    if (items[i].GetRarity() == Rarity.Common) m_rarityList.Add(items[i]); 
-                    }
-                }    
 
             if (m_rarityList.Count > 0) return m_rarityList;
             else {
