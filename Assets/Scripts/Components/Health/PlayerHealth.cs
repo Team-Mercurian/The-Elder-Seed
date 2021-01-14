@@ -8,7 +8,7 @@ public class PlayerHealth : EntityHealth {
 	private void Awake() => m_instance = this;
 	public static PlayerHealth GetSingleton() => m_instance;
 
-    [SerializeField] Animator m_animator = null;
+    
 
     //Establecer variables.
 		

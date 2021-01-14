@@ -58,18 +58,40 @@ public class AimHead:MonoBehaviour
 */
         if (m_targets.Count > 0) {
 
+            float m_closestDistance = 9999;
+            Transform m_closestCalculatedTarget = null;
+            foreach(Transform target in m_targets)
+            {
+                if (target == null)
+                {
+                    m_targets.Remove(target);
+                }
+                else
+                {
+                    float m_distance = Vector3.Distance(target.transform.position, transform.position);
+                    if (m_distance < m_closestDistance)
+                    {
+                        m_closestDistance = m_distance;
+                        m_closestCalculatedTarget = target;
+                    }
+                }
+            }
+            m_lookPosition = m_closestCalculatedTarget.position;
+            m_animator.SetBool("inCombat", true);
+            
+
+            /*
             if (m_targets[0] != null) {
 
                 m_lookPosition = m_targets[0].transform.position;
                 m_animator.SetBool("inCombat", true);
                 }
+            */
             }
-
         else 
         {
             m_lookPosition = m_defaultPos;
             m_animator.SetBool("inCombat", false);
-
         }
         
         float m_angle = (Mathf.Atan2(m_lookPosition.z - m_player.position.z, m_lookPosition.x - m_player.position.x) * Mathf.Rad2Deg) + m_player.eulerAngles.y;

@@ -31,6 +31,7 @@ public abstract class EntityHealth : MonoBehaviour {
             [Header("References")]
             [SerializeField] protected EntityMovement m_entityMovement = null;
             [SerializeField] protected HealthBar m_healthBar = null;
+            [SerializeField] public Animator m_animator = null;
 
             //Privadas.
             private Coroutine m_damageCoroutine;
@@ -61,6 +62,10 @@ public abstract class EntityHealth : MonoBehaviour {
             m_dt.SetData(damage.ToString());
 
             m_entityMovement.SetKnockback(knockback);
+            if(m_animator != null)
+            {
+                m_animator.SetTrigger("hurt");
+            }
 
             //Detectar si este perdio toda su vida.
             if (m_actualHealth == 0) {
