@@ -179,6 +179,14 @@ public class DataSystem : MonoBehaviour {
                     }
                 }
             
+            if (m_rarityList.Count == 0) {
+                
+                for(int i = 0; i < items.Count; i ++) {
+                    
+                    if (items[i].GetRarity() == Rarity.Common) m_rarityList.Add(items[i]); 
+                    }
+                }    
+
             if (m_rarityList.Count > 0) return m_rarityList;
             else {
                 

@@ -46,7 +46,10 @@ public abstract class DamageBase : MonoBehaviour
             Vector3 dir1 = (other.transform.position - m_parent.position).normalized;
             Vector2 dir2 = new Vector2(dir1.x, dir1.z);
             Knockback m_knockback = new Knockback(dir2, m_weapon.GetKnockbackForce(), m_weapon.GetKnockbackTime());
-            if (DoDamage(other.gameObject, m_knockback, m_weapon.GetCalculatedDamage(m_weapon.GetUses()))) 
+
+            int m_uses = m_parent == PlayerBrain.GetSingleton().transform ? DataSystem.GetSingleton().GetDungeonData().GetActualWeapon().GetUses() : m_weapon.GetUses();
+
+            if (DoDamage(other.gameObject, m_knockback, m_weapon.GetCalculatedDamage(m_uses, true))) 
             {
                 UseWeapon();
             }

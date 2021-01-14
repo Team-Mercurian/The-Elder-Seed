@@ -56,7 +56,7 @@ public class WeaponRepair_WeaponUI : Inventory_ItemUI {
 			DataSystem m_ds = DataSystem.GetSingleton();
 
 			m_weaponEntity.SetUses(m_ds.GetWeapon(m_weaponEntity.GetID()).GetUses());
-			SelectedWeaponUI.GetSingleton().SetData(m_ds.GetActualWeapon(), m_ds.GetDungeonData().GetActualWeapon().GetUses());
+			if (SelectedWeaponUI.GetSingleton() != null) SelectedWeaponUI.GetSingleton().SetData(m_ds.GetActualWeapon(), m_ds.GetDungeonData().GetActualWeapon().GetUses());
 			GetInventory().GetRepairWeapon().UsePlant();
 			GetInventory().GetRepairWeapon().Reset();
 			SaveSystem.Save();

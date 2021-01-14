@@ -46,7 +46,7 @@ public class WeaponStatsUI : PanelUI, IHasTwoOptionsUI {
 			m_title.text = m_weapon.GetName();
 			m_baseDamage.text = "Daño base: " + m_weapon.GetBaseDamage().ToString();
 			m_actualUses.text = "Durabilidad: " + weaponData.GetUses() + "/" + m_weapon.GetUses();
-			m_actualDamage.text = "Daño actual: " + m_weapon.GetCalculatedDamage(m_weaponEntity.GetUses()).ToString();
+			m_actualDamage.text = "Daño actual: " + m_weapon.GetCalculatedDamage(m_weaponEntity.GetUses(), false).ToString();
 			m_criticalProbability.text = "Probabilidad de Critico: " + m_weapon.GetCriticalProbability().ToString();
 			m_knockbackForce.text = "Empuje: " + (m_weapon.GetKnockbackForce() * m_weapon.GetKnockbackTime()).ToString();
 			}

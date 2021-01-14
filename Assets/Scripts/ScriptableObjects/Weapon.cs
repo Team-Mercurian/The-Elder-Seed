@@ -60,13 +60,13 @@ public class Weapon : Item {
 
         public Mesh GetWeaponMesh() => m_weaponMesh;
 		
-        public int GetCalculatedDamage(int uses) {
+        public int GetCalculatedDamage(int uses, bool critical) {
             
             //(Daño base + (Daño base * (desgaste actual / desgaste máximo))) * multiplicador de daño crítico. 
 
             int m_damage = Mathf.RoundToInt(m_baseDamage + (m_baseDamage * (float) uses/ GetUses()));
 
-            if (Random.Range(0, 100) < m_criticalProbability) m_damage = Mathf.RoundToInt(m_damage * 1.5f); 
+            if (critical && Random.Range(0, 100) < m_criticalProbability) m_damage = Mathf.RoundToInt(m_damage * 1.5f); 
 
             return m_damage;
             }

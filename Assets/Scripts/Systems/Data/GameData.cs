@@ -317,7 +317,7 @@ public class WeaponEntityData {
 
     public int GetID() => m_ID;
     public int GetIndex() => m_index;
-    public void UseWeapon() => m_uses --;
+    public void UseWeapon() => m_uses = Mathf.Clamp(m_uses - 1, 0, 5000);
     public void SetUses(int count) => m_uses = count;
     public int GetUses() => m_uses;
     }
